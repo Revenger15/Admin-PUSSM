@@ -48,7 +48,7 @@
                   padding: 6px 0;
                   font-weight: normal;"><center>
                     <p style="font-size:18px; font-weight: bold; margin-bottom: 2%;">Select your user type</p>
-                  <select name="type">    
+                  <select name="type" required>    
                       <option value="" disabled selected>Select Your Option</option>
                       <option value="sspadmin">SSP Head</option>
                       <option value="sspteacher">SSP Teacher</option>
@@ -59,11 +59,11 @@
                   </div>
                   <div class="input-group input-group-outline my-3">
                     <label class="form-label">Email</label>
-                    <input type="email" name="email" class="form-control">
+                    <input type="email" name="email" class="form-control" required>
                   </div>
                   <div class="input-group input-group-outline mb-3">
                     <label class="form-label">Password</label>
-                    <input type="password" name="password" class="form-control">
+                    <input type="password" name="password" class="form-control" required>
                   </div>
                   <div class="form-check form-switch d-flex align-items-center mb-3">
                     <input class="form-check-input" type="checkbox" id="rememberMe">
