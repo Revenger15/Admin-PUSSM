@@ -59,6 +59,7 @@ if (isset($_POST['submit'])) {
         } elseif($type == 'std') {
             $database->getReference('users')->update([
                 $createdUser->uid => [
+                    'contact' => $_POST['cno'],
                     'firstname' => $_POST['fname'],
                     'middlename' => $_POST['mname'],
                     'lastname' => $_POST['lname'],
@@ -71,7 +72,6 @@ if (isset($_POST['submit'])) {
             ]);
         }
 
-        echo '<script>alert("Successfully Registered! Please check your inbox for your email verification link!")</script>';
     } catch (Exception $e) {
         echo '<script>alert("' . $e . '")</script>';
     }
@@ -112,6 +112,8 @@ if (isset($_POST['submit'])) {
 
         <label class="fields std" for="stdid">Student Number</label>
         <input class="fields std" type="text" name="stdid" id="stdid"><br>
+        <label class="fields std" for="cno">Contact Number</label>
+        <input class="fields std" type="tel" name="cno" id="cno"><br>
         <label class="fields sspteacher ssphead" for="empid">Employee Number</label>
         <input class="fields sspteacher ssphead" type="text" name="empid" id="empid"><br>
         <label class="fields std sspteacher ssphead" for="fname">First Name</label>
