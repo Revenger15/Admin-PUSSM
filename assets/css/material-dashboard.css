@@ -17113,6 +17113,21 @@ fieldset:disabled .btn {
 .active .avatar.avatar-scale-up {
   transform: scale(1.2);
 }
+.logo-login {
+  position: absolute;
+  width: 105px;
+  height: 105px;
+  bottom: 2%;
+  right: 1%;
+  opacity: 0.3;
+  border-radius: 50%;
+}
+.bg-login {
+  background-image: url(../img/favicon.png);
+  background-repeat: content;
+  background-size: 100%, 100%;
+  opacity: 0.8;
+}
 
 .avatar-xxl {
   width: 110px !important;
@@ -24519,4 +24534,47 @@ pre[class*="language-"] {
   }
 }
 
-/*# sourceMappingURL=material-dashboard.css.map */
+/*Circular Progress bar*/
+@keyframes growProgressBar {
+  0%,
+  33% {
+    --pgPercentage: 0;
+  }
+  100% {
+    --pgPercentage: var(--value);
+  }
+}
+
+@property --pgPercentage {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 0;
+}
+
+div[role="progressbar"] {
+  --size: 12rem;
+  --fg: #369;
+  --bg: #def;
+  --pgPercentage: var(--value);
+  animation: growProgressBar 3s 1 forwards;
+  width: var(--size);
+  height: var(--size);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(
+      closest-side,
+      white 80%,
+      transparent 0 99.9%,
+      white 0
+    ),
+    conic-gradient(var(--fg) calc(var(--pgPercentage) * 1%), var(--bg) 0);
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: calc(var(--size) / 5);
+  color: var(--fg);
+}
+
+div[role="progressbar"]::before {
+  counter-reset: percentage var(--value);
+  content: counter(percentage) "%";
+}
