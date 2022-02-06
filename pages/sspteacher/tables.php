@@ -20,6 +20,7 @@ $userReference = $database->getReference("users/" . $uid . "/result");
   <title>
     Tables
   </title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <!--     Fonts and icons     -->
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
   <!-- Nucleo Icons -->
@@ -31,6 +32,10 @@ $userReference = $database->getReference("users/" . $uid . "/result");
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
   <!-- CSS Files -->
   <link id="pagestyle" href="../../assets/css/material-dashboard.css?v=3.0.0" rel="stylesheet" />
+
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </head>
 
 <body class="g-sidenav-show  bg-gray-200">
@@ -148,10 +153,10 @@ $userReference = $database->getReference("users/" . $uid . "/result");
                       $resultKeys = $userReference->getValue();
                       foreach ($resultKeys as $temp => $key) {
                         $result = $resultReference->getChild($key)->getValue();
-                        $studentReference = $database->getReference("users/".$result['uid']);
+                        $studentReference = $database->getReference("users/" . $result['uid']);
 
                         $name = $studentReference->getChild('lastname')->getValue();
-                        $name .= ", ".$studentReference->getChild('firstname')->getValue();
+                        $name .= ", " . $studentReference->getChild('firstname')->getValue();
                         $name .= " " . $studentReference->getChild('middlename')->getValue();
 
                         $email = $studentReference->getChild('email')->getValue();
@@ -167,22 +172,22 @@ $userReference = $database->getReference("users/" . $uid . "/result");
                               <img src="../../assets/img/ic-student.png" class="avatar avatar-sm me-3 border-radius-lg" alt="user1">
                             </div>
                             <div class="d-flex flex-column justify-content-center">
-                              <h6 class="mb-0 text-sm">'. $name .'</h6>
-                              <p class="text-xs text-secondary mb-0">'.$email.'</p>
+                              <h6 class="mb-0 text-sm">' . $name . '</h6>
+                              <p class="text-xs text-secondary mb-0">' . $email . '</p>
                             </div>
                           </div>
                         </td>
                         <td>
-                          <p class="text-xs font-weight-bold mb-0">'.$section.'</p>
+                          <p class="text-xs font-weight-bold mb-0">' . $section . '</p>
                         </td>
                         <td>
-                          <p class="text-xs font-weight-bold mb-0">'.$contact.'</p>
+                          <p class="text-xs font-weight-bold mb-0">' . $contact . '</p>
                         </td>
                         <td class="align-middle text-center">
-                          <span class="text-secondary text-xs font-weight-bold">'.$date.'</span>
+                          <span class="text-secondary text-xs font-weight-bold">' . $date . '</span>
                         </td>
                         <td class="align-middle">
-                          <a href="javascript:;" class="text-sm font-weight-bold text-xs badge badge-sm bg-gradient-success" data-toggle="tooltip" data-original-title="Edit user">
+                          <a href="#" onclick="showDetails(\''. $key .'\');" class="text-sm font-weight-bold text-xs badge badge-sm bg-gradient-success">
                             Result
                           </a>
                         </td>
@@ -470,11 +475,22 @@ $userReference = $database->getReference("users/" . $uid . "/result");
       </div>
     </div>
   </div>
+
+  <!-- JQuery -->
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+  jQuery Modal
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" /> -->
+
   <!--   Core JS Files   -->
   <script src="../../assets/js/core/popper.min.js"></script>
   <script src="../../assets/js/core/bootstrap.min.js"></script>
   <script src="../../assets/js/plugins/perfect-scrollbar.min.js"></script>
   <script src="../../assets/js/plugins/smooth-scrollbar.min.js"></script>
+
+  <!-- JQuery -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
   <script>
     var win = navigator.platform.indexOf('Win') > -1;
     if (win && document.querySelector('#sidenav-scrollbar')) {
@@ -488,6 +504,69 @@ $userReference = $database->getReference("users/" . $uid . "/result");
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="../../assets/js/material-dashboard.min.js?v=3.0.0"></script>
+
+  <script>
+    function showDetails(key) {
+      $("#userInformation").modal('show');
+
+      $.ajax({
+        url: "data/studInfo.php",
+        type: "POST",
+        data: {
+          "key": key
+        }
+      }).done(function(data) {
+        $("#user-info-modal").html(data);
+        // var modalBody = document.getElementById('user-info-modal');
+        // modalBody.html(data);
+      });
+    }
+  </script>
+
+  <div class="modal fade" id="userInformation" tabindex="-1" role="dialog" aria-labelledby="userInformationLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="userInformationlLabel">Student Record</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" id="user-info-modal">
+          <p>Name: </p>
+          <p>Section: </p>
+          <p>Contact Number: </p>
+          <div>
+            <p>Results</p>
+            <p>Date: </p>
+          </div>
+          <p>Actions</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary">Refer(Guidance)</button>
+          <button type="button" class="btn btn-secondary">Refer(Nurse)</button>
+          <button type="button" class="btn btn-primary">Mark Contacted</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- <div id="userInformation" class="modal">
+    <h1>Student Record</h1>
+    <p>Name: </p>
+    <p>Section: </p>
+    <p>Contact Number: </p>
+    <div>
+      <p>Results</p>
+      <p>Date: </p>
+    </div>
+    <p>Actions</p>
+    <div>
+      <button>Refer to Guidance</button>
+      <button>Refer to Nurse</button>
+      <button>Mark Contacted</button>
+    </div>
+  </div> -->
 </body>
 
 </html>

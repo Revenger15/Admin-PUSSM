@@ -4,7 +4,6 @@ use Firebase\Auth\Token\Exception\InvalidToken;
 // Calls the Firebase API/Library
 include '../includes/dbconfig.php';
 $auth = $firebase->createAuth();
-
 session_start();
 
 if(isset($_SESSION['error'])) {
@@ -36,7 +35,7 @@ if(isset($_POST['submit'])) {
                     header('Location: sign-out.php');
                 }
             } else {
-                $reference = $database->getReference("admin/" . $type);
+                $reference = $database->getReference("admin/" . $uid);
                 if(!$reference->getSnapshot()->hasChildren()) {
                     $_SESSION['error'] = "Invalid user type selected!";
                     header('Location: sign-out.php');
@@ -45,9 +44,9 @@ if(isset($_POST['submit'])) {
 
             // TODO: Change links based acct type
             if($type=="sspteacher") {
-                header('Location: #sspteacher');
+                header('Location: ../pages/sspteacher/dashboard.html');
             } elseif($type=="ssphead") {
-                header('Location: #ssphead');
+                header('Location: ../pages/ssphead/dashboard.html');
             } elseif($type=="referM") {
                 header('Location: #referM');
             } elseif($type=="referP") {
