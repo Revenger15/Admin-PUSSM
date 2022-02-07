@@ -63,7 +63,12 @@
                   </div>
                   <div class="input-group input-group-outline mb-3">
                     <label class="form-label">Password</label>
-                    <input type="password" name="password" class="form-control" required>
+                      <input type="password" name="password" id="password" class="form-control" style="border-radius: 0.375em;" required>
+                      <button type="button"
+                        style="position:absolute; cursor: pointer; z-index: 3; width: 9%; border: none; background: none; right: 0%; top: 50%; transform: translate(0%, -50%);"
+                        id="togglePassword">
+                        <i id="password-icon" class="fa fa-eye-slash"></i>
+                      </button>
                   </div>
                   <div class="form-check form-switch d-flex align-items-center mb-3">
                     <input class="form-check-input" type="checkbox" id="rememberMe">
@@ -85,6 +90,28 @@
     </div>
   </main>
   <!--   Core JS Files   -->
+  <script>
+    const togglePassword = document.querySelector("#togglePassword");
+    const password = document.querySelector("#password");
+
+    const icon = document.querySelector("#password-icon");
+
+    togglePassword.addEventListener("click", function () {
+      // toggle the type attribute
+      const type = password.getAttribute("type") === "password" ? "text" : "password";
+      password.setAttribute("type", type);
+
+      // toggle the icon
+      icon.classList.toggle("fa-eye");
+      icon.classList.toggle("fa-eye-slash");
+      // prevent form submit
+      password.focus();
+      // const form = document.querySelector("form");
+      // form.addEventListener('submit', function (e) {
+      //   e.preventDefault();
+      // });
+    });
+  </script>
   <script src="../assets/js/core/popper.min.js"></script>
   <script src="../assets/js/core/bootstrap.min.js"></script>
   <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
