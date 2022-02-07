@@ -47,13 +47,11 @@ if (isset($_POST['submit'])) {
             // TODO: Change links based acct type
             if($success) {
                 if($type=="sspteacher") {
-                    header('Location: ../pages/sspteacher/dashboard.html');
+                    header('Location: ../pages/sspteacher/dashboard.php');
                 } elseif($type=="ssphead") {
-                    header('Location: ../pages/ssphead/dashboard.html');
-                } elseif($type=="referM") {
-                    header('Location: #referM');
-                } elseif($type=="referP") {
-                    header('Location: #referP');
+                    header('Location: ../pages/ssphead/dashboard.php');
+                } elseif($type=="referM" && $type=="referP") {
+                    header('Location: ../pages/refer/tables.php');
                 }
             } else {
                 $_SESSION['error'] = "Invalid user type selected!";

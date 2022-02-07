@@ -1,14 +1,3 @@
-<?php
-include '../../includes/dbconfig.php';
-session_start();
-
-// DEBUG: UID
-$uid = "UP-21-090-F";
-
-$resultReference = $database->getReference("result");
-$userReference = $database->getReference("users/" . $uid . "/result");
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -20,7 +9,6 @@ $userReference = $database->getReference("users/" . $uid . "/result");
   <title>
     Tables
   </title>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <!--     Fonts and icons     -->
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
   <!-- Nucleo Icons -->
@@ -32,14 +20,10 @@ $userReference = $database->getReference("users/" . $uid . "/result");
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
   <!-- CSS Files -->
   <link id="pagestyle" href="../../assets/css/material-dashboard.css?v=3.0.0" rel="stylesheet" />
-
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </head>
 
 <body class="g-sidenav-show  bg-gray-200">
-<aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3   bg-gradient-dark" id="sidenav-main">
+  <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3   bg-gradient-dark" id="sidenav-main">
     <div class="sidenav-header">
       <i class="fas fa-times p-3 cursor-pointer text-white opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
       <a class="navbar-brand m-0" target="_blank">
@@ -64,18 +48,19 @@ $userReference = $database->getReference("users/" . $uid . "/result");
             </div>
             <span class="nav-link-text ms-1">Tables</span>
           </a>
-        </li>        
+        </li>
         <li class="nav-item">
-          <a class="nav-link text-white" href="profile.php">
+          <a class="nav-link text-white" href="sign-up.php">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="material-icons opacity-10">person</i>
+              <i class="material-icons opacity-10">assignment</i>
             </div>
-            <span class="nav-link-text ms-1">Profile</span>
+            <span class="nav-link-text ms-1">Create Account</span>
           </a>
         </li>
         <li class="nav-item mt-3">
           <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">___________________________________</h6>
         </li>
+
         <li class="nav-item">
           <a class="nav-link text-white " href="../sign-out.php">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -93,7 +78,7 @@ $userReference = $database->getReference("users/" . $uid . "/result");
       <div class="container-fluid py-1 px-3">
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
-            <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">SSP Teacher</a></li>
+            <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">SSP Head</a></li>
             <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Tables</li>
           </ol>
           <h6 class="font-weight-bolder mb-0">Tables</h6>
@@ -147,58 +132,168 @@ $userReference = $database->getReference("users/" . $uid . "/result");
                     </tr>
                   </thead>
                   <tbody>
-                    <?php
-                    if ($userReference->getSnapshot()->hasChildren()) {
-                      $resultKeys = $userReference->getValue();
-                      foreach ($resultKeys as $temp => $key) {
-                        $result = $resultReference->getChild($key)->getValue();
-                        $studentReference = $database->getReference("users/" . $result['uid']);
-
-                        $name = $studentReference->getChild('lastname')->getValue();
-                        $name .= ", " . $studentReference->getChild('firstname')->getValue();
-                        $name .= " " . $studentReference->getChild('middlename')->getValue();
-
-                        $email = $studentReference->getChild('email')->getValue();
-                        $section = $studentReference->getChild('section')->getValue();
-                        $contact = $studentReference->getChild('contact')->getValue();
-                        $date = $result['date'];
-
-                        echo '
-                        <tr>
-                        <td>
-                          <div class="d-flex px-2 py-1">
-                            <div>
-                              <img src="../../assets/img/ic-student.png" class="avatar avatar-sm me-3 border-radius-lg" alt="user1">
-                            </div>
-                            <div class="d-flex flex-column justify-content-center">
-                              <h6 class="mb-0 text-sm">' . $name . '</h6>
-                              <p class="text-xs text-secondary mb-0">' . $email . '</p>
-                            </div>
+                    <tr>
+                      <td>
+                        <div class="d-flex px-2 py-1">
+                          <div>
+                            <img src="../../assets/img/team-2.jpg" class="avatar avatar-sm me-3 border-radius-lg" alt="user1">
                           </div>
-                        </td>
-                        <td>
-                          <p class="text-xs font-weight-bold mb-0">' . $section . '</p>
-                        </td>
-                        <td>
-                          <p class="text-xs font-weight-bold mb-0">' . $contact . '</p>
-                        </td>
-                        <td class="align-middle text-center">
-                          <span class="text-secondary text-xs font-weight-bold">' . $date . '</span>
-                        </td>
-                        <td class="align-middle">
-                          <a href="#" onclick="showDetails(\''. $key .'\');" class="text-sm font-weight-bold text-xs badge badge-sm bg-gradient-success">
-                            Result
-                          </a>
-                        </td>
-                      </tr>
-                          ';
-                      }
-                    } else {
-                      echo '
-                          <tr><th colspan="5">Sorry! No data found.</th></tr>
-                        ';
-                    }
-                    ?>
+                          <div class="d-flex flex-column justify-content-center">
+                            <h6 class="mb-0 text-sm">Arniel C. Fernandez</h6>
+                            <p class="text-xs text-secondary mb-0">farniel1588@gmail.com</p>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <p class="text-xs font-weight-bold mb-0">3BSITSYSDEV-1</p>
+                      </td>
+                      <td>
+                        <p class="text-xs font-weight-bold mb-0">09491050876</p>
+                      </td>
+                      <td class="align-middle text-center">
+                        <span class="text-secondary text-xs font-weight-bold">23/04/18</span>
+                      </td>
+                      <td class="align-middle">
+                        <a href="javascript:;" class="text-sm font-weight-bold text-xs badge badge-sm bg-gradient-success" data-toggle="tooltip" data-original-title="Edit user">
+                          Result
+                        </a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="d-flex px-2 py-1">
+                          <div>
+                            <img src="../../assets/img/team-3.png" class="avatar avatar-sm me-3 border-radius-lg" alt="user2">
+                          </div>
+                          <div class="d-flex flex-column justify-content-center">
+                            <h6 class="mb-0 text-sm">Alexa Liras</h6>
+                            <p class="text-xs text-secondary mb-0">alexa@creative-tim.com</p>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <p class="text-xs font-weight-bold mb-0">3BSITSYSDEV-1</p>
+                      </td>
+                      <td>
+                        <p class="text-xs font-weight-bold mb-0">09491050876</p>
+                      </td>
+                      <td class="align-middle text-center">
+                        <span class="text-secondary text-xs font-weight-bold">23/04/18</span>
+                      </td>
+                      <td class="align-middle">
+                        <a href="javascript:;" class="text-sm font-weight-bold text-xs badge badge-sm bg-gradient-success" data-toggle="tooltip" data-original-title="Edit user">
+                          Result
+                        </a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="d-flex px-2 py-1">
+                          <div>
+                            <img src="../../assets/img/team-4.jpg" class="avatar avatar-sm me-3 border-radius-lg" alt="user3">
+                          </div>
+                          <div class="d-flex flex-column justify-content-center">
+                            <h6 class="mb-0 text-sm">Laurent Perrier</h6>
+                            <p class="text-xs text-secondary mb-0">laurent@creative-tim.com</p>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <p class="text-xs font-weight-bold mb-0">3BSITSYSDEV-1</p>
+                      </td>
+                      <td>
+                        <p class="text-xs font-weight-bold mb-0">09491050876</p>
+                      </td>
+                      <td class="align-middle text-center">
+                        <span class="text-secondary text-xs font-weight-bold">23/04/18</span>
+                      </td>
+                      <td class="align-middle">
+                        <a href="javascript:;" class="text-sm font-weight-bold text-xs badge badge-sm bg-gradient-success" data-toggle="tooltip" data-original-title="Edit user">
+                          Result
+                        </a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="d-flex px-2 py-1">
+                          <div>
+                            <img src="../../assets/img/team-3.png" class="avatar avatar-sm me-3 border-radius-lg" alt="user4">
+                          </div>
+                          <div class="d-flex flex-column justify-content-center">
+                            <h6 class="mb-0 text-sm">Michael Levi</h6>
+                            <p class="text-xs text-secondary mb-0">michael@creative-tim.com</p>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <p class="text-xs font-weight-bold mb-0">3BSITSYSDEV-1</p>
+                      </td>
+                      <td>
+                        <p class="text-xs font-weight-bold mb-0">09491050876</p>
+                      </td>
+                      <td class="align-middle text-center">
+                        <span class="text-secondary text-xs font-weight-bold">23/04/18</span>
+                      </td>
+                      <td class="align-middle">
+                        <a href="javascript:;" class="text-sm font-weight-bold text-xs badge badge-sm bg-gradient-success" data-toggle="tooltip" data-original-title="Edit user">
+                          Result
+                        </a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="d-flex px-2 py-1">
+                          <div>
+                            <img src="../../assets/img/team-2.jpg" class="avatar avatar-sm me-3 border-radius-lg" alt="user5">
+                          </div>
+                          <div class="d-flex flex-column justify-content-center">
+                            <h6 class="mb-0 text-sm">Richard Gran</h6>
+                            <p class="text-xs text-secondary mb-0">richard@creative-tim.com</p>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <p class="text-xs font-weight-bold mb-0">3BSITSYSDEV-1</p>
+                      </td>
+                      <td>
+                        <p class="text-xs font-weight-bold mb-0">09491050876</p>
+                      </td>
+                      <td class="align-middle text-center">
+                        <span class="text-secondary text-xs font-weight-bold">23/04/18</span>
+                      </td>
+                      <td class="align-middle">
+                        <a href="javascript:;" class="text-sm font-weight-bold text-xs badge badge-sm bg-gradient-success" data-toggle="tooltip" data-original-title="Edit user">
+                          Result
+                        </a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="d-flex px-2 py-1">
+                          <div>
+                            <img src="../../assets/img/team-4.jpg" class="avatar avatar-sm me-3 border-radius-lg" alt="user6">
+                          </div>
+                          <div class="d-flex flex-column justify-content-center">
+                            <h6 class="mb-0 text-sm">Miriam Eric</h6>
+                            <p class="text-xs text-secondary mb-0">miriam@creative-tim.com</p>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <p class="text-xs font-weight-bold mb-0">3BSITSYSDEV-1</p>
+                      </td>
+                      <td>
+                        <p class="text-xs font-weight-bold mb-0">09491050876</p>
+                      </td>
+                      <td class="align-middle text-center">
+                        <span class="text-secondary text-xs font-weight-bold">23/04/18</span>
+                      </td>
+                      <td class="align-middle">
+                        <a href="javascript:;" class="text-sm font-weight-bold text-xs badge badge-sm bg-gradient-success" data-toggle="tooltip" data-original-title="Edit user">
+                          Result
+                        </a>
+                      </td>
+                    </tr>
                   </tbody>
                 </table>
               </div>
@@ -432,20 +527,6 @@ $userReference = $database->getReference("users/" . $uid . "/result");
       </div>
       <hr class="horizontal dark my-1">
       <div class="card-body pt-sm-3 pt-0">
-        <!-- Sidebar Backgrounds -->
-        <div>
-          <h6 class="mb-0">Sidebar Colors</h6>
-        </div>
-        <a href="javascript:void(0)" class="switch-trigger background-color">
-          <div class="badge-colors my-2 text-start">
-            <span class="badge filter bg-gradient-primary active" data-color="primary" onclick="sidebarColor(this)"></span>
-            <span class="badge filter bg-gradient-dark" data-color="dark" onclick="sidebarColor(this)"></span>
-            <span class="badge filter bg-gradient-info" data-color="info" onclick="sidebarColor(this)"></span>
-            <span class="badge filter bg-gradient-success" data-color="success" onclick="sidebarColor(this)"></span>
-            <span class="badge filter bg-gradient-warning" data-color="warning" onclick="sidebarColor(this)"></span>
-            <span class="badge filter bg-gradient-danger" data-color="danger" onclick="sidebarColor(this)"></span>
-          </div>
-        </a>
         <!-- Sidenav Type -->
         <div class="mt-3">
           <h6 class="mb-0">Sidenav Type</h6>
@@ -474,22 +555,11 @@ $userReference = $database->getReference("users/" . $uid . "/result");
       </div>
     </div>
   </div>
-
-  <!-- JQuery -->
-  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
-  jQuery Modal
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" /> -->
-
   <!--   Core JS Files   -->
   <script src="../../assets/js/core/popper.min.js"></script>
   <script src="../../assets/js/core/bootstrap.min.js"></script>
   <script src="../../assets/js/plugins/perfect-scrollbar.min.js"></script>
   <script src="../../assets/js/plugins/smooth-scrollbar.min.js"></script>
-
-  <!-- JQuery -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
-
   <script>
     var win = navigator.platform.indexOf('Win') > -1;
     if (win && document.querySelector('#sidenav-scrollbar')) {
@@ -503,69 +573,6 @@ $userReference = $database->getReference("users/" . $uid . "/result");
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="../../assets/js/material-dashboard.min.js?v=3.0.0"></script>
-
-  <script>
-    function showDetails(key) {
-      $("#userInformation").modal('show');
-
-      $.ajax({
-        url: "data/studInfo.php",
-        type: "POST",
-        data: {
-          "key": key
-        }
-      }).done(function(data) {
-        $("#user-info-modal").html(data);
-        // var modalBody = document.getElementById('user-info-modal');
-        // modalBody.html(data);
-      });
-    }
-  </script>
-
-  <div class="modal fade" id="userInformation" tabindex="-1" role="dialog" aria-labelledby="userInformationLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="userInformationlLabel">Student Record</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body" id="user-info-modal">
-          <p>Name: </p>
-          <p>Section: </p>
-          <p>Contact Number: </p>
-          <div>
-            <p>Results</p>
-            <p>Date: </p>
-          </div>
-          <p>Actions</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary">Refer(Guidance)</button>
-          <button type="button" class="btn btn-secondary">Refer(Nurse)</button>
-          <button type="button" class="btn btn-primary">Mark Contacted</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- <div id="userInformation" class="modal">
-    <h1>Student Record</h1>
-    <p>Name: </p>
-    <p>Section: </p>
-    <p>Contact Number: </p>
-    <div>
-      <p>Results</p>
-      <p>Date: </p>
-    </div>
-    <p>Actions</p>
-    <div>
-      <button>Refer to Guidance</button>
-      <button>Refer to Nurse</button>
-      <button>Mark Contacted</button>
-    </div>
-  </div> -->
 </body>
 
 </html>
