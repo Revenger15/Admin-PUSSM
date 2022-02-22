@@ -1,3 +1,14 @@
+<?php
+include '../../includes/dbconfig.php';
+session_start();
+
+// DEBUG: UID
+$uid = "UP-21-090-F";
+
+$resultReference = $database->getReference("result");
+$userReference = $database->getReference("users/" . $uid . "/result");
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,8 +18,9 @@
   <link rel="apple-touch-icon" sizes="76x76" href="../../assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../../assets/img/favicon.png">
   <title>
-    Records
+    Students Record
   </title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <!--     Fonts and icons     -->
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
   <!-- Nucleo Icons -->
@@ -19,11 +31,15 @@
   <!-- Material Icons -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
   <!-- CSS Files -->
+  
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
   <link id="pagestyle" href="../../assets/css/material-dashboard.css?v=3.0.0" rel="stylesheet" />
 </head>
 
 <body class="g-sidenav-show  bg-gray-200">
-  <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3   bg-gradient-dark" id="sidenav-main">
+<aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3   bg-gradient-dark" id="sidenav-main">
     <div class="sidenav-header">
       <i class="fas fa-times p-3 cursor-pointer text-white opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
       <a class="navbar-brand m-0" target="_blank">
@@ -46,21 +62,12 @@
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">table_view</i>
             </div>
-            <span class="nav-link-text ms-1">Teachers Record</span>
+            <span class="nav-link-text ms-1">Student Records</span>
           </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link text-white" href="sign-up.php">
-            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="material-icons opacity-10">assignment</i>
-            </div>
-            <span class="nav-link-text ms-1">Teachers</span>
-          </a>
-        </li>
+        </li>        
         <li class="nav-item mt-3">
           <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">___________________________________</h6>
         </li>
-
         <li class="nav-item">
           <a class="nav-link text-white " href="../sign-out.php">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -78,10 +85,10 @@
       <div class="container-fluid py-1 px-3">
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
-            <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">SSP Head</a></li>
-            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Records</li>
+            <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Admin</a></li>
+            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Students Record</li>
           </ol>
-          <h6 class="font-weight-bolder mb-0">Records</h6>
+          <h6 class="font-weight-bolder mb-0">Students Record</h6>
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
           <div class="ms-md-auto pe-md-3 d-flex align-items-center">
@@ -111,12 +118,36 @@
     </nav>
     <!-- End Navbar -->
     <div class="container-fluid py-4">
+    <!-- Pagination -->
+
+    <div class="row">
+    <nav class="pagination-outer" aria-label="Page navigation">
+        <ul class="pagination">
+            <li class="page-item">
+                <a href="#" class="page-link" aria-label="Previous">
+                    <span aria-hidden="true">« Previous</span>
+                </a>
+            </li>
+            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item"><a class="page-link" href="#">4</a></li>
+            <li class="page-item"><a class="page-link" href="#">5</a></li>
+            <li class="page-item">
+                <a href="#" class="page-link" aria-label="Next">
+                    <span aria-hidden="true">Next »</span>
+                </a>
+            </li>
+        </ul>
+      </nav>
+      </div>
+
       <div class="row">
         <div class="col-12">
           <div class="card my-4">
             <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
               <div class="bg-gradient-faded-success shadow-dark border-radius-lg pt-4 pb-3">
-                <h6 class="text-white text-capitalize ps-3">Teacher Asigning</h6>
+                <h6 class="text-white text-capitalize ps-3">Students Contact</h6>
               </div>
             </div>
             <div class="card-body px-0 pb-2">
@@ -127,173 +158,63 @@
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Names</th>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Section</th>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Contact</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No. of Students</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Date</th>
                       <th class="text-secondary opacity-7"></th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>
-                        <div class="d-flex px-2 py-1">
-                          <div>
-                            <img src="../../assets/img/team-2.jpg" class="avatar avatar-sm me-3 border-radius-lg" alt="user1">
+                    <?php
+                    if ($userReference->getSnapshot()->hasChildren()) {
+                      $resultKeys = $userReference->getValue();
+                      foreach ($resultKeys as $temp => $key) {
+                        $result = $resultReference->getChild($key)->getValue();
+                        $studentReference = $database->getReference("users/" . $result['uid']);
+
+                        $name = $studentReference->getChild('lastname')->getValue();
+                        $name .= ", " . $studentReference->getChild('firstname')->getValue();
+                        $name .= " " . $studentReference->getChild('middlename')->getValue();
+
+                        $email = $studentReference->getChild('email')->getValue();
+                        $section = $studentReference->getChild('section')->getValue();
+                        $contact = $studentReference->getChild('contact')->getValue();
+                        $date = $result['date'];
+
+                        echo '
+                        <tr>
+                        <td>
+                          <div class="d-flex px-2 py-1">
+                            <div>
+                              <img src="../../assets/img/ic-student.png" class="avatar avatar-sm me-3 border-radius-lg" alt="user1">
+                            </div>
+                            <div class="d-flex flex-column justify-content-center">
+                              <h6 class="mb-0 text-sm">' . $name . '</h6>
+                              <p class="text-xs text-secondary mb-0">' . $email . '</p>
+                            </div>
                           </div>
-                          <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">Arniel C. Fernandez</h6>
-                            <p class="text-xs text-secondary mb-0">farniel1588@gmail.com</p>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <p class="text-xs font-weight-bold mb-0">3BSITSYSDEV-1</p>
-                      </td>
-                      <td>
-                        <p class="text-xs font-weight-bold mb-0">09491050876</p>
-                      </td>
-                      <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">20</span>
-                      </td>
-                      <td class="align-middle">
-                        <a href="javascript:;" class="text-sm font-weight-bold text-xs badge badge-sm bg-gradient-success" data-toggle="tooltip" data-original-title="Edit user">
-                          Asign
-                        </a>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="d-flex px-2 py-1">
-                          <div>
-                            <img src="../../assets/img/team-3.png" class="avatar avatar-sm me-3 border-radius-lg" alt="user2">
-                          </div>
-                          <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">Alexa Liras</h6>
-                            <p class="text-xs text-secondary mb-0">alexa@creative-tim.com</p>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <p class="text-xs font-weight-bold mb-0">3BSITSYSDEV-2</p>
-                      </td>
-                      <td>
-                        <p class="text-xs font-weight-bold mb-0">09491050876</p>
-                      </td>
-                      <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">20</span>
-                      </td>
-                      <td class="align-middle">
-                        <a href="javascript:;" class="text-sm font-weight-bold text-xs badge badge-sm bg-gradient-success" data-toggle="tooltip" data-original-title="Edit user">
-                          Asign
-                        </a>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="d-flex px-2 py-1">
-                          <div>
-                            <img src="../../assets/img/team-4.jpg" class="avatar avatar-sm me-3 border-radius-lg" alt="user3">
-                          </div>
-                          <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">Laurent Perrier</h6>
-                            <p class="text-xs text-secondary mb-0">laurent@creative-tim.com</p>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <p class="text-xs font-weight-bold mb-0">3BSITSYSDEV-3</p>
-                      </td>
-                      <td>
-                        <p class="text-xs font-weight-bold mb-0">09491050876</p>
-                      </td>
-                      <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">20</span>
-                      </td>
-                      <td class="align-middle">
-                        <a href="javascript:;" class="text-sm font-weight-bold text-xs badge badge-sm bg-gradient-success" data-toggle="tooltip" data-original-title="Edit user">
-                          Asign
-                        </a>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="d-flex px-2 py-1">
-                          <div>
-                            <img src="../../assets/img/team-3.png" class="avatar avatar-sm me-3 border-radius-lg" alt="user4">
-                          </div>
-                          <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">Michael Levi</h6>
-                            <p class="text-xs text-secondary mb-0">michael@creative-tim.com</p>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <p class="text-xs font-weight-bold mb-0">3BSITSYSDEV-4</p>
-                      </td>
-                      <td>
-                        <p class="text-xs font-weight-bold mb-0">09491050876</p>
-                      </td>
-                      <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">20</span>
-                      </td>
-                      <td class="align-middle">
-                        <a href="javascript:;" class="text-sm font-weight-bold text-xs badge badge-sm bg-gradient-success" data-toggle="tooltip" data-original-title="Edit user">
-                          Asign
-                        </a>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="d-flex px-2 py-1">
-                          <div>
-                            <img src="../../assets/img/team-2.jpg" class="avatar avatar-sm me-3 border-radius-lg" alt="user5">
-                          </div>
-                          <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">Richard Gran</h6>
-                            <p class="text-xs text-secondary mb-0">richard@creative-tim.com</p>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <p class="text-xs font-weight-bold mb-0">3BSITSYSDEV-5</p>
-                      </td>
-                      <td>
-                        <p class="text-xs font-weight-bold mb-0">09491050876</p>
-                      </td>
-                      <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">20</span>
-                      </td>
-                      <td class="align-middle">
-                        <a href="javascript:;" class="text-sm font-weight-bold text-xs badge badge-sm bg-gradient-success" data-toggle="tooltip" data-original-title="Edit user">
-                          Asign
-                        </a>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="d-flex px-2 py-1">
-                          <div>
-                            <img src="../../assets/img/team-4.jpg" class="avatar avatar-sm me-3 border-radius-lg" alt="user6">
-                          </div>
-                          <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">Miriam Eric</h6>
-                            <p class="text-xs text-secondary mb-0">miriam@creative-tim.com</p>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <p class="text-xs font-weight-bold mb-0">3BSITSYSDEV-6</p>
-                      </td>
-                      <td>
-                        <p class="text-xs font-weight-bold mb-0">09491050876</p>
-                      </td>
-                      <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">20</span>
-                      </td>
-                      <td class="align-middle">
-                        <a href="javascript:;" class="text-sm font-weight-bold text-xs badge badge-sm bg-gradient-success" data-toggle="tooltip" data-original-title="Edit user">
-                          Asign
-                        </a>
-                      </td>
-                    </tr>
+                        </td>
+                        <td>
+                          <p class="text-xs font-weight-bold mb-0">' . $section . '</p>
+                        </td>
+                        <td>
+                          <p class="text-xs font-weight-bold mb-0">' . $contact . '</p>
+                        </td>
+                        <td class="align-middle text-center">
+                          <span class="text-secondary text-xs font-weight-bold">' . $date . '</span>
+                        </td>
+                        <td class="align-middle">
+                          <a href="#" onclick="showDetails(\''. $key .'\');" class="text-sm font-weight-bold text-xs badge badge-sm bg-gradient-success">
+                            Result
+                          </a>
+                        </td>
+                      </tr>
+                          ';
+                      }
+                    } else {
+                      echo '
+                          <tr><th colspan="5">Sorry! No data found.</th></tr>
+                        ';
+                    }
+                    ?>
                   </tbody>
                 </table>
               </div>
@@ -306,7 +227,7 @@
           <div class="card my-4">
             <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
               <div class="bg-gradient-faded-warning shadow-dark border-radius-lg pt-4 pb-3">
-                <h6 class="text-white text-capitalize ps-3">Personal Information</h6>
+                <h6 class="text-white text-capitalize ps-3">History of Contacted</h6>
               </div>
             </div>
             <div class="card-body px-0 pb-2">
@@ -317,7 +238,7 @@
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Names</th>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Section</th>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Contact</th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2">No. of Students</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2">Date</th>
                       <th></th>
                     </tr>
                   </thead>
@@ -341,11 +262,11 @@
                         <p class="text-xs font-weight-bold mb-0">09491050876</p>
                       </td>
                       <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">20</span>
+                        <span class="text-secondary text-xs font-weight-bold">23/04/18</span>
                       </td>
                       <td class="align-middle">
                         <a href="javascript:;" class="text-sm font-weight-bold text-xs badge badge-sm bg-gradient-warning" data-toggle="tooltip" data-original-title="Edit user">
-                          Info
+                          Contacted
                         </a>
                       </td>
                     </tr>
@@ -362,17 +283,17 @@
                         </div>
                       </td>
                       <td>
-                        <p class="text-xs font-weight-bold mb-0">3BSITSYSDEV-2</p>
+                        <p class="text-xs font-weight-bold mb-0">3BSITSYSDEV-1</p>
                       </td>
                       <td>
                         <p class="text-xs font-weight-bold mb-0">09491050876</p>
                       </td>
                       <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">20</span>
+                        <span class="text-secondary text-xs font-weight-bold">23/04/18</span>
                       </td>
                       <td class="align-middle">
                         <a href="javascript:;" class="text-sm font-weight-bold text-xs badge badge-sm bg-gradient-warning" data-toggle="tooltip" data-original-title="Edit user">
-                          Info
+                          Contacted
                         </a>
                       </td>
                     </tr>
@@ -389,17 +310,17 @@
                         </div>
                       </td>
                       <td>
-                        <p class="text-xs font-weight-bold mb-0">3BSITSYSDEV-3</p>
+                        <p class="text-xs font-weight-bold mb-0">3BSITSYSDEV-1</p>
                       </td>
                       <td>
                         <p class="text-xs font-weight-bold mb-0">09491050876</p>
                       </td>
                       <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">20</span>
+                        <span class="text-secondary text-xs font-weight-bold">23/04/18</span>
                       </td>
                       <td class="align-middle">
                         <a href="javascript:;" class="text-sm font-weight-bold text-xs badge badge-sm bg-gradient-warning" data-toggle="tooltip" data-original-title="Edit user">
-                          Info
+                          Contacted
                         </a>
                       </td>
                     </tr>
@@ -416,17 +337,17 @@
                         </div>
                       </td>
                       <td>
-                        <p class="text-xs font-weight-bold mb-0">3BSITSYSDEV-4</p>
+                        <p class="text-xs font-weight-bold mb-0">3BSITSYSDEV-1</p>
                       </td>
                       <td>
                         <p class="text-xs font-weight-bold mb-0">09491050876</p>
                       </td>
                       <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">20</span>
+                        <span class="text-secondary text-xs font-weight-bold">23/04/18</span>
                       </td>
                       <td class="align-middle">
                         <a href="javascript:;" class="text-sm font-weight-bold text-xs badge badge-sm bg-gradient-warning" data-toggle="tooltip" data-original-title="Edit user">
-                          Info
+                          Contacted
                         </a>
                       </td>
                     </tr>
@@ -443,17 +364,17 @@
                         </div>
                       </td>
                       <td>
-                        <p class="text-xs font-weight-bold mb-0">3BSITSYSDEV-5</p>
+                        <p class="text-xs font-weight-bold mb-0">3BSITSYSDEV-1</p>
                       </td>
                       <td>
                         <p class="text-xs font-weight-bold mb-0">09491050876</p>
                       </td>
                       <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">20</span>
+                        <span class="text-secondary text-xs font-weight-bold">23/04/18</span>
                       </td>
                       <td class="align-middle">
                         <a href="javascript:;" class="text-sm font-weight-bold text-xs badge badge-sm bg-gradient-warning" data-toggle="tooltip" data-original-title="Edit user">
-                          Info
+                          Contacted
                         </a>
                       </td>
                     </tr>
@@ -470,17 +391,17 @@
                         </div>
                       </td>
                       <td>
-                        <p class="text-xs font-weight-bold mb-0">3BSITSYSDEV-6  </p>
+                        <p class="text-xs font-weight-bold mb-0">3BSITSYSDEV-1</p>
                       </td>
                       <td>
                         <p class="text-xs font-weight-bold mb-0">09491050876</p>
                       </td>
                       <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">20</span>
+                        <span class="text-secondary text-xs font-weight-bold">23/04/18</span>
                       </td>
                       <td class="align-middle">
                         <a href="javascript:;" class="text-sm font-weight-bold text-xs badge badge-sm bg-gradient-warning" data-toggle="tooltip" data-original-title="Edit user">
-                          Info
+                          Contacted
                         </a>
                       </td>
                     </tr>
@@ -516,7 +437,7 @@
       <div class="card-header pb-0 pt-3">
         <div class="float-start">
           <h5 class="mt-3 mb-0">Settings</h5>
-          <p>Records options</p>
+          <p>Students Record options</p>
         </div>
         <div class="float-end mt-4">
           <button class="btn btn-link text-dark p-0 fixed-plugin-close-button">
@@ -527,6 +448,20 @@
       </div>
       <hr class="horizontal dark my-1">
       <div class="card-body pt-sm-3 pt-0">
+        <!-- Sidebar Backgrounds -->
+        <div>
+          <h6 class="mb-0">Sidebar Colors</h6>
+        </div>
+        <a href="javascript:void(0)" class="switch-trigger background-color">
+          <div class="badge-colors my-2 text-start">
+            <span class="badge filter bg-gradient-primary active" data-color="primary" onclick="sidebarColor(this)"></span>
+            <span class="badge filter bg-gradient-dark" data-color="dark" onclick="sidebarColor(this)"></span>
+            <span class="badge filter bg-gradient-info" data-color="info" onclick="sidebarColor(this)"></span>
+            <span class="badge filter bg-gradient-success" data-color="success" onclick="sidebarColor(this)"></span>
+            <span class="badge filter bg-gradient-warning" data-color="warning" onclick="sidebarColor(this)"></span>
+            <span class="badge filter bg-gradient-danger" data-color="danger" onclick="sidebarColor(this)"></span>
+          </div>
+        </a>
         <!-- Sidenav Type -->
         <div class="mt-3">
           <h6 class="mb-0">Sidenav Type</h6>
@@ -555,11 +490,22 @@
       </div>
     </div>
   </div>
+
+  <!-- JQuery -->
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+  jQuery Modal
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" /> -->
+
   <!--   Core JS Files   -->
   <script src="../../assets/js/core/popper.min.js"></script>
   <script src="../../assets/js/core/bootstrap.min.js"></script>
   <script src="../../assets/js/plugins/perfect-scrollbar.min.js"></script>
   <script src="../../assets/js/plugins/smooth-scrollbar.min.js"></script>
+
+  <!-- JQuery -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
   <script>
     var win = navigator.platform.indexOf('Win') > -1;
     if (win && document.querySelector('#sidenav-scrollbar')) {
@@ -573,6 +519,68 @@
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="../../assets/js/material-dashboard.min.js?v=3.0.0"></script>
+
+  <script>
+    function showDetails(key) {
+      $("#userInformation").modal('show');
+
+      $.ajax({
+        url: "data/studInfo.php",
+        type: "POST",
+        data: {
+          "key": key
+        }
+      }).done(function(data) {
+        $("#user-info-modal").html(data);
+        // var modalBody = document.getElementById('user-info-modal');
+        // modalBody.html(data);
+      });
+    }
+  </script>
+
+  <div class="modal fade" id="userInformation" tabindex="-1" role="dialog" aria-labelledby="userInformationLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="userInformationlLabel">Student Record</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" id="user-info-modal">
+          <p>Name: </p>
+          <p>Section: </p>
+          <p>Contact Number: </p>
+          <div>
+            <p>Results</p>
+            <p>Date: </p>
+          </div>
+          <p>Actions</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary">Refer(Nurse)</button>
+          <button type="button" class="btn btn-primary">Mark Contacted</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- <div id="userInformation" class="modal">
+    <h1>Student Record</h1>
+    <p>Name: </p>
+    <p>Section: </p>
+    <p>Contact Number: </p>
+    <div>
+      <p>Results</p>
+      <p>Date: </p>
+    </div>
+    <p>Actions</p>
+    <div>
+      <button>Refer to Guidance</button>
+      <button>Refer to Nurse</button>
+      <button>Mark Contacted</button>
+    </div>
+  </div> -->
 </body>
 
 </html>
