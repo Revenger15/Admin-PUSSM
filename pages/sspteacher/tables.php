@@ -31,7 +31,10 @@ $userReference = $database->getReference("users/" . $uid . "/result");
   <!-- Material Icons -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
   <!-- CSS Files -->
-  
+
+  <script src="../../js/progressbar.js"></script>
+  <script src="../../js/progressbar.min.js"></script>
+
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
@@ -39,11 +42,11 @@ $userReference = $database->getReference("users/" . $uid . "/result");
 </head>
 
 <body class="g-sidenav-show  bg-gray-200">
-<aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3   bg-gradient-dark" id="sidenav-main">
+  <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3   bg-gradient-dark" id="sidenav-main">
     <div class="sidenav-header">
       <i class="fas fa-times p-3 cursor-pointer text-white opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
       <a class="navbar-brand m-0" target="_blank">
-        <span class="ms-1 font-weight-bold text-white fs-2">Tables</span>
+        <span class="ms-1 font-weight-bold text-white fs-2">Records</span>
       </a>
     </div>
     <hr class="horizontal light mt-0 mb-2">
@@ -64,7 +67,7 @@ $userReference = $database->getReference("users/" . $uid . "/result");
             </div>
             <span class="nav-link-text ms-1">Student Records</span>
           </a>
-        </li>        
+        </li>
         <li class="nav-item">
           <a class="nav-link text-white" href="profile.php">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -126,15 +129,15 @@ $userReference = $database->getReference("users/" . $uid . "/result");
     </nav>
     <!-- End Navbar -->
     <div class="container-fluid py-4">
-    <!-- Pagination -->
+      <!-- Pagination -->
 
-    <div class="row">
-    <nav class="pagination-outer" aria-label="Page navigation">
-        <ul class="pagination">
+      <div class="row">
+        <nav class="pagination-outer" aria-label="Page navigation">
+          <ul class="pagination">
             <li class="page-item">
-                <a href="#" class="page-link" aria-label="Previous">
-                    <span aria-hidden="true">« Previous</span>
-                </a>
+              <a href="#" class="page-link" aria-label="Previous">
+                <span aria-hidden="true">« Previous</span>
+              </a>
             </li>
             <li class="page-item active"><a class="page-link" href="#">1</a></li>
             <li class="page-item"><a class="page-link" href="#">2</a></li>
@@ -142,12 +145,12 @@ $userReference = $database->getReference("users/" . $uid . "/result");
             <li class="page-item"><a class="page-link" href="#">4</a></li>
             <li class="page-item"><a class="page-link" href="#">5</a></li>
             <li class="page-item">
-                <a href="#" class="page-link" aria-label="Next">
-                    <span aria-hidden="true">Next »</span>
-                </a>
+              <a href="#" class="page-link" aria-label="Next">
+                <span aria-hidden="true">Next »</span>
+              </a>
             </li>
-        </ul>
-      </nav>
+          </ul>
+        </nav>
       </div>
 
       <div class="row">
@@ -210,7 +213,7 @@ $userReference = $database->getReference("users/" . $uid . "/result");
                           <span class="text-secondary text-xs font-weight-bold">' . $date . '</span>
                         </td>
                         <td class="align-middle">
-                          <a href="#" onclick="showDetails(\''. $key .'\');" class="text-sm font-weight-bold text-xs badge badge-sm bg-gradient-success">
+                          <a href="#" onclick="showDetails(\'' . $key . '\');" class="text-sm font-weight-bold text-xs badge badge-sm bg-gradient-success">
                             Result
                           </a>
                         </td>
@@ -547,14 +550,63 @@ $userReference = $database->getReference("users/" . $uid . "/result");
   </script>
 
   <div class="modal fade" id="userInformation" tabindex="-1" role="dialog" aria-labelledby="userInformationLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="userInformationlLabel">Student Record</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
+        <style>
+          .circular-progress {
+            position: relative;
+            height: 200px;
+            width: 200px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+          }
+
+          .circular-progress:before {
+            content: "";
+            position: absolute;
+            height: 84%;
+            width: 84%;
+            background-color: #ffffff;
+            border-radius: 50%;
+          }
+
+          .value-container {
+            position: relative;
+            font-family: "Poppins", sans-serif;
+            font-size: 50px;
+            color: #231c3d;
+          }
+        </style>
+
+        <script>
+          function circleBar(conProg, conVal, value) {
+            let progressBar = document.querySelector(conProg);
+          let valueContainer = document.querySelector(conVal);
+
+          let progressValue = 0;
+          let progressEndValue = value;
+          let speed = 1;
+
+          let progress = setInterval(() => {
+            progressValue++;
+            valueContainer.textContent = `${progressValue}%`;
+            progressBar.style.background = `conic-gradient(
+      #4d5bf9 ${progressValue * 3.6}deg,
+      #cadcff ${progressValue * 3.6}deg
+  )`;
+            if (progressValue == progressEndValue) {
+              clearInterval(progress);
+            }
+          }, speed);
+          }
+        </script>
         <div class="modal-body" id="user-info-modal">
           <p>Name: </p>
           <p>Section: </p>
@@ -567,7 +619,6 @@ $userReference = $database->getReference("users/" . $uid . "/result");
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary">Refer(Guidance)</button>
-          <button type="button" class="btn btn-secondary">Refer(Nurse)</button>
           <button type="button" class="btn btn-primary">Mark Contacted</button>
         </div>
       </div>
@@ -591,5 +642,6 @@ $userReference = $database->getReference("users/" . $uid . "/result");
     </div>
   </div> -->
 </body>
+
 
 </html>
