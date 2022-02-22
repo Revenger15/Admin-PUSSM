@@ -18,7 +18,7 @@ $userReference = $database->getReference("users/" . $uid . "/result");
   <link rel="apple-touch-icon" sizes="76x76" href="../../assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../../assets/img/favicon.png">
   <title>
-    Tables
+    Students Record
   </title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <!--     Fonts and icons     -->
@@ -65,14 +65,6 @@ $userReference = $database->getReference("users/" . $uid . "/result");
             <span class="nav-link-text ms-1">Student Records</span>
           </a>
         </li>        
-        <li class="nav-item">
-          <a class="nav-link text-white" href="profile.php">
-            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="material-icons opacity-10">person</i>
-            </div>
-            <span class="nav-link-text ms-1">Profile</span>
-          </a>
-        </li>
         <li class="nav-item mt-3">
           <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">___________________________________</h6>
         </li>
@@ -93,10 +85,10 @@ $userReference = $database->getReference("users/" . $uid . "/result");
       <div class="container-fluid py-1 px-3">
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
-            <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">SSP Teacher</a></li>
-            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Tables</li>
+            <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Admin</a></li>
+            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Students Record</li>
           </ol>
-          <h6 class="font-weight-bolder mb-0">Tables</h6>
+          <h6 class="font-weight-bolder mb-0">Students Record</h6>
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
           <div class="ms-md-auto pe-md-3 d-flex align-items-center">
@@ -445,7 +437,7 @@ $userReference = $database->getReference("users/" . $uid . "/result");
       <div class="card-header pb-0 pt-3">
         <div class="float-start">
           <h5 class="mt-3 mb-0">Settings</h5>
-          <p>tables options</p>
+          <p>Students Record options</p>
         </div>
         <div class="float-end mt-4">
           <button class="btn btn-link text-dark p-0 fixed-plugin-close-button">
@@ -566,7 +558,7 @@ $userReference = $database->getReference("users/" . $uid . "/result");
           <p>Actions</p>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary">Refer(Guidance)</button>
+          <button type="button" class="btn btn-secondary">Refer(Nurse)</button>
           <button type="button" class="btn btn-primary">Mark Contacted</button>
         </div>
       </div>

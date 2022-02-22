@@ -7,7 +7,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="../../assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../../assets/img/favicon.png">
   <title>
-    Tables
+    Records
   </title>
   <!--     Fonts and icons     -->
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
@@ -27,7 +27,7 @@
     <div class="sidenav-header">
       <i class="fas fa-times p-3 cursor-pointer text-white opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
       <a class="navbar-brand m-0" target="_blank">
-        <span class="ms-1 font-weight-bold text-white fs-2">Tables</span>
+        <span class="ms-1 font-weight-bold text-white fs-2">Records</span>
       </a>
     </div>
     <hr class="horizontal light mt-0 mb-2">
@@ -46,7 +46,7 @@
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">table_view</i>
             </div>
-            <span class="nav-link-text ms-1">Tables</span>
+            <span class="nav-link-text ms-1">Teachers Record</span>
           </a>
         </li>
         <li class="nav-item">
@@ -54,7 +54,7 @@
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">assignment</i>
             </div>
-            <span class="nav-link-text ms-1">Create Account</span>
+            <span class="nav-link-text ms-1">Teachers</span>
           </a>
         </li>
         <li class="nav-item mt-3">
@@ -79,9 +79,9 @@
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
             <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">SSP Head</a></li>
-            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Tables</li>
+            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Records</li>
           </ol>
-          <h6 class="font-weight-bolder mb-0">Tables</h6>
+          <h6 class="font-weight-bolder mb-0">Records</h6>
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
           <div class="ms-md-auto pe-md-3 d-flex align-items-center">
@@ -116,7 +116,7 @@
           <div class="card my-4">
             <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
               <div class="bg-gradient-faded-success shadow-dark border-radius-lg pt-4 pb-3">
-                <h6 class="text-white text-capitalize ps-3">Students Contact</h6>
+                <h6 class="text-white text-capitalize ps-3">Teacher Asigning</h6>
               </div>
             </div>
             <div class="card-body px-0 pb-2">
@@ -127,7 +127,7 @@
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Names</th>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Section</th>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Contact</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Date</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No. of Students</th>
                       <th class="text-secondary opacity-7"></th>
                     </tr>
                   </thead>
@@ -151,11 +151,11 @@
                         <p class="text-xs font-weight-bold mb-0">09491050876</p>
                       </td>
                       <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">23/04/18</span>
+                        <span class="text-secondary text-xs font-weight-bold">20</span>
                       </td>
                       <td class="align-middle">
                         <a href="javascript:;" class="text-sm font-weight-bold text-xs badge badge-sm bg-gradient-success" data-toggle="tooltip" data-original-title="Edit user">
-                          Result
+                          Asign
                         </a>
                       </td>
                     </tr>
@@ -172,17 +172,17 @@
                         </div>
                       </td>
                       <td>
-                        <p class="text-xs font-weight-bold mb-0">3BSITSYSDEV-1</p>
+                        <p class="text-xs font-weight-bold mb-0">3BSITSYSDEV-2</p>
                       </td>
                       <td>
                         <p class="text-xs font-weight-bold mb-0">09491050876</p>
                       </td>
                       <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">23/04/18</span>
+                        <span class="text-secondary text-xs font-weight-bold">20</span>
                       </td>
                       <td class="align-middle">
                         <a href="javascript:;" class="text-sm font-weight-bold text-xs badge badge-sm bg-gradient-success" data-toggle="tooltip" data-original-title="Edit user">
-                          Result
+                          Asign
                         </a>
                       </td>
                     </tr>
@@ -199,17 +199,17 @@
                         </div>
                       </td>
                       <td>
-                        <p class="text-xs font-weight-bold mb-0">3BSITSYSDEV-1</p>
+                        <p class="text-xs font-weight-bold mb-0">3BSITSYSDEV-3</p>
                       </td>
                       <td>
                         <p class="text-xs font-weight-bold mb-0">09491050876</p>
                       </td>
                       <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">23/04/18</span>
+                        <span class="text-secondary text-xs font-weight-bold">20</span>
                       </td>
                       <td class="align-middle">
                         <a href="javascript:;" class="text-sm font-weight-bold text-xs badge badge-sm bg-gradient-success" data-toggle="tooltip" data-original-title="Edit user">
-                          Result
+                          Asign
                         </a>
                       </td>
                     </tr>
@@ -226,17 +226,17 @@
                         </div>
                       </td>
                       <td>
-                        <p class="text-xs font-weight-bold mb-0">3BSITSYSDEV-1</p>
+                        <p class="text-xs font-weight-bold mb-0">3BSITSYSDEV-4</p>
                       </td>
                       <td>
                         <p class="text-xs font-weight-bold mb-0">09491050876</p>
                       </td>
                       <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">23/04/18</span>
+                        <span class="text-secondary text-xs font-weight-bold">20</span>
                       </td>
                       <td class="align-middle">
                         <a href="javascript:;" class="text-sm font-weight-bold text-xs badge badge-sm bg-gradient-success" data-toggle="tooltip" data-original-title="Edit user">
-                          Result
+                          Asign
                         </a>
                       </td>
                     </tr>
@@ -253,17 +253,17 @@
                         </div>
                       </td>
                       <td>
-                        <p class="text-xs font-weight-bold mb-0">3BSITSYSDEV-1</p>
+                        <p class="text-xs font-weight-bold mb-0">3BSITSYSDEV-5</p>
                       </td>
                       <td>
                         <p class="text-xs font-weight-bold mb-0">09491050876</p>
                       </td>
                       <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">23/04/18</span>
+                        <span class="text-secondary text-xs font-weight-bold">20</span>
                       </td>
                       <td class="align-middle">
                         <a href="javascript:;" class="text-sm font-weight-bold text-xs badge badge-sm bg-gradient-success" data-toggle="tooltip" data-original-title="Edit user">
-                          Result
+                          Asign
                         </a>
                       </td>
                     </tr>
@@ -280,17 +280,17 @@
                         </div>
                       </td>
                       <td>
-                        <p class="text-xs font-weight-bold mb-0">3BSITSYSDEV-1</p>
+                        <p class="text-xs font-weight-bold mb-0">3BSITSYSDEV-6</p>
                       </td>
                       <td>
                         <p class="text-xs font-weight-bold mb-0">09491050876</p>
                       </td>
                       <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">23/04/18</span>
+                        <span class="text-secondary text-xs font-weight-bold">20</span>
                       </td>
                       <td class="align-middle">
                         <a href="javascript:;" class="text-sm font-weight-bold text-xs badge badge-sm bg-gradient-success" data-toggle="tooltip" data-original-title="Edit user">
-                          Result
+                          Asign
                         </a>
                       </td>
                     </tr>
@@ -306,7 +306,7 @@
           <div class="card my-4">
             <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
               <div class="bg-gradient-faded-warning shadow-dark border-radius-lg pt-4 pb-3">
-                <h6 class="text-white text-capitalize ps-3">History of Contacted</h6>
+                <h6 class="text-white text-capitalize ps-3">Personal Information</h6>
               </div>
             </div>
             <div class="card-body px-0 pb-2">
@@ -317,7 +317,7 @@
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Names</th>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Section</th>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Contact</th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2">Date</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2">No. of Students</th>
                       <th></th>
                     </tr>
                   </thead>
@@ -341,11 +341,11 @@
                         <p class="text-xs font-weight-bold mb-0">09491050876</p>
                       </td>
                       <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">23/04/18</span>
+                        <span class="text-secondary text-xs font-weight-bold">20</span>
                       </td>
                       <td class="align-middle">
                         <a href="javascript:;" class="text-sm font-weight-bold text-xs badge badge-sm bg-gradient-warning" data-toggle="tooltip" data-original-title="Edit user">
-                          Contacted
+                          Info
                         </a>
                       </td>
                     </tr>
@@ -362,17 +362,17 @@
                         </div>
                       </td>
                       <td>
-                        <p class="text-xs font-weight-bold mb-0">3BSITSYSDEV-1</p>
+                        <p class="text-xs font-weight-bold mb-0">3BSITSYSDEV-2</p>
                       </td>
                       <td>
                         <p class="text-xs font-weight-bold mb-0">09491050876</p>
                       </td>
                       <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">23/04/18</span>
+                        <span class="text-secondary text-xs font-weight-bold">20</span>
                       </td>
                       <td class="align-middle">
                         <a href="javascript:;" class="text-sm font-weight-bold text-xs badge badge-sm bg-gradient-warning" data-toggle="tooltip" data-original-title="Edit user">
-                          Contacted
+                          Info
                         </a>
                       </td>
                     </tr>
@@ -389,17 +389,17 @@
                         </div>
                       </td>
                       <td>
-                        <p class="text-xs font-weight-bold mb-0">3BSITSYSDEV-1</p>
+                        <p class="text-xs font-weight-bold mb-0">3BSITSYSDEV-3</p>
                       </td>
                       <td>
                         <p class="text-xs font-weight-bold mb-0">09491050876</p>
                       </td>
                       <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">23/04/18</span>
+                        <span class="text-secondary text-xs font-weight-bold">20</span>
                       </td>
                       <td class="align-middle">
                         <a href="javascript:;" class="text-sm font-weight-bold text-xs badge badge-sm bg-gradient-warning" data-toggle="tooltip" data-original-title="Edit user">
-                          Contacted
+                          Info
                         </a>
                       </td>
                     </tr>
@@ -416,17 +416,17 @@
                         </div>
                       </td>
                       <td>
-                        <p class="text-xs font-weight-bold mb-0">3BSITSYSDEV-1</p>
+                        <p class="text-xs font-weight-bold mb-0">3BSITSYSDEV-4</p>
                       </td>
                       <td>
                         <p class="text-xs font-weight-bold mb-0">09491050876</p>
                       </td>
                       <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">23/04/18</span>
+                        <span class="text-secondary text-xs font-weight-bold">20</span>
                       </td>
                       <td class="align-middle">
                         <a href="javascript:;" class="text-sm font-weight-bold text-xs badge badge-sm bg-gradient-warning" data-toggle="tooltip" data-original-title="Edit user">
-                          Contacted
+                          Info
                         </a>
                       </td>
                     </tr>
@@ -443,17 +443,17 @@
                         </div>
                       </td>
                       <td>
-                        <p class="text-xs font-weight-bold mb-0">3BSITSYSDEV-1</p>
+                        <p class="text-xs font-weight-bold mb-0">3BSITSYSDEV-5</p>
                       </td>
                       <td>
                         <p class="text-xs font-weight-bold mb-0">09491050876</p>
                       </td>
                       <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">23/04/18</span>
+                        <span class="text-secondary text-xs font-weight-bold">20</span>
                       </td>
                       <td class="align-middle">
                         <a href="javascript:;" class="text-sm font-weight-bold text-xs badge badge-sm bg-gradient-warning" data-toggle="tooltip" data-original-title="Edit user">
-                          Contacted
+                          Info
                         </a>
                       </td>
                     </tr>
@@ -470,17 +470,17 @@
                         </div>
                       </td>
                       <td>
-                        <p class="text-xs font-weight-bold mb-0">3BSITSYSDEV-1</p>
+                        <p class="text-xs font-weight-bold mb-0">3BSITSYSDEV-6  </p>
                       </td>
                       <td>
                         <p class="text-xs font-weight-bold mb-0">09491050876</p>
                       </td>
                       <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">23/04/18</span>
+                        <span class="text-secondary text-xs font-weight-bold">20</span>
                       </td>
                       <td class="align-middle">
                         <a href="javascript:;" class="text-sm font-weight-bold text-xs badge badge-sm bg-gradient-warning" data-toggle="tooltip" data-original-title="Edit user">
-                          Contacted
+                          Info
                         </a>
                       </td>
                     </tr>
@@ -516,7 +516,7 @@
       <div class="card-header pb-0 pt-3">
         <div class="float-start">
           <h5 class="mt-3 mb-0">Settings</h5>
-          <p>tables options</p>
+          <p>Records options</p>
         </div>
         <div class="float-end mt-4">
           <button class="btn btn-link text-dark p-0 fixed-plugin-close-button">
