@@ -7,7 +7,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="../../assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../../assets/img/favicon.png">
   <title>
-   Dashboard
+    Dashboard
   </title>
   <!--     Fonts and icons     -->
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
@@ -20,6 +20,12 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
   <!-- CSS Files -->
   <link id="pagestyle" href="../../assets/css/material-dashboard.css?v=3.0.0" rel="stylesheet" />
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </head>
 
 <body class="g-sidenav-show  bg-gray-200">
@@ -58,7 +64,7 @@
           </a>
         </li>
 
-        
+
         <li class="nav-item">
           <a class="nav-link text-white" href="UserLogs.php">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -66,7 +72,7 @@
             </div>
             <span class="nav-link-text ms-1">User Log</span>
           </a>
-        </li> 
+        </li>
         <li class="nav-item mt-3">
           <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">___________________________________</h6>
         </li>
@@ -274,12 +280,13 @@
           <div class="form-check form-switch ps-0 ms-auto my-auto">
             <input class="form-check-input mt-1 ms-auto" type="checkbox" id="dark-version" onclick="darkMode(this)">
           </div>
-        </div><div class="mt-3">
+        </div>
+        <div class="mt-3">
           <h6 class="mb-0">Change password</h6>
           <p class="text-sm">Recommended: If just first login</p>
         </div>
-        <div class="mt-2 text-center fs-7"> 
-          <button class="btn bg-gradient-dark px-3 mb-2 ms-2" id="show-modal" onclick="show-modal();">Change password</button> 
+        <div class="mt-2 text-center fs-7">
+          <button class="btn bg-gradient-dark px-3 mb-2 ms-2" id="show-modal" data-toggle="modal" data-target="#changePassword">Change password</button>
         </div>
       </div>
     </div>
@@ -550,39 +557,68 @@
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="../../assets/js/material-dashboard.min.js?v=3.0.0"></script>
-  
-                      <div class="modal" id="instructionBatch" tabindex="-1" role="dialog" aria-labelledby="instructionBatchLabel" aria-hidden="true">
-                        <div class="modal-header">
-                            <h3 class="mb-0">Change Password</h3>
-                        </div>
-                        <div class="modal-body">
-                            <form class="form" role="form" autocomplete="off">
-                                <div class="form-group">
-                                    <label for="inputPasswordOld">Current Password</label>
-                                    <input type="password" class="form-control" id="inputPasswordOld" required="">
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputPasswordNew">New Password</label>
-                                    <input type="password" class="form-control" id="inputPasswordNew" required="">
-                                    <span class="form-text small text-muted">
-                                            The password must be 8-20 characters, and must <em>not</em> contain spaces.
-                                        </span>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputPasswordNewVerify">Verify</label>
-                                    <input type="password" class="form-control" id="inputPasswordNewVerify" required="">
-                                    <span class="form-text small text-muted">
-                                            To confirm, type the new password again.
-                                        </span>
-                                </div>
-                                <div class="form-group">
-                                    <button type="submit" class="btn btn-success btn-lg float-right">Save</button>
-                                </div>
-                            </form>
-                        </div>
-                      </div>
 
+  <script>
+    function changePassword() {
+      var cur = $.trim($('#inputPasswordOld').val());
+      var newp = $.trim($('#inputPasswordNew').val());
+      var ver = $.trim($('#inputPasswordVerify').val());
 
+      if (cur != newp) {
+        if (newp == ver) {
+          var frm = $('#frmChange');
+
+          $.ajax({
+            type: "POST",
+            url: "../change.php",
+            data: frm.serialize(),
+            success: function(result) {
+              // $("#newid").html(result);
+              console.log(result);
+            }
+          });
+        }
+      }
+    }
+  </script>
+
+  <div class="modal" id="changePassword" tabindex="-1" role="dialog" aria-labelledby="changePasswordLabel" aria-hidden="true">
+    <div class="modal-dialog" id="proc-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="changePasswordLabel">Change Password</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form class="form" role="form" id="frmChange" autocomplete="off">
+            <div class="form-group">
+              <label for="inputPasswordOld">Current Password</label>
+              <input type="password" class="form-control" name="inputPasswordOld" id="inputPasswordOld" required="">
+            </div>
+            <div class="form-group">
+              <label for="inputPasswordNew">New Password</label>
+              <input type="password" class="form-control" name="inputPasswordNew" id="inputPasswordNew" required="">
+              <span class="form-text small text-muted">
+                The password must be 8-20 characters, and must <em>not</em> contain spaces.
+              </span>
+            </div>
+            <div class="form-group">
+              <label for="inputPasswordNewVerify">Verify</label>
+              <input type="password" class="form-control" name="inputPasswordNewVerify" id="inputPasswordNewVerify" required="">
+              <span class="form-text small text-muted">
+                To confirm, type the new password again.
+              </span>
+            </div>
+            <div class="modal-footer">
+              <button type="button" onclick="changePassword();" class="btn btn-success btn-lg float-right">Save</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 
 </body>
 
