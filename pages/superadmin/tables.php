@@ -18,7 +18,7 @@ $userReference = $database->getReference("users/" . $uid . "/result");
   <link rel="apple-touch-icon" sizes="76x76" href="../../assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../../assets/img/favicon.png">
   <title>
-    Students Record
+    Assessment
   </title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <!--     Fonts and icons     -->
@@ -43,7 +43,7 @@ $userReference = $database->getReference("users/" . $uid . "/result");
     <div class="sidenav-header">
       <i class="fas fa-times p-3 cursor-pointer text-white opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
       <a class="navbar-brand m-0" target="_blank">
-        <span class="ms-1 font-weight-bold text-white fs-2">Records</span>
+        <span class="ms-1 font-weight-bold text-white fs-2">Assessment</span>
       </a>
     </div>
     <hr class="horizontal light mt-0 mb-2">
@@ -62,9 +62,29 @@ $userReference = $database->getReference("users/" . $uid . "/result");
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">table_view</i>
             </div>
-            <span class="nav-link-text ms-1">Student Records</span>
+            <span class="nav-link-text ms-1">Assessment</span>
           </a>
-        </li>        
+        </li>
+        
+        <li class="nav-item">
+          <a class="nav-link text-whitee " href="Useracc.php">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10">assignment</i>
+            </div>
+            <span class="nav-link-text ms-1">User Accounts</span>
+          </a>
+        </li>
+
+        
+        <li class="nav-item">
+          <a class="nav-link text-white" href="UserLogs.php">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10">person</i>
+            </div>
+            <span class="nav-link-text ms-1">User Log</span>
+          </a>
+        </li> 
+
         <li class="nav-item mt-3">
           <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">___________________________________</h6>
         </li>
@@ -86,32 +106,18 @@ $userReference = $database->getReference("users/" . $uid . "/result");
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
             <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Admin</a></li>
-            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Students Record</li>
+            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Assessment</li>
           </ol>
-          <h6 class="font-weight-bolder mb-0">Students Record</h6>
+          <h6 class="font-weight-bolder mb-0">Record</h6>
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
-          <div class="ms-md-auto pe-md-3 d-flex align-items-center">
+          <div class="col-5 pe-md-3 d-flex align-items-center">
             <div class="input-group input-group-outline">
               <label class="form-label">Type here...</label>
               <input type="text" class="form-control">
             </div>
           </div>
           <ul class="navbar-nav  justify-content-end">
-            <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
-              <a href="javascript:;" class="nav-link text-body p-0" id="iconNavbarSidenav">
-                <div class="sidenav-toggler-inner">
-                  <i class="sidenav-toggler-line"></i>
-                  <i class="sidenav-toggler-line"></i>
-                  <i class="sidenav-toggler-line"></i>
-                </div>
-              </a>
-            </li>
-            <li class="nav-item px-3 d-flex align-items-center">
-              <a href="javascript:;" class="nav-link text-body p-0">
-                <i class="fa fa-cog fixed-plugin-button-nav cursor-pointer"></i>
-              </a>
-            </li>
           </ul>
         </div>
       </div>
@@ -419,9 +425,7 @@ $userReference = $database->getReference("users/" . $uid . "/result");
             </div>
             <div class="col-lg-6">
               <ul class="nav nav-footer justify-content-center justify-content-lg-end">
-                <li class="nav-item">
-                  <a href="###" class="nav-link text-muted" target="_blank">About Us</a>
-                </li>
+              
               </ul>
             </div>
           </div>

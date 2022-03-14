@@ -2371,6 +2371,7 @@ progress {
 .form-control {
   display: block;
   width: 100%;
+  padding-left: 10%;
   padding: 0.5rem 0;
   font-size: 0.875rem;
   font-weight: 400;
@@ -2378,7 +2379,7 @@ progress {
   color: #495057;
   background-color: transparent;
   background-clip: padding-box;
-  border: 1px solid #d2d6da;
+  border: 1px solid #7e7e81;
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
@@ -2399,9 +2400,9 @@ progress {
 .form-control:focus {
   color: #495057;
   background-color: transparent;
-  border-color: transparent;
+  border-color: gray;
   outline: 0;
-  box-shadow: none;
+  box-shadow: lightblue;
 }
 .form-control::-webkit-date-and-time-value {
   height: 1.5rem;
@@ -5008,6 +5009,7 @@ fieldset:disabled .btn {
 .card {
   position: relative;
   display: flex;
+  width: 100%;
   flex-direction: column;
   min-width: 0;
   word-wrap: break-word;
@@ -18602,8 +18604,8 @@ body.dark-version {
 .fixed-plugin .fixed-plugin-button {
   background: #fff;
   border-radius: 50%;
-  bottom: 30px;
-  right: 30px;
+  bottom: 860px;
+  right: 20px;
   font-size: 1.25rem;
   z-index: 990;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.16);
@@ -19089,9 +19091,6 @@ label,
   transition: 0.2s ease all;
 }
 
-.form-control {
-  border: none;
-}
 .form-control.is-invalid {
   border: 1px solid #d2d6da;
   padding: 0.625rem 0.75rem;

@@ -46,9 +46,27 @@
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">table_view</i>
             </div>
-            <span class="nav-link-text ms-1">Tables</span>
+            <span class="nav-link-text ms-1">Assessment</span>
           </a>
-        </li>        
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-whitee " href="Useracc.php">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10">assignment</i>
+            </div>
+            <span class="nav-link-text ms-1">User Accounts</span>
+          </a>
+        </li>
+
+        
+        <li class="nav-item">
+          <a class="nav-link text-white" href="UserLogs.php">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10">person</i>
+            </div>
+            <span class="nav-link-text ms-1">User Log</span>
+          </a>
+        </li> 
         <li class="nav-item mt-3">
           <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">___________________________________</h6>
         </li>
@@ -69,34 +87,14 @@
       <div class="container-fluid py-1 px-3">
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
-            <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">SSP Teacher</a></li>
+            <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Admin</a></li>
             <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Dashboard</li>
           </ol>
-          <h6 class="font-weight-bolder mb-0">Dashboard</h6>
+          <h6 class="font-weight-bolder mb-0">Welcome to Dashboard</h6>
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
           <div class="ms-md-auto pe-md-3 d-flex align-items-center">
-            <div class="input-group input-group-outline">
-              <label class="form-label">Type here...</label>
-              <input type="text" class="form-control">
-            </div>
           </div>
-          <ul class="navbar-nav  justify-content-end">
-            <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
-              <a href="javascript:;" class="nav-link text-body p-0" id="iconNavbarSidenav">
-                <div class="sidenav-toggler-inner">
-                  <i class="sidenav-toggler-line"></i>
-                  <i class="sidenav-toggler-line"></i>
-                  <i class="sidenav-toggler-line"></i>
-                </div>
-              </a>
-            </li>
-            <li class="nav-item px-3 d-flex align-items-center">
-              <a href="javascript:;" class="nav-link text-body p-0">
-                <i class="fa fa-cog fixed-plugin-button-nav cursor-pointer"></i>
-              </a>
-            </li>
-          </ul>
         </div>
       </div>
     </nav>
@@ -235,13 +233,6 @@
           <div class="row align-items-center justify-content-lg-between">
             <div class="col-lg-6 mb-lg-0 mb-4">
             </div>
-            <div class="col-lg-6">
-              <ul class="nav nav-footer justify-content-center justify-content-lg-end">
-                <li class="nav-item">
-                  <a href="###" class="nav-link text-muted" target="_blank">About Us</a>
-                </li>
-              </ul>
-            </div>
           </div>
         </div>
       </footer>
@@ -277,19 +268,18 @@
           <button class="btn bg-gradient-dark px-3 mb-2 ms-2" data-class="bg-white" onclick="sidebarType(this)">White</button>
         </div>
         <p class="text-sm d-xl-none d-block mt-2">You can change the sidenav type just on desktop view.</p>
-        <!-- Navbar Fixed -->
-        <div class="mt-3 d-flex">
-          <h6 class="mb-0">Navbar Fixed</h6>
-          <div class="form-check form-switch ps-0 ms-auto my-auto">
-            <input class="form-check-input mt-1 ms-auto" type="checkbox" id="navbarFixed" onclick="navbarFixed(this)">
-          </div>
-        </div>
         <hr class="horizontal dark my-3">
         <div class="mt-2 d-flex">
           <h6 class="mb-0">Light / Dark</h6>
           <div class="form-check form-switch ps-0 ms-auto my-auto">
             <input class="form-check-input mt-1 ms-auto" type="checkbox" id="dark-version" onclick="darkMode(this)">
           </div>
+        </div><div class="mt-3">
+          <h6 class="mb-0">Change password</h6>
+          <p class="text-sm">Recommended: If just first login</p>
+        </div>
+        <div class="mt-2 text-center fs-7"> 
+          <button class="btn bg-gradient-dark px-3 mb-2 ms-2" id="show-modal" onclick="show-modal();">Change password</button> 
         </div>
       </div>
     </div>
@@ -560,6 +550,40 @@
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="../../assets/js/material-dashboard.min.js?v=3.0.0"></script>
+  
+                      <div class="modal" id="instructionBatch" tabindex="-1" role="dialog" aria-labelledby="instructionBatchLabel" aria-hidden="true">
+                        <div class="modal-header">
+                            <h3 class="mb-0">Change Password</h3>
+                        </div>
+                        <div class="modal-body">
+                            <form class="form" role="form" autocomplete="off">
+                                <div class="form-group">
+                                    <label for="inputPasswordOld">Current Password</label>
+                                    <input type="password" class="form-control" id="inputPasswordOld" required="">
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputPasswordNew">New Password</label>
+                                    <input type="password" class="form-control" id="inputPasswordNew" required="">
+                                    <span class="form-text small text-muted">
+                                            The password must be 8-20 characters, and must <em>not</em> contain spaces.
+                                        </span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputPasswordNewVerify">Verify</label>
+                                    <input type="password" class="form-control" id="inputPasswordNewVerify" required="">
+                                    <span class="form-text small text-muted">
+                                            To confirm, type the new password again.
+                                        </span>
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-success btn-lg float-right">Save</button>
+                                </div>
+                            </form>
+                        </div>
+                      </div>
+
+
+
 </body>
 
 </html>
