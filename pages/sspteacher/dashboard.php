@@ -42,19 +42,43 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white " href="tables.php">
+          <a class="nav-link text-white " href="subjects.php">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">table_view</i>
             </div>
-            <span class="nav-link-text ms-1">Tables</span>
+            <span class="nav-link-text ms-1">Subjects</span>
           </a>
-        </li>        
+        </li>
         <li class="nav-item">
-          <a class="nav-link text-white " href="profile.php">
+          <a class="nav-link text-white " href="assessment.php">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10">table_view</i>
+            </div>
+            <span class="nav-link-text ms-1">Assessment</span>
+          </a>
+        </li>   
+        <li class="nav-item">
+          <a class="nav-link text-white " href="students.php">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10">table_view</i>
+            </div>
+            <span class="nav-link-text ms-1">Students</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" href="profile.php">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">person</i>
             </div>
             <span class="nav-link-text ms-1">Profile</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" href="UserLogs.php">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10">person</i>
+            </div>
+            <span class="nav-link-text ms-1">User Logs</span>
           </a>
         </li>
         <li class="nav-item mt-3">
