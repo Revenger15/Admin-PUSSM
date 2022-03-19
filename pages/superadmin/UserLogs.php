@@ -129,7 +129,7 @@ $userReference = $database->getReference("users/" . $uid . "/result");
           <div class="card my-4">
             <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
               <div class="bg-gradient-faded-warning shadow-dark border-radius-lg pt-4 pb-3">
-                <h6 class="text-white text-capitalize ps-3">History</h6>
+                <h6 class="text-white text-capitalize ps-3">User History</h6>
               </div>
             </div>
             <div class="page-content page-container" id="page-content">
@@ -219,9 +219,6 @@ $userReference = $database->getReference("users/" . $uid . "/result");
     </div>
   </main>
   <div class="fixed-plugin">
-    <a class="fixed-plugin-button text-dark position-fixed px-3 py-2">
-      <i class="material-icons py-2">settings</i>
-    </a>
     <div class="card shadow-lg">
       <div class="card-header pb-0 pt-3">
         <div class="float-start">

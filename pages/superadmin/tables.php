@@ -108,7 +108,7 @@ $userReference = $database->getReference("users/" . $uid . "/result");
             <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Admin</a></li>
             <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Assessment</li>
           </ol>
-          <h6 class="font-weight-bolder mb-0">Record</h6>
+          <h6 class="font-weight-bolder mb-0">Mental Record</h6>
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
           <div class="col-5 pe-md-3 d-flex align-items-center">
@@ -127,7 +127,7 @@ $userReference = $database->getReference("users/" . $uid . "/result");
     <!-- Pagination -->
 
     <div class="row">
-    <nav class="pagination-outer" aria-label="Page navigation">
+      <nav class="pagination-outer" aria-label="Page navigation">
         <ul class="pagination">
             <li class="page-item">
                 <a href="#" class="page-link" aria-label="Previous">
@@ -146,7 +146,7 @@ $userReference = $database->getReference("users/" . $uid . "/result");
             </li>
         </ul>
       </nav>
-      </div>
+    </div>
 
       <div class="row">
         <div class="col-12">
@@ -418,25 +418,9 @@ $userReference = $database->getReference("users/" . $uid . "/result");
           </div>
         </div>
       </div>
-      <footer class="footer py-4  ">
-        <div class="container-fluid">
-          <div class="row align-items-center justify-content-lg-between">
-            <div class="col-lg-6 mb-lg-0 mb-4">
-            </div>
-            <div class="col-lg-6">
-              <ul class="nav nav-footer justify-content-center justify-content-lg-end">
-              
-              </ul>
-            </div>
-          </div>
-        </div>
-      </footer>
     </div>
   </main>
   <div class="fixed-plugin">
-    <a class="fixed-plugin-button text-dark position-fixed px-3 py-2">
-      <i class="material-icons py-2">settings</i>
-    </a>
     <div class="card shadow-lg">
       <div class="card-header pb-0 pt-3">
         <div class="float-start">

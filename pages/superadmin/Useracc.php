@@ -53,7 +53,7 @@
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">table_view</i>
             </div>
-            <span class="nav-link-text ms-1">Teachers Record</span>
+            <span class="nav-link-text ms-1">Assessment</span>
           </a>
         </li>
         <li class="nav-item">
@@ -70,7 +70,7 @@
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">person</i>
             </div>
-            <span class="nav-link-text ms-1">User Logs</span>
+            <span class="nav-link-text ms-1">User Log</span>
           </a>
         </li> 
 
@@ -102,20 +102,11 @@
               <div class="card card-plain">
                 <div class="card-header">
                   <h4 class="font-weight-bolder">Create Account</h4>
-                  <p class="mb-0">Enter email and password to register</p>
+                  <p class="mb-0">Account for the SSP HEAD</p>
                 </div>
                 <div class="card-body">
                   <form method="POST" enctype="multipart/form-data" name="teacher-register" id="teacher-register">
-                    <p>Batch Sign up:</p>
-                    <div class="custom-file">
-                      <input type="file" accept=".csv" name="batch-csv" class="custom-file-input" id="customFile" onchange="csvInput();">
-                      <label class="custom-file-label" for="customFile" id="fileLabel">No File Selected (.csv)</label>
-                      <a href="#dl-template" id="dl-template" onclick="templateModal();" style="float: right;">Download Template</a>
-                    </div>
-                    <br>
-                    <br>
-                    <hr>
-                    <p>Single Sign up:</p>
+                    <p>Sign up:</p>
                     <div class="input-group input-group-outline mb-3">
                       <label class="form-label">LastName</label>
                       <input type="text" name="lName" class="form-control">
@@ -126,6 +117,10 @@
                     </div>
                     <div class="input-group input-group-outline mb-3">
                       <label class="form-label">MiddleName</label>
+                      <input type="text" name="mName" class="form-control">
+                    </div>
+                    <div class="input-group input-group-outline mb-3">
+                      <label class="form-label">Department</label>
                       <input type="text" name="mName" class="form-control">
                     </div>
                     <div class="input-group input-group-outline mb-3">
