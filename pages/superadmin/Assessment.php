@@ -124,36 +124,12 @@ $userReference = $database->getReference("users/" . $uid . "/result");
     </nav>
     <!-- End Navbar -->
     <div class="container-fluid py-4">
-    <!-- Pagination -->
-
-    <div class="row">
-      <nav class="pagination-outer" aria-label="Page navigation">
-        <ul class="pagination">
-            <li class="page-item">
-                <a href="#" class="page-link" aria-label="Previous">
-                    <span aria-hidden="true">« Previous</span>
-                </a>
-            </li>
-            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item"><a class="page-link" href="#">4</a></li>
-            <li class="page-item"><a class="page-link" href="#">5</a></li>
-            <li class="page-item">
-                <a href="#" class="page-link" aria-label="Next">
-                    <span aria-hidden="true">Next »</span>
-                </a>
-            </li>
-        </ul>
-      </nav>
-    </div>
-
       <div class="row">
         <div class="col-12">
           <div class="card my-4">
             <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
               <div class="bg-gradient-faded-success shadow-dark border-radius-lg pt-4 pb-3">
-                <h6 class="text-white text-capitalize ps-3">Students Contact</h6>
+                <h6 class="text-white text-capitalize ps-3">Students Contact </h6>
               </div>
             </div>
             <div class="card-body px-0 pb-2">
@@ -223,6 +199,27 @@ $userReference = $database->getReference("users/" . $uid . "/result");
                     ?>
                   </tbody>
                 </table>
+              </div>
+            </div>
+            <div class="fixed-table-pagination">
+              <div class="float-left pagination">
+                <button type="button" class="btn btn-outline-success mt-2 ms-1 mb-1">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer" viewBox="0 0 16 16">
+                  <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"></path>
+                  <path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z"></path>
+                  </svg> Print
+                </button>
+              </div>
+              <div class="float-right pagination">
+                <ul class="pagination"><li class="page-item page-pre">
+                  <a class="page-link" aria-label="previous page" href="">« Previous</a></li><li class="page-item active">
+                  <a class="page-link" aria-label="to page 1" href="">1</a></li><li class="page-item">
+                  <a class="page-link" aria-label="to page 2" href="">2</a></li><li class="page-item">
+                  <a class="page-link" aria-label="to page 3" href="">3</a></li><li class="page-item">
+                  <a class="page-link" aria-label="to page 4" href="">4</a></li><li class="page-item">
+                  <a class="page-link" aria-label="to page 5" href="">5</a></li><li class="page-item">
+                  <a class="page-link" aria-label="next page" href="">Next »</a></li>
+                </ul>
               </div>
             </div>
           </div>
@@ -413,6 +410,27 @@ $userReference = $database->getReference("users/" . $uid . "/result");
                     </tr>
                   </tbody>
                 </table>
+              </div>
+            </div>
+            <div class="fixed-table-pagination">
+              <div class="float-left pagination">
+                <button type="button" class="btn btn-outline-danger mt-2 ms-1 mb-1">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer" viewBox="0 0 16 16">
+                  <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"></path>
+                  <path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z"></path>
+                  </svg> Print
+                </button>
+              </div>
+              <div class="float-right pagination">
+                <ul class="pagination"><li class="page-item page-pre">
+                  <a class="page-link" aria-label="previous page" href="">« Previous</a></li><li class="page-item active">
+                  <a class="page-link" aria-label="to page 1" href="">1</a></li><li class="page-item">
+                  <a class="page-link" aria-label="to page 2" href="">2</a></li><li class="page-item">
+                  <a class="page-link" aria-label="to page 3" href="">3</a></li><li class="page-item">
+                  <a class="page-link" aria-label="to page 4" href="">4</a></li><li class="page-item">
+                  <a class="page-link" aria-label="to page 5" href="">5</a></li><li class="page-item">
+                  <a class="page-link" aria-label="next page" href="">Next »</a></li>
+                </ul>
               </div>
             </div>
           </div>
