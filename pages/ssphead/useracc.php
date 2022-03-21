@@ -18,7 +18,7 @@ $userReference = $database->getReference("users/" . $uid . "/result");
   <link rel="apple-touch-icon" sizes="76x76" href="../../assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../../assets/img/favicon.png">
   <title>
-    User Logs
+    User Account
   </title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <!--     Fonts and icons     -->
@@ -36,6 +36,11 @@ $userReference = $database->getReference("users/" . $uid . "/result");
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
   <link id="pagestyle" href="../../assets/css/material-dashboard.css?v=3.0.0" rel="stylesheet" />
+  <style>
+    .table td, .table th {
+    border-top: unset;
+    }
+  </style>
 </head>
 
 <body class="g-sidenav-show  bg-gray-200">
@@ -43,13 +48,13 @@ $userReference = $database->getReference("users/" . $uid . "/result");
     <div class="sidenav-header">
       <i class="fas fa-times p-3 cursor-pointer text-white opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
       <a class="navbar-brand m-0" target="_blank">
-        <span class="ms-1 font-weight-bold text-white fs-2">User Logs</span>
+        <span class="ms-1 font-weight-bold text-white fs-3">User account</span>
       </a>
     </div>
     <hr class="horizontal light mt-0 mb-2">
     <div class="collapse navbar-collapse  w-auto  max-height-vh-100" id="sidenav-collapse-main">
       <ul class="navbar-nav">
-      <li class="nav-item">
+        <li class="nav-item">
           <a class="nav-link text-white" href="dashboard.php">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">dashboard</i>
@@ -58,11 +63,19 @@ $userReference = $database->getReference("users/" . $uid . "/result");
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white " href="assessment.php">
+          <a class="nav-link text-white " href="teachers.php">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">assignment</i>
             </div>
-            <span class="nav-link-text ms-1">Assessment</span>
+            <span class="nav-link-text ms-1">Teachers</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" href="subjects.php">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10">table_view</i>
+            </div>
+            <span class="nav-link-text ms-1">Subjects</span>
           </a>
         </li>
         <li class="nav-item">
@@ -74,7 +87,15 @@ $userReference = $database->getReference("users/" . $uid . "/result");
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white " href="useracc.php">
+          <a class="nav-link text-white" href="testbank.php">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10">folder</i>
+            </div>
+            <span class="nav-link-text ms-1">Test Bank</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white active bg-gradient-faded-dark-vertical" href="#">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-person-fill material-icons" viewBox="0 0 16 16">
               <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0zm2 5.755V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-.245S4 12 8 12s5 1.755 5 1.755z"/>
@@ -84,14 +105,13 @@ $userReference = $database->getReference("users/" . $uid . "/result");
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white active bg-gradient-faded-dark-vertical" href="#">
+          <a class="nav-link text-white" href="userlogs.php">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">person</i>
             </div>
             <span class="nav-link-text ms-1">User Log</span>
           </a>
         </li> 
-
         <li class="nav-item mt-3">
           <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">___________________________________</h6>
         </li>
@@ -103,28 +123,6 @@ $userReference = $database->getReference("users/" . $uid . "/result");
             <span class="nav-link-text ms-1">Log Out</span>
           </a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link dropdown-toggle pt-1 px-0" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <div class="media d-flex align-items-center ps-3 pt-2">
-                <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                  <i class="material-icons opacity-10">settings</i>
-                </div>
-              <div class="media-body ms-2 text-dark align-items-center d-none d-lg-block">
-                <span class="nav-link-text text-white">Setting</span>
-              </div>
-            </div>
-          </a>
-          <div class="dropdown-menu dashboard-dropdown dropdown-menu-start mt-2 py-1 bg-light">
-              <select class="dropdown-item d-flex align-items-center bg-transparent" aria-label=".form-select-lg example">
-                <option selected>School Year</option>
-                <option value="1">SY-21/22</option>
-                <option value="2">SY-22/23</option>
-                <option value="3">SY-23/24</option>
-                <option value="3">SY-24/25</option>
-                <option value="3">SY-25/26</option>
-              </select>
-          </div>
-        </li>
       </ul>
     </div>
   </aside>
@@ -134,10 +132,10 @@ $userReference = $database->getReference("users/" . $uid . "/result");
       <div class="container-fluid py-1 px-3">
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
-            <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">SSP Adviser</a></li>
-            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">User Logs</li>
+            <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">SSP Head</a></li>
+            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">User Account</li>
           </ol>
-          <h6 class="font-weight-bolder mb-0">User Logs</h6>
+          <h6 class="font-weight-bolder mb-0">SSP Teachers list</h6>
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
           <div class="col-5 pe-md-3 d-flex align-items-center">
@@ -152,99 +150,83 @@ $userReference = $database->getReference("users/" . $uid . "/result");
       </div>
     </nav>
     <!-- End Navbar -->
-    <div class="container-fluid py-4">
+    <div class="container-fluid py-4"> 
       <div class="row">
         <div class="col-12">
           <div class="card my-4">
             <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
-              <div class="bg-gradient-faded-success shadow-dark border-radius-lg pt-4 pb-3">
-                <h6 class="text-white text-capitalize ps-3">User History</h6>
+              <div class="bg-gradient-faded-warning shadow-dark border-radius-lg pt-4 pb-3">
+                <h6 class="text-white text-capitalize ps-3">Account Deletion</h6>
               </div>
             </div>
-            <div class="page-content page-container" id="page-content">
-    <div class="card-body px-0 pb-2">
-        <div class="table-responsive p-0">
-            <div class="col-xl-12">
-                <div>
-                    <div class="card-block">
-                        <div class="row m-b-25">
-                            <div class="col-auto p-r-0">
-                            <div class="col">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-sticky" viewBox="0 0 16 16">
-                                <path d="M2.5 1A1.5 1.5 0 0 0 1 2.5v11A1.5 1.5 0 0 0 2.5 15h6.086a1.5 1.5 0 0 0 1.06-.44l4.915-4.914A1.5 1.5 0 0 0 15 8.586V2.5A1.5 1.5 0 0 0 13.5 1h-11zM2 2.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 .5.5V8H9.5A1.5 1.5 0 0 0 8 9.5V14H2.5a.5.5 0 0 1-.5-.5v-11zm7 11.293V9.5a.5.5 0 0 1 .5-.5h4.293L9 13.793z"/>
-                            </svg>
-                            </div>     
+            <div class="card-body px-0 pb-2">
+              <div class="table-responsive p-0">
+                <table class="table align-items-center justify-content-center mb-0">
+                    <thead>
+                      <tr>
+                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Names</th>
+                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"></th>
+                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Subject</th>
+                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Section</th>
+                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-3">Delete</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <div class="d-flex px-2 py-1">
+                            <div>
+                              <img src="../../assets/img/team-2.jpg" class="avatar avatar-sm me-3 border-radius-lg" alt="user1">
                             </div>
-                            <div class="col">
-                                <h6 class="m-b-5">Login time</h6>
-                                <p class="text-muted m-b-0">You log in last</p>
-                                <p class="text-muted m-b-0"><i class="mdi mdi-timer feather icon-clock m-r-10"></i>24 min ago</p>
+                            <div class="d-flex flex-column justify-content-center">
+                              <h6 class="mb-0 text-sm">Arniel C. Fernandez</h6>
+                              <p class="text-xs text-secondary mb-0">farniel1588@gmail.com</p>
                             </div>
-                        </div>
-                        <div class="row m-b-25">
-                            <div class="col-auto p-r-0">
-                            <div class="col">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-sticky" viewBox="0 0 16 16">
-                                <path d="M2.5 1A1.5 1.5 0 0 0 1 2.5v11A1.5 1.5 0 0 0 2.5 15h6.086a1.5 1.5 0 0 0 1.06-.44l4.915-4.914A1.5 1.5 0 0 0 15 8.586V2.5A1.5 1.5 0 0 0 13.5 1h-11zM2 2.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 .5.5V8H9.5A1.5 1.5 0 0 0 8 9.5V14H2.5a.5.5 0 0 1-.5-.5v-11zm7 11.293V9.5a.5.5 0 0 1 .5-.5h4.293L9 13.793z"/>
-                            </svg>
-                            </div> 
-                            </div>
-                            <div class="col">
-                                <h6 class="m-b-5">Log out time</h6>
-                                <p class="text-muted m-b-0">You logged out last</p>
-                                <p class="text-muted m-b-0"><i class="mdi mdi-timer feather icon-clock m-r-10"></i>12 hours ago</p>
-                            </div>
-                        </div>
-                        <div class="row m-b-25">
-                            <div class="col-auto p-r-0">
-                            <div class="col">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-sticky" viewBox="0 0 16 16">
-                                <path d="M2.5 1A1.5 1.5 0 0 0 1 2.5v11A1.5 1.5 0 0 0 2.5 15h6.086a1.5 1.5 0 0 0 1.06-.44l4.915-4.914A1.5 1.5 0 0 0 15 8.586V2.5A1.5 1.5 0 0 0 13.5 1h-11zM2 2.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 .5.5V8H9.5A1.5 1.5 0 0 0 8 9.5V14H2.5a.5.5 0 0 1-.5-.5v-11zm7 11.293V9.5a.5.5 0 0 1 .5-.5h4.293L9 13.793z"/>
-                            </svg>
-                            </div>
-                            </div>
-                            <div class="col">
-                                <h6 class="m-b-5">Accout creation</h6>
-                                <p class="text-muted m-b-0">You created account last</p>
-                                <p class="text-muted m-b-0"><i class="mdi mdi-timer feather icon-clock m-r-10"></i>2 min ago</p>
-                            </div>
-                        </div>
-                        <div class="row m-b-25">
-                            <div class="col-auto p-r-0">
-                            <div class="col">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-sticky" viewBox="0 0 16 16">
-                                <path d="M2.5 1A1.5 1.5 0 0 0 1 2.5v11A1.5 1.5 0 0 0 2.5 15h6.086a1.5 1.5 0 0 0 1.06-.44l4.915-4.914A1.5 1.5 0 0 0 15 8.586V2.5A1.5 1.5 0 0 0 13.5 1h-11zM2 2.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 .5.5V8H9.5A1.5 1.5 0 0 0 8 9.5V14H2.5a.5.5 0 0 1-.5-.5v-11zm7 11.293V9.5a.5.5 0 0 1 .5-.5h4.293L9 13.793z"/>
-                            </svg>
-                            </div> 
-                            </div>
-                            <div class="col">
-                                <h6 class="m-b-5">Accout creation</h6>
-                                <p class="text-muted m-b-0">You created account last</p>
-                                <p class="text-muted m-b-0"><i class="mdi mdi-timer feather icon-clock m-r-10"></i>12 min ago</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                          </div>
+                        </td>
+                        <td>
+                          <p class="text-xs font-weight-bold mb-0"></p>
+                        </td>
+                        <td>
+                          <p class="text-xs font-weight-bold mb-0">SSP-000</p>
+                        </td>
+                        <td>
+                          <span class="text-xs font-weight-bold mb-0">BSIT-00</span>
+                        </td>
+                        <td>
+                          <button type="button" class="btn btn-outline-danger mt-2 ms-1 mb-1">
+                            <a href="#" class="text-danger" data-toggle="tooltip" title="" data-original-title="Delete"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                </table>
+              </div>
             </div>
-        </div>
-    </div>
-</div>
+            <div class="fixed-table-pagination">
+              <div class="float-left pagination">
+                <button type="button" class="btn btn-outline-warning mt-2 ms-1 mb-1">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer" viewBox="0 0 16 16">
+                  <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"></path>
+                  <path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z"></path>
+                  </svg> Print
+                </button>
+              </div>
+              <div class="float-right pagination">
+                <ul class="pagination">
+                  <li class="page-item page-pre"><a class="page-link" aria-label="previous page" href="">« Previous</a></li>
+                  <li class="page-item active bg-gradient-faded-warning-vertical border-radius-2xl"><a class="page-link" aria-label="to page 1" href="">1</a></li>
+                  <li class="page-item"><a class="page-link" aria-label="to page 2" href="">2</a></li>
+                  <li class="page-item"><a class="page-link" aria-label="to page 3" href="">3</a></li>
+                  <li class="page-item"><a class="page-link" aria-label="to page 4" href="">4</a></li>
+                  <li class="page-item"><a class="page-link" aria-label="to page 5" href="">5</a></li>
+                  <li class="page-item"><a class="page-link" aria-label="next page" href="">Next »</a></li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-      <footer class="footer py-4  ">
-        <div class="container-fluid">
-          <div class="row align-items-center justify-content-lg-between">
-            <div class="col-lg-6 mb-lg-0 mb-4">
-            </div>
-            <div class="col-lg-6">
-              <ul class="nav nav-footer justify-content-center justify-content-lg-end">
-              
-              </ul>
-            </div>
-          </div>
-        </div>
-      </footer>
     </div>
   </main>
   <div class="fixed-plugin">
@@ -334,6 +316,68 @@ $userReference = $database->getReference("users/" . $uid . "/result");
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="../../assets/js/material-dashboard.min.js?v=3.0.0"></script>
+
+  <script>
+    function showDetails(key) {
+      $("#userInformation").modal('show');
+
+      $.ajax({
+        url: "data/studInfo.php",
+        type: "POST",
+        data: {
+          "key": key
+        }
+      }).done(function(data) {
+        $("#user-info-modal").html(data);
+        // var modalBody = document.getElementById('user-info-modal');
+        // modalBody.html(data);
+      });
+    }
+  </script>
+
+  <div class="modal fade" id="userInformation" tabindex="-1" role="dialog" aria-labelledby="userInformationLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="userInformationlLabel">Student Record</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" id="user-info-modal">
+          <p>Name: </p>
+          <p>Section: </p>
+          <p>Contact Number: </p>
+          <div>
+            <p>Results</p>
+            <p>Date: </p>
+          </div>
+          <p>Actions</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary">Refer(Nurse)</button>
+          <button type="button" class="btn btn-primary">Mark Contacted</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- <div id="userInformation" class="modal">
+    <h1>Student Record</h1>
+    <p>Name: </p>
+    <p>Section: </p>
+    <p>Contact Number: </p>
+    <div>
+      <p>Results</p>
+      <p>Date: </p>
+    </div>
+    <p>Actions</p>
+    <div>
+      <button>Refer to Guidance</button>
+      <button>Refer to Nurse</button>
+      <button>Mark Contacted</button>
+    </div>
+  </div> -->
 </body>
 
 </html>

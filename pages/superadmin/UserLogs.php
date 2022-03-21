@@ -58,7 +58,7 @@ $userReference = $database->getReference("users/" . $uid . "/result");
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white " href="Assessment.php">
+          <a class="nav-link text-white " href="assessment.php">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">table_view</i>
             </div>
@@ -67,11 +67,11 @@ $userReference = $database->getReference("users/" . $uid . "/result");
         </li>
         
         <li class="nav-item">
-          <a class="nav-link text-whitee " href="Useracc.php">
+          <a class="nav-link text-whitee " href="hteacher.php">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">assignment</i>
             </div>
-            <span class="nav-link-text ms-1">User Accounts</span>
+            <span class="nav-link-text ms-1">Head Teachers</span>
           </a>
         </li>
 
@@ -128,7 +128,7 @@ $userReference = $database->getReference("users/" . $uid . "/result");
         <div class="col-12">
           <div class="card my-4">
             <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
-              <div class="bg-gradient-faded-warning shadow-dark border-radius-lg pt-4 pb-3">
+              <div class="bg-gradient-faded-dark shadow-dark border-radius-lg pt-4 pb-3">
                 <h6 class="text-white text-capitalize ps-3">User History</h6>
               </div>
             </div>

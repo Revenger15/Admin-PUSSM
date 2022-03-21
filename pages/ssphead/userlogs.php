@@ -58,11 +58,19 @@ $userReference = $database->getReference("users/" . $uid . "/result");
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white " href="assessment.php">
+          <a class="nav-link text-white " href="teachers.php">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">assignment</i>
             </div>
-            <span class="nav-link-text ms-1">Assessment</span>
+            <span class="nav-link-text ms-1">Teachers</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" href="subjects.php">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10">table_view</i>
+            </div>
+            <span class="nav-link-text ms-1">Subjects</span>
           </a>
         </li>
         <li class="nav-item">
@@ -71,6 +79,14 @@ $userReference = $database->getReference("users/" . $uid . "/result");
               <i class="material-icons opacity-10">assignment</i>
             </div>
             <span class="nav-link-text ms-1">Students</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" href="testbank.php">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10">folder</i>
+            </div>
+            <span class="nav-link-text ms-1">Test Bank</span>
           </a>
         </li>
         <li class="nav-item">
@@ -103,28 +119,6 @@ $userReference = $database->getReference("users/" . $uid . "/result");
             <span class="nav-link-text ms-1">Log Out</span>
           </a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link dropdown-toggle pt-1 px-0" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <div class="media d-flex align-items-center ps-3 pt-2">
-                <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                  <i class="material-icons opacity-10">settings</i>
-                </div>
-              <div class="media-body ms-2 text-dark align-items-center d-none d-lg-block">
-                <span class="nav-link-text text-white">Setting</span>
-              </div>
-            </div>
-          </a>
-          <div class="dropdown-menu dashboard-dropdown dropdown-menu-start mt-2 py-1 bg-light">
-              <select class="dropdown-item d-flex align-items-center bg-transparent" aria-label=".form-select-lg example">
-                <option selected>School Year</option>
-                <option value="1">SY-21/22</option>
-                <option value="2">SY-22/23</option>
-                <option value="3">SY-23/24</option>
-                <option value="3">SY-24/25</option>
-                <option value="3">SY-25/26</option>
-              </select>
-          </div>
-        </li>
       </ul>
     </div>
   </aside>
@@ -134,7 +128,7 @@ $userReference = $database->getReference("users/" . $uid . "/result");
       <div class="container-fluid py-1 px-3">
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
-            <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">SSP Adviser</a></li>
+            <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">SSP Head</a></li>
             <li class="breadcrumb-item text-sm text-dark active" aria-current="page">User Logs</li>
           </ol>
           <h6 class="font-weight-bolder mb-0">User Logs</h6>

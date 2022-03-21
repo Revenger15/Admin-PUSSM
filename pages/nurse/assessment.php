@@ -36,11 +36,6 @@ $userReference = $database->getReference("users/" . $uid . "/result");
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
   <link id="pagestyle" href="../../assets/css/material-dashboard.css?v=3.0.0" rel="stylesheet" />
-  <style>
-    .table td, .table th {
-    border-top: unset;
-    }
-  </style>
 </head>
 
 <body class="g-sidenav-show  bg-gray-200">
@@ -48,7 +43,7 @@ $userReference = $database->getReference("users/" . $uid . "/result");
     <div class="sidenav-header">
       <i class="fas fa-times p-3 cursor-pointer text-white opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
       <a class="navbar-brand m-0" target="_blank">
-        <span class="ms-1 font-weight-bold text-white fs-2">Assessment</span>
+        <span class="ms-1 font-weight-bold text-white fs-2">Record</span>
       </a>
     </div>
     <hr class="horizontal light mt-0 mb-2">
@@ -67,22 +62,11 @@ $userReference = $database->getReference("users/" . $uid . "/result");
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">table_view</i>
             </div>
-            <span class="nav-link-text ms-1">Teachers</span>
+            <span class="nav-link-text ms-1">Assessment</span>
           </a>
         </li>
-        
         <li class="nav-item">
-          <a class="nav-link text-whitee " href="Useracc.php">
-            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="material-icons opacity-10">assignment</i>
-            </div>
-            <span class="nav-link-text ms-1">User Accounts</span>
-          </a>
-        </li>
-
-        
-        <li class="nav-item">
-          <a class="nav-link text-white" href="UserLogs.php">
+          <a class="nav-link text-white" href="userlogs.php">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">person</i>
             </div>
@@ -110,10 +94,10 @@ $userReference = $database->getReference("users/" . $uid . "/result");
       <div class="container-fluid py-1 px-3">
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
-            <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">SSP Head</a></li>
-            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Teachers</li>
+            <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">School Nurse</a></li>
+            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Assessment</li>
           </ol>
-          <h6 class="font-weight-bolder mb-0">Teachers</h6>
+          <h6 class="font-weight-bolder mb-0">Physical Record</h6>
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
           <div class="col-5 pe-md-3 d-flex align-items-center">
@@ -122,220 +106,112 @@ $userReference = $database->getReference("users/" . $uid . "/result");
               <input type="text" class="form-control">
             </div>
           </div>
-          <ul class="navbar-nav  justify-content-end">
-          </ul>
         </div>
       </div>
     </nav>
     <!-- End Navbar -->
     <div class="container-fluid py-4">
-    <!-- Pagination -->
-
-    <div class="row">
-      <nav class="pagination-outer" aria-label="Page navigation">
-        <ul class="pagination">
-            <li class="page-item">
-                <a href="#" class="page-link" aria-label="Previous">
-                    <span aria-hidden="true">« Previous</span>
-                </a>
-            </li>
-            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item"><a class="page-link" href="#">4</a></li>
-            <li class="page-item"><a class="page-link" href="#">5</a></li>
-            <li class="page-item">
-                <a href="#" class="page-link" aria-label="Next">
-                    <span aria-hidden="true">Next »</span>
-                </a>
-            </li>
-        </ul>
-      </nav>
-    </div>
-
-    <div class="row">  
+      <div class="row">
         <div class="col-12">
           <div class="card my-4">
             <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
               <div class="bg-gradient-faded-success shadow-dark border-radius-lg pt-4 pb-3">
-                <h6 class="text-white text-capitalize ps-3">Teacher Asigning</h6>
+                <h6 class="text-white text-capitalize ps-3">Students Contact </h6>
               </div>
             </div>
-            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css" integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous" />
-            <div class="mt-3 mb-4">
-            <div class="col-lg-12 mt-4 mt-lg-0">
-                <div class="row">
-                  <div class="col-md-12">
-                    <div class="user-dashboard-info-box table-responsive mb-0 bg-white">
-                      <table class="table manage-candidates-top mb-0">
-                        <thead>
-                          <tr>
-                            <th> SSP Teacher</th>
-                            <th class="text-center">Section</th>
-                            <th class="action text-right"></th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr class="candidates-list">
-                            <td class="title">
-                              <div class="thumb">
-                                <img class="img-fluid" src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="">
-                              </div>
-                              <div class="candidate-list-details">
-                                <div class="candidate-list-info">
-                                  <div class="candidate-list-title">
-                                    <h5 class="mb-0"><a href="#">Brooke Kelly</a></h5>
-                                  </div>
-                                  <div class="candidate-list-option">
-                                    <ul class="list-unstyled">
-                                      <li><i class="fas fa-filter pr-1"></i>Information Technology</li>
-                                      <li><i class="fas fa-map-marker-alt pr-1"></i>Rolling Meadows, IL 60008</li>
-                                    </ul>
-                                  </div>
-                                </div>
-                              </div>
-                            </td>
-                            <td class="candidate-list-favourite-time text-center">
-                              <a class="candidate-list-favourite order-2 text-danger" href="#"></a>
-                              <span class="candidate-list-time order-1">section</span>
-                            </td>
-                            <td>
-                              <ul class="list-unstyled mb-0 d-flex justify-content-end">
-                                <li><a href="#" class="text-primary" data-toggle="tooltip" title="" data-original-title="view"><i class="far fa-eye"></i></a></li>
-                                <li><a href="#" class="text-info" data-toggle="tooltip" title="" data-original-title="Edit"><i class="fas fa-pencil-alt"></i></a></li>
-                                <li><a href="#" class="text-danger" data-toggle="tooltip" title="" data-original-title="Delete"><i class="far fa-trash-alt"></i></a></li>
-                              </ul>
-                            </td>
-                          </tr>
-                          <tr class="candidates-list">
-                            <td class="title">
-                              <div class="thumb">
-                                <img class="img-fluid" src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="">
-                              </div>
-                              <div class="candidate-list-details">
-                                <div class="candidate-list-info">
-                                  <div class="candidate-list-title">
-                                    <h5 class="mb-0"><a href="#">Ronald Bradley</a></h5>
-                                  </div>
-                                  <div class="candidate-list-option">
-                                    <ul class="list-unstyled">
-                                      <li><i class="fas fa-filter pr-1"></i>Human Resources</li>
-                                      <li><i class="fas fa-map-marker-alt pr-1"></i>Monroe Township, NJ 08831</li>
-                                    </ul>
-                                  </div>
-                                </div>
-                              </div>
-                            </td>
-                            <td class="candidate-list-favourite-time text-center">
-                              <a class="candidate-list-favourite order-2 text-danger" href="#"></a>
-                              <span class="candidate-list-time order-1">section</span>
-                            </td>
-                            <td>
-                              <ul class="list-unstyled mb-0 d-flex justify-content-end">
-                                <li><a href="#" class="text-primary" data-toggle="tooltip" title="" data-original-title="view"><i class="far fa-eye"></i></a></li>
-                                <li><a href="#" class="text-info" data-toggle="tooltip" title="" data-original-title="Edit"><i class="fas fa-pencil-alt"></i></a></li>
-                                <li><a href="#" class="text-danger" data-toggle="tooltip" title="" data-original-title="Delete"><i class="far fa-trash-alt"></i></a></li>
-                              </ul>
-                            </td>
-                          </tr>
-                          <tr class="candidates-list">
-                            <td class="title">
-                              <div class="thumb">
-                                <img class="img-fluid" src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="">
-                              </div>
-                              <div class="candidate-list-details">
-                                <div class="candidate-list-info">
-                                  <div class="candidate-list-title">
-                                    <h5 class="mb-0"><a href="#">Rafael Briggs</a></h5>
-                                  </div>
-                                  <div class="candidate-list-option">
-                                    <ul class="list-unstyled">
-                                      <li><i class="fas fa-filter pr-1"></i>Recruitment Consultancy</li>
-                                      <li><i class="fas fa-map-marker-alt pr-1"></i>Haines City, FL 33844</li>
-                                    </ul>
-                                  </div>
-                                </div>
-                              </div>
-                            </td>
-                            <td class="candidate-list-favourite-time text-center">
-                              <a class="candidate-list-favourite order-2 text-danger" href="#"></a>
-                              <span class="candidate-list-time order-1">section</span>
-                            </td>
-                            <td>
-                              <ul class="list-unstyled mb-0 d-flex justify-content-end">
-                                <li><a href="#" class="text-primary" data-toggle="tooltip" title="" data-original-title="view"><i class="far fa-eye"></i></a></li>
-                                <li><a href="#" class="text-info" data-toggle="tooltip" title="" data-original-title="Edit"><i class="fas fa-pencil-alt"></i></a></li>
-                                <li><a href="#" class="text-danger" data-toggle="tooltip" title="" data-original-title="Delete"><i class="far fa-trash-alt"></i></a></li>
-                              </ul>
-                            </td>
-                          </tr>
-                          <tr class="candidates-list">
-                            <td class="title">
-                              <div class="thumb">
-                              <img src="../../assets/img/team-1.png" class="avatar avatar-xl me-4 border-radius-lg" alt="user1">
-                              </div>
-                              <div class="candidate-list-details">
-                                <div class="candidate-list-info">
-                                  <div class="candidate-list-title">
-                                    <h5 class="mb-0"><a href="#">Vickie Meyer</a></h5>
-                                  </div>
-                                  <div class="candidate-list-option">
-                                    <ul class="list-unstyled">
-                                      <li><i class="fas fa-filter pr-1"></i>Human Resources</li>
-                                      <li><i class="fas fa-map-marker-alt pr-1"></i>Minneapolis, MN 55406</li>
-                                    </ul>
-                                  </div>
-                                </div>
-                              </div>
-                            </td>
-                            <td class="candidate-list-favourite-time text-center">
-                              <a class="candidate-list-favourite order-2 text-danger" href="#"></a>
-                              <span class="candidate-list-time order-1">section</span>
-                            </td>
-                            <td>
-                              <ul class="list-unstyled mb-0 d-flex justify-content-end">
-                                <li><a href="#" class="text-primary" data-toggle="tooltip" title="" data-original-title="view"><i class="far fa-eye"></i></a></li>
-                                <li><a href="#" class="text-info" data-toggle="tooltip" title="" data-original-title="Edit"><i class="fas fa-pencil-alt"></i></a></li>
-                                <li><a href="#" class="text-danger" data-toggle="tooltip" title="" data-original-title="Delete"><i class="far fa-trash-alt"></i></a></li>
-                              </ul>
-                            </td>
-                          </tr>
-                          <tr class="candidates-list">
-                            <td class="title">
-                              <div class="thumb">
-                                <img class="img-fluid" src="https://bootdey.com/img/Content/avatar/avatar4.png" alt="">
-                              </div>
-                              <div class="candidate-list-details">
-                                <div class="candidate-list-info">
-                                  <div class="candidate-list-title">
-                                    <h5 class="mb-0"><a href="#">Nichole Haynes</a></h5>
-                                  </div>
-                                  <div class="candidate-list-option">
-                                    <ul class="list-unstyled">
-                                      <li><i class="fas fa-filter pr-1"></i>Information Technology</li>
-                                      <li><i class="fas fa-map-marker-alt pr-1"></i>Botchergate, Carlisle</li>
-                                    </ul>
-                                  </div>
-                                </div>
-                              </div>
-                            </td>
-                            <td class="candidate-list-favourite-time text-center">
-                              <a class="candidate-list-favourite order-2 text-danger" href="#"></a>
-                              <span class="candidate-list-time order-1">section</span>
-                            </td>
-                            <td>
-                              <ul class="list-unstyled mb-0 d-flex justify-content-end">
-                                <li><a href="#" class="text-primary" data-toggle="tooltip" title="" data-original-title="view"><i class="far fa-eye"></i></a></li>
-                                <li><a href="#" class="text-info" data-toggle="tooltip" title="" data-original-title="Edit"><i class="fas fa-pencil-alt"></i></a></li>
-                                <li><a href="#" class="text-danger" data-toggle="tooltip" title="" data-original-title="Delete"><i class="far fa-trash-alt"></i></a></li>
-                              </ul>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                </div>
+            <div class="card-body px-0 pb-2">
+              <div class="table-responsive p-0">
+                <table class="table align-items-center mb-0">
+                  <thead>
+                    <tr>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Names</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Subject</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Section</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Contact</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Date</th>
+                      <th class="text-secondary opacity-7"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <?php
+                    if ($userReference->getSnapshot()->hasChildren()) {
+                      $resultKeys = $userReference->getValue();
+                      foreach ($resultKeys as $temp => $key) {
+                        $result = $resultReference->getChild($key)->getValue();
+                        $studentReference = $database->getReference("users/" . $result['uid']);
+
+                        $name = $studentReference->getChild('lastname')->getValue();
+                        $name .= ", " . $studentReference->getChild('firstname')->getValue();
+                        $name .= " " . $studentReference->getChild('middlename')->getValue();
+
+                        $email = $studentReference->getChild('email')->getValue();
+                        $section = $studentReference->getChild('section')->getValue();
+                        $subject = $studentReference->getChild('subject')->getValue();
+                        $contact = $studentReference->getChild('contact')->getValue();
+                        $date = $result['date'];
+
+                        echo '
+                        <tr>
+                        <td>
+                          <div class="d-flex px-2 py-1">
+                            <div>
+                              <img src="../../assets/img/ic-student.png" class="avatar avatar-sm me-3 border-radius-lg" alt="user1">
+                            </div>
+                            <div class="d-flex flex-column justify-content-center">
+                              <h6 class="mb-0 text-sm">' . $name . '</h6>
+                              <p class="text-xs text-secondary mb-0">' . $email . '</p>
+                            </div>
+                          </div>
+                        </td>
+                        <td>
+                          <p class="text-xs font-weight-bold mb-0">' . $subject . '</p>
+                        </td>
+                        <td>
+                          <p class="text-xs font-weight-bold mb-0">' . $section . '</p>
+                        </td>
+                        <td>
+                          <p class="text-xs font-weight-bold mb-0">' . $contact . '</p>
+                        </td>
+                        <td class="align-middle text-center">
+                          <span class="text-secondary text-xs font-weight-bold">' . $date . '</span>
+                        </td>
+                        <td class="align-middle">
+                          <a href="#" onclick="showDetails(\''. $key .'\');" class="text-sm font-weight-bold text-xs badge badge-sm bg-gradient-success">
+                            Result
+                          </a>
+                        </td>
+                      </tr>
+                          ';
+                      }
+                    } else {
+                      echo '
+                          <tr><th colspan="5">Sorry! No data found.</th></tr>
+                        ';
+                    }
+                    ?>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="fixed-table-pagination">
+              <div class="float-left pagination">
+                <button type="button" class="btn btn-outline-success mt-2 ms-1 mb-1">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer" viewBox="0 0 16 16">
+                  <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"></path>
+                  <path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z"></path>
+                  </svg> Print
+                </button>
+              </div>
+              <div class="float-right pagination">
+                <ul class="pagination">
+                  <li class="page-item page-pre"><a class="page-link" aria-label="previous page" href="">« Previous</a></li>
+                  <li class="page-item active bg-gradient-faded-success-vertical border-radius-2xl"><a class="page-link" aria-label="to page 1" href="">1</a></li>
+                  <li class="page-item"><a class="page-link" aria-label="to page 2" href="">2</a></li>
+                  <li class="page-item"><a class="page-link" aria-label="to page 3" href="">3</a></li>
+                  <li class="page-item"><a class="page-link" aria-label="to page 4" href="">4</a></li>
+                  <li class="page-item"><a class="page-link" aria-label="to page 5" href="">5</a></li>
+                  <li class="page-item"><a class="page-link" aria-label="next page" href="">Next »</a></li>
+                </ul>
               </div>
             </div>
           </div>
@@ -355,6 +231,7 @@ $userReference = $database->getReference("users/" . $uid . "/result");
                   <thead>
                     <tr>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Names</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Subject</th>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Section</th>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Contact</th>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2">Date</th>
@@ -375,31 +252,7 @@ $userReference = $database->getReference("users/" . $uid . "/result");
                         </div>
                       </td>
                       <td>
-                        <p class="text-xs font-weight-bold mb-0">3BSITSYSDEV-1</p>
-                      </td>
-                      <td>
-                        <p class="text-xs font-weight-bold mb-0">09491050876</p>
-                      </td>
-                      <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">23/04/18</span>
-                      </td>
-                      <td class="align-middle">
-                        <a href="javascript:;" class="text-sm font-weight-bold text-xs badge badge-sm bg-gradient-warning" data-toggle="tooltip" data-original-title="Edit user">
-                          Contacted
-                        </a>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="d-flex px-2 py-1">
-                          <div>
-                            <img src="../../assets/img/team-2.jpg" class="avatar avatar-sm me-3 border-radius-lg" alt="user1">
-                          </div>
-                          <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">Arniel C. Fernandez</h6>
-                            <p class="text-xs text-secondary mb-0">farniel1588@gmail.com</p>
-                          </div>
-                        </div>
+                        <p class="text-xs font-weight-bold mb-0">SSP-001</p>
                       </td>
                       <td>
                         <p class="text-xs font-weight-bold mb-0">3BSITSYSDEV-1</p>
@@ -429,31 +282,7 @@ $userReference = $database->getReference("users/" . $uid . "/result");
                         </div>
                       </td>
                       <td>
-                        <p class="text-xs font-weight-bold mb-0">3BSITSYSDEV-1</p>
-                      </td>
-                      <td>
-                        <p class="text-xs font-weight-bold mb-0">09491050876</p>
-                      </td>
-                      <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">23/04/18</span>
-                      </td>
-                      <td class="align-middle">
-                        <a href="javascript:;" class="text-sm font-weight-bold text-xs badge badge-sm bg-gradient-warning" data-toggle="tooltip" data-original-title="Edit user">
-                          Contacted
-                        </a>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="d-flex px-2 py-1">
-                          <div>
-                            <img src="../../assets/img/team-2.jpg" class="avatar avatar-sm me-3 border-radius-lg" alt="user1">
-                          </div>
-                          <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">Arniel C. Fernandez</h6>
-                            <p class="text-xs text-secondary mb-0">farniel1588@gmail.com</p>
-                          </div>
-                        </div>
+                        <p class="text-xs font-weight-bold mb-0">SSP-001</p>
                       </td>
                       <td>
                         <p class="text-xs font-weight-bold mb-0">3BSITSYSDEV-1</p>
@@ -483,6 +312,9 @@ $userReference = $database->getReference("users/" . $uid . "/result");
                         </div>
                       </td>
                       <td>
+                        <p class="text-xs font-weight-bold mb-0">SSP-001</p>
+                      </td>
+                      <td>
                         <p class="text-xs font-weight-bold mb-0">3BSITSYSDEV-1</p>
                       </td>
                       <td>
@@ -508,6 +340,69 @@ $userReference = $database->getReference("users/" . $uid . "/result");
                             <p class="text-xs text-secondary mb-0">farniel1588@gmail.com</p>
                           </div>
                         </div>
+                      </td>
+                      <td>
+                        <p class="text-xs font-weight-bold mb-0">SSP-001</p>
+                      </td>
+                      <td>
+                        <p class="text-xs font-weight-bold mb-0">3BSITSYSDEV-1</p>
+                      </td>
+                      <td>
+                        <p class="text-xs font-weight-bold mb-0">09491050876</p>
+                      </td>
+                      <td class="align-middle text-center">
+                        <span class="text-secondary text-xs font-weight-bold">23/04/18</span>
+                      </td>
+                      <td class="align-middle">
+                        <a href="javascript:;" class="text-sm font-weight-bold text-xs badge badge-sm bg-gradient-warning" data-toggle="tooltip" data-original-title="Edit user">
+                          Contacted
+                        </a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="d-flex px-2 py-1">
+                          <div>
+                            <img src="../../assets/img/team-2.jpg" class="avatar avatar-sm me-3 border-radius-lg" alt="user1">
+                          </div>
+                          <div class="d-flex flex-column justify-content-center">
+                            <h6 class="mb-0 text-sm">Arniel C. Fernandez</h6>
+                            <p class="text-xs text-secondary mb-0">farniel1588@gmail.com</p>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <p class="text-xs font-weight-bold mb-0">SSP-001</p>
+                      </td>
+                      <td>
+                        <p class="text-xs font-weight-bold mb-0">3BSITSYSDEV-1</p>
+                      </td>
+                      <td>
+                        <p class="text-xs font-weight-bold mb-0">09491050876</p>
+                      </td>
+                      <td class="align-middle text-center">
+                        <span class="text-secondary text-xs font-weight-bold">23/04/18</span>
+                      </td>
+                      <td class="align-middle">
+                        <a href="javascript:;" class="text-sm font-weight-bold text-xs badge badge-sm bg-gradient-warning" data-toggle="tooltip" data-original-title="Edit user">
+                          Contacted
+                        </a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="d-flex px-2 py-1">
+                          <div>
+                            <img src="../../assets/img/team-2.jpg" class="avatar avatar-sm me-3 border-radius-lg" alt="user1">
+                          </div>
+                          <div class="d-flex flex-column justify-content-center">
+                            <h6 class="mb-0 text-sm">Arniel C. Fernandez</h6>
+                            <p class="text-xs text-secondary mb-0">farniel1588@gmail.com</p>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <p class="text-xs font-weight-bold mb-0">SSP-001</p>
                       </td>
                       <td>
                         <p class="text-xs font-weight-bold mb-0">3BSITSYSDEV-1</p>
@@ -530,7 +425,7 @@ $userReference = $database->getReference("users/" . $uid . "/result");
             </div>
             <div class="fixed-table-pagination">
               <div class="float-left pagination">
-                <button type="button" class="btn btn-outline-danger mt-2 ms-1 mb-1">
+                <button type="button" class="btn btn-outline-warning mt-2 ms-1 mb-1">
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer" viewBox="0 0 16 16">
                   <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"></path>
                   <path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z"></path>
@@ -538,14 +433,14 @@ $userReference = $database->getReference("users/" . $uid . "/result");
                 </button>
               </div>
               <div class="float-right pagination">
-                <ul class="pagination"><li class="page-item page-pre">
-                  <a class="page-link" aria-label="previous page" href="">« Previous</a></li><li class="page-item active">
-                  <a class="page-link" aria-label="to page 1" href="">1</a></li><li class="page-item">
-                  <a class="page-link" aria-label="to page 2" href="">2</a></li><li class="page-item">
-                  <a class="page-link" aria-label="to page 3" href="">3</a></li><li class="page-item">
-                  <a class="page-link" aria-label="to page 4" href="">4</a></li><li class="page-item">
-                  <a class="page-link" aria-label="to page 5" href="">5</a></li><li class="page-item">
-                  <a class="page-link" aria-label="next page" href="">Next »</a></li>
+                <ul class="pagination">
+                  <li class="page-item page-pre"><a class="page-link" aria-label="previous page" href="">« Previous</a></li>
+                  <li class="page-item active bg-gradient-faded-warning-vertical border-radius-2xl"><a class="page-link" aria-label="to page 1" href="">1</a></li>
+                  <li class="page-item"><a class="page-link" aria-label="to page 2" href="">2</a></li>
+                  <li class="page-item"><a class="page-link" aria-label="to page 3" href="">3</a></li>
+                  <li class="page-item"><a class="page-link" aria-label="to page 4" href="">4</a></li>
+                  <li class="page-item"><a class="page-link" aria-label="to page 5" href="">5</a></li>
+                  <li class="page-item"><a class="page-link" aria-label="next page" href="">Next »</a></li>
                 </ul>
               </div>
             </div>
@@ -555,9 +450,6 @@ $userReference = $database->getReference("users/" . $uid . "/result");
     </div>
   </main>
   <div class="fixed-plugin">
-    <a class="fixed-plugin-button text-dark position-fixed px-3 py-2">
-      <i class="material-icons py-2">settings</i>
-    </a>
     <div class="card shadow-lg">
       <div class="card-header pb-0 pt-3">
         <div class="float-start">

@@ -42,31 +42,13 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white" href="assessment.php">
+          <a class="nav-link text-white " href="assessment.php">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="material-icons opacity-10">assignment</i>
+              <i class="material-icons opacity-10">table_view</i>
             </div>
             <span class="nav-link-text ms-1">Assessment</span>
           </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link text-white" href="students.php">
-            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="material-icons opacity-10">assignment</i>
-            </div>
-            <span class="nav-link-text ms-1">Students</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link text-white" href="useracc.php">
-            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-person-fill material-icons" viewBox="0 0 16 16">
-              <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0zm2 5.755V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-.245S4 12 8 12s5 1.755 5 1.755z"/>
-            </svg>
-            </div>
-            <span class="nav-link-text ms-1">User Accounts</span>
-          </a>
-        </li>
+        </li>       
         <li class="nav-item">
           <a class="nav-link text-white" href="userlogs.php">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -86,28 +68,6 @@
             <span class="nav-link-text ms-1">Log Out</span>
           </a>
         </li>
-        <li class="nav-item">
-              <a class="nav-link dropdown-toggle pt-1 px-0" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <div class="media d-flex align-items-center ps-3 pt-2">
-                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                      <i class="material-icons opacity-10">settings</i>
-                    </div>
-                  <div class="media-body ms-2 text-dark align-items-center d-none d-lg-block">
-                    <span class="nav-link-text text-white">Setting</span>
-                  </div>
-                </div>
-              </a>
-              <div class="dropdown-menu dashboard-dropdown dropdown-menu-start mt-2 py-1 bg-light">
-                  <select class="dropdown-item d-flex align-items-center bg-transparent" aria-label=".form-select-lg example">
-                      <option selected>School Year</option>
-                      <option value="1">SY-21/22</option>
-                      <option value="2">SY-22/23</option>
-                      <option value="3">SY-23/24</option>
-                      <option value="3">SY-24/25</option>
-                      <option value="3">SY-25/26</option>
-                  </select>
-              </div>
-        </li>
       </ul>
     </div>
   </aside>
@@ -117,7 +77,7 @@
       <div class="container-fluid py-1 px-3">
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
-            <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">SSP Adviser</a></li>
+            <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">School Nurse</a></li>
             <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Dashboard</li>
           </ol>
           <h6 class="font-weight-bolder mb-0">Welcome to Dashboard</h6>
@@ -151,20 +111,13 @@
                 <div class="media d-flex align-items-center">
                   <img class="icon-xs rounded-circle" alt="Image placeholder" src="../../assets\img\team-4.jpg">
                   <div class="media-body ms-2 text-dark align-items-center d-none d-lg-block">
-                    <span class="mb-0 font-small fw-bold text-gray-900">SSP Adviser (Name)</span>
+                    <span class="mb-0 font-small fw-bold text-gray-900">Nurse(SchoolNurse)</span>
                   </div>
                 </div>
               </a>
               <div class="dropdown-menu dashboard-dropdown dropdown-menu-end mt-2 py-1">
-                  <a class="dropdown-item d-flex align-items-center" href="#" data-bs-toggle="modal" data-bs-target="#editTaskModal" draggable="false">
-                    <svg class="dropdown-icon me-2 icon-sm" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 20 20">
-                      <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
-                      <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
-                    </svg>
-                    My Profile 
-                  </a>
                   <a class="dropdown-item d-flex align-items-center" href="#" data-bs-toggle="modal" data-bs-target="#editTaskModal2" draggable="false">
-                    <svg class="dropdown-icon me-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <svg class="dropdown-icon me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                       <path d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 1 1 0-5.86 2.929 2.929 0 0 1 0 5.858z"></path>
                     </svg>
                     Change Password

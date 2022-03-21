@@ -42,25 +42,49 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white " href="tables.php">
+          <a class="nav-link text-white " href="teachers.php">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="material-icons opacity-10">table_view</i>
+              <i class="material-icons opacity-10">assignment</i>
             </div>
-            <span class="nav-link-text ms-1">Assessment</span>
+            <span class="nav-link-text ms-1">Teachers</span>
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white" href="tables.php">
+          <a class="nav-link text-white" href="subjects.php">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10">table_view</i>
+            </div>
+            <span class="nav-link-text ms-1">Subjects</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" href="students.php">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">assignment</i>
+            </div>
+            <span class="nav-link-text ms-1">Students</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" href="testbank.php">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10">folder</i>
+            </div>
+            <span class="nav-link-text ms-1">Test Bank</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" href="useracc.php">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-person-fill material-icons" viewBox="0 0 16 16">
+              <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0zm2 5.755V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-.245S4 12 8 12s5 1.755 5 1.755z"/>
+            </svg>
             </div>
             <span class="nav-link-text ms-1">User Accounts</span>
           </a>
         </li>
-
-        
         <li class="nav-item">
-          <a class="nav-link text-white" href="UserLogs.php">
+          <a class="nav-link text-white" href="userlogs.php">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">person</i>
             </div>
@@ -115,6 +139,24 @@
               <a href="javascript:;" class="nav-link text-body p-0">
                 <i class="fa fa-cog fixed-plugin-button-nav cursor-pointer" aria-hidden="true"></i>
               </a>
+            </li>
+            <li class="nav-item dropdown ms-lg-3">
+              <a class="nav-link dropdown-toggle pt-1 px-0" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <div class="media d-flex align-items-center">
+                  <img class="icon-xs rounded-circle" alt="Image placeholder" src="../../assets\img\team-4.jpg">
+                  <div class="media-body ms-2 text-dark align-items-center d-none d-lg-block">
+                    <span class="mb-0 font-small fw-bold text-gray-900">SSPHEAD (Name)</span>
+                  </div>
+                </div>
+              </a>
+              <div class="dropdown-menu dashboard-dropdown dropdown-menu-end mt-2 py-1">
+                  <a class="dropdown-item d-flex align-items-center" href="#" data-bs-toggle="modal" data-bs-target="#editTaskModal2" draggable="false">
+                    <svg class="dropdown-icon me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 1 1 0-5.86 2.929 2.929 0 0 1 0 5.858z"></path>
+                    </svg>
+                    Change Password
+                  </a>
+              </div>
             </li>
           </ul>
         </div>
@@ -208,7 +250,7 @@
               </div>
             </div>
             <div class="card-body">
-              <h6 class="mb-0 ">Weekly Overall</h6>
+              <h6 class="mb-0 ">Overall</h6>
               <p class="text-sm ">Result</p>
               <hr class="dark horizontal">
             </div>

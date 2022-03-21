@@ -7,7 +7,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="../../assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../../assets/img/favicon.png">
   <title>
-    Sign up
+    SSP Adviser
   </title>
   <!--     Fonts and icons     -->
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
@@ -34,7 +34,7 @@
     <div class="sidenav-header">
       <i class="fas fa-times p-3 cursor-pointer text-white opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
       <a class="navbar-brand m-0" target="_blank">
-        <span class="ms-1 font-weight-bold text-white fs-2">Sign Up</span>
+        <span class="ms-1 font-weight-bold text-white fs-2">Advisers</span>
       </a>
     </div>
     <hr class="horizontal light mt-0 mb-2">
@@ -49,14 +49,6 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white " href="tables.php">
-            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="material-icons opacity-10">table_view</i>
-            </div>
-            <span class="nav-link-text ms-1">Teachers Record</span>
-          </a>
-        </li>
-        <li class="nav-item">
           <a class="nav-link text-whitee active bg-gradient-faded-dark-vertical" href="#">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">assignment</i>
@@ -64,6 +56,48 @@
             <span class="nav-link-text ms-1">Teachers</span>
           </a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" href="subjects.php">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10">table_view</i>
+            </div>
+            <span class="nav-link-text ms-1">Subjects</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" href="students.php">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10">assignment</i>
+            </div>
+            <span class="nav-link-text ms-1">Students</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" href="testbank.php">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10">folder</i>
+            </div>
+            <span class="nav-link-text ms-1">Test Bank</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" href="useracc.php">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-person-fill material-icons" viewBox="0 0 16 16">
+              <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0zm2 5.755V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-.245S4 12 8 12s5 1.755 5 1.755z"/>
+            </svg>
+            </div>
+            <span class="nav-link-text ms-1">User Accounts</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" href="userlogs.php">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10">person</i>
+            </div>
+            <span class="nav-link-text ms-1">User Log</span>
+          </a>
+        </li> 
         <li class="nav-item mt-3">
           <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">___________________________________</h6>
         </li>
@@ -102,46 +136,54 @@
                       <label class="custom-file-label" for="customFile" id="fileLabel">No File Selected (.csv)</label>
                       <a href="#dl-template" id="dl-template" onclick="templateModal();" style="float: right;">Download Template</a>
                     </div>
-                    <br>
-                    <br>
-                    <hr>
                     <p>Single Sign up:</p>
                     <div class="input-group input-group-outline mb-3">
                       <label class="form-label">LastName</label>
-                      <input type="text" name="lName" class="form-control">
+                      <input type="text" name="lName" class="form-control" required>
+                      <div class="invalid-feedback">
+                        Please provide a valid LastName.
+                      </div>
                     </div>
                     <div class="input-group input-group-outline mb-3">
                       <label class="form-label">FirstName</label>
-                      <input type="text" name="fName" class="form-control">
+                      <input type="text" name="fName" class="form-control" required>
+                      <div class="invalid-feedback">
+                        Please provide a valid FirstName.
+                      </div>
                     </div>
                     <div class="input-group input-group-outline mb-3">
                       <label class="form-label">MiddleName</label>
-                      <input type="text" name="mName" class="form-control">
+                      <input type="text" name="mName" class="form-control" required>
+                      <div class="invalid-feedback">
+                        Please provide a valid MiddleName.
+                      </div>
                     </div>
                     <div class="input-group input-group-outline mb-3">
                       <label class="form-label">Employee Number</label>
-                      <input type="text" name="empNo" class="form-control">
+                      <input type="text" name="empNo" class="form-control" required>
+                      <div class="invalid-feedback">
+                        Please provide a valid Employee Number.
+                      </div>
                     </div>
                     <div class="input-group input-group-outline mb-3">
                       <label class="form-label">Email</label>
-                      <input type="email" name="email" class="form-control">
+                      <input type="email" name="email" class="form-control" required>
+                      <div class="invalid-feedback">
+                        Please provide a valid Email.
+                      </div>
                     </div>
                     <div class="input-group input-group-outline mb-3">
                       <label class="form-label">Password</label>
-                      <input type="password" name="password" id="password" class="form-control" style="border-radius: 0.375em;">
+                      <input type="password" name="password" id="password" class="form-control" style="border-radius: 0.375em;" required>
                       <button style="position:absolute; cursor: pointer; z-index: 3; width: 9%; border: none; background: none; right: 0%; top: 50%; transform: translate(0%, -50%);" id="togglePassword">
                         <i id="password-icon" class="fa fa-eye-slash"></i>
                       </button>
+                      <div class="invalid-feedback">
+                        Please provide a Password.
+                      </div>
                     </div>
-                    <!-- Removed. Task 4b - Remove ToS -->
-                    <!-- <div class="form-check form-check-info text-start ps-0">
-                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                            <label class="form-check-label" for="flexCheckDefault">
-                              I agree the <a href="javascript:;" class="text-dark font-weight-bolder">Terms and Conditions</a>
-                            </label>
-                          </div> -->
                     <div class="text-center">
-                      <button type="button" id="btn-account" class="btn btn-lg bg-gradient-success btn-lg w-100 mt-4 mb-0">Create</button>
+                      <button type="button" id="" class="btn btn-lg bg-gradient-success btn-lg w-100 mt-4 mb-0">Create</button>
                     </div>
                   </form>
                 </div>
@@ -152,6 +194,10 @@
       </div>
     </section>
   </main>
+  <!-- validation -->
+  <script src="../pages\ssphead\validation.js"></script>
+
+
   <!-- JQuery -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
 
