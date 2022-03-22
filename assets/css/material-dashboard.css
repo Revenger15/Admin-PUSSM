@@ -8455,6 +8455,9 @@ fieldset:disabled .btn {
 .mt-12 {
   margin-top: 16rem !important;
 }
+.mt-advsearch {
+  margin-top: 2.8rem !important;
+}
 
 .mt-auto {
   margin-top: auto !important;
@@ -17125,7 +17128,8 @@ fieldset:disabled .btn {
   border-radius: 50%;
 }
 .bg-login {
-  background-image: url(../img/favicon.png);
+  background-color: #63d471;
+  background-image: linear-gradient(315deg, #63d471 0%, #233329 74%);
   background-repeat: content;
   background-size: 100%, 100%;
   opacity: 0.8;

@@ -58,15 +58,6 @@ $userReference = $database->getReference("users/" . $uid . "/result");
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white " href="assessment.php">
-            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="material-icons opacity-10">table_view</i>
-            </div>
-            <span class="nav-link-text ms-1">Assessment</span>
-          </a>
-        </li>
-        
-        <li class="nav-item">
           <a class="nav-link text-whitee " href="hteacher.php">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">assignment</i>
@@ -74,8 +65,6 @@ $userReference = $database->getReference("users/" . $uid . "/result");
             <span class="nav-link-text ms-1">Head Teachers</span>
           </a>
         </li>
-
-        
         <li class="nav-item">
           <a class="nav-link text-white active bg-gradient-faded-dark-vertical" href="#">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">

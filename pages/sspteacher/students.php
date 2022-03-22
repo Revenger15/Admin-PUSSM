@@ -142,66 +142,91 @@
                       <label class="custom-file-label" for="customFile" id="fileLabel">No File Selected (.csv)</label>
                       <a href="#dl-template" id="dl-template" onclick="templateModal();" style="float: right;">Download Template</a>
                     </div>
-                    <p>Single Sign up:</p>
-                    <div class="input-group input-group-outline mb-3">
-                      <label class="form-label">ID Number</label>
-                      <input type="text" name="lName" class="form-control" required>
+                    <p class="mt-4">Single Sign up:</p>
+                    <div class="input-group input-group-outline mb-1">
+                        <select class="form-control" id="" required="">
+                            <option value="" selected>-select gender-</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Prefer-not-to-say">Prefer not to say</option>
+                        </select>
                       <div class="invalid-feedback">
-                        Please provide a valid ID Number.
+                        Please provide gender.
                       </div>
                     </div>
-                    <div class="input-group input-group-outline mb-3">
-                      <label class="form-label">Subject</label>
-                      <input type="text" name="lName" class="form-control" required>
+                    <div class="input-group input-group-outline mb-1">
+                        <select class="form-control" id="" required="">
+                            <option value="" selected>-Select Department-</option>
+                            <option value="CITE">CITE</option>
+                            <option value="CEA">CEA</option>
+                            <option value="CAS">CAS</option>
+                            <option value="CHS">CHS</option>
+                            <option value="CSS">CSS</option>
+                            <option value="PUCO">PUCO</option>
+                        </select>
                       <div class="invalid-feedback">
-                        Please provide a Subject.
+                        Please provide a valid Department.
                       </div>
                     </div>
-                    <div class="input-group input-group-outline mb-3">
-                      <label class="form-label">Section</label>
-                      <input type="text" name="lName" class="form-control" required>
-                      <div class="invalid-feedback">
-                        Please provide a Section.
-                      </div>
-                    </div>
-                    <div class="input-group input-group-outline mb-3">
+                    <div class="input-group input-group-outline mb-2">
                       <label class="form-label">LastName</label>
-                      <input type="text" name="lName" class="form-control" required>
+                      <input type="text" name="lName" class="form-control" required="">
                       <div class="invalid-feedback">
                         Please provide a valid LastName.
                       </div>
                     </div>
-                    <div class="input-group input-group-outline mb-3">
+                    <div class="input-group input-group-outline mb-2">
                       <label class="form-label">FirstName</label>
-                      <input type="text" name="fName" class="form-control" required>
+                      <input type="text" name="fName" class="form-control" required="">
                       <div class="invalid-feedback">
                         Please provide a valid FirstName.
                       </div>
                     </div>
-                    <div class="input-group input-group-outline mb-3">
+                    <div class="input-group input-group-outline mb-2">
                       <label class="form-label">MiddleName</label>
-                      <input type="text" name="mName" class="form-control" required>
+                      <input type="text" name="mName" class="form-control" required="">
                       <div class="invalid-feedback">
                         Please provide a valid MiddleName.
                       </div>
                     </div>
-                    <div class="input-group input-group-outline mb-3">
+                    <div class="input-group input-group-outline mb-2">
+                      <label class="form-label">ID Number</label>
+                      <input type="text" name="lName" class="form-control" required="">
+                      <div class="invalid-feedback">
+                        Please provide a valid ID Number.
+                      </div>
+                    </div>
+                    <div class="input-group input-group-outline mb-2">
+                      <label class="form-label">Subject</label>
+                      <input type="text" name="lName" class="form-control" required="">
+                      <div class="invalid-feedback">
+                        Please provide a Subject.
+                      </div>
+                    </div>
+                    <div class="input-group input-group-outline mb-2">
+                      <label class="form-label">Section</label>
+                      <input type="text" name="lName" class="form-control" required="">
+                      <div class="invalid-feedback">
+                        Please provide a Section.
+                      </div>
+                    </div>
+                    <div class="input-group input-group-outline mb-2">
                       <label class="form-label">Contact Number</label>
-                      <input type="text" name="empNo" class="form-control" required>
+                      <input type="text" name="empNo" class="form-control" required="">
                       <div class="invalid-feedback">
                         Please provide a valid Number.
                       </div>
                     </div>
-                    <div class="input-group input-group-outline mb-3">
+                    <div class="input-group input-group-outline mb-2">
                       <label class="form-label">Email</label>
-                      <input type="email" name="email" class="form-control" required>
+                      <input type="email" name="email" class="form-control" required="">
                       <div class="invalid-feedback">
                         Please provide a valid Email.
                       </div>
                     </div>
-                    <div class="input-group input-group-outline mb-3">
+                    <div class="input-group input-group-outline mb-2">
                       <label class="form-label">Password</label>
-                      <input type="password" name="password" id="password" class="form-control" style="border-radius: 0.375em;" required>
+                      <input type="password" name="password" id="password" class="form-control" style="border-radius: 0.375em;" required="">
                       <button style="position:absolute; cursor: pointer; z-index: 3; width: 9%; border: none; background: none; right: 0%; top: 50%; transform: translate(0%, -50%);" id="togglePassword">
                         <i id="password-icon" class="fa fa-eye-slash"></i>
                       </button>

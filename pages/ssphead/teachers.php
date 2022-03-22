@@ -138,6 +138,17 @@
                     </div>
                     <p>Single Sign up:</p>
                     <div class="input-group input-group-outline mb-3">
+                        <select class="form-control" id="" required="">
+                            <option value="" selected>-select gender-</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Prefer-not-to-say">Prefer not to say</option>
+                        </select>
+                      <div class="invalid-feedback">
+                        Please provide gender.
+                      </div>
+                    </div>
+                    <div class="input-group input-group-outline mb-3">
                       <label class="form-label">LastName</label>
                       <input type="text" name="lName" class="form-control" required>
                       <div class="invalid-feedback">

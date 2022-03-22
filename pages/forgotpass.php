@@ -7,7 +7,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets/img/favicon.png">
   <title>
-    Material Dashboard 2 by Creative Tim
+    Reset password
   </title>
   <!--     Fonts and icons     -->
   <link rel="stylesheet" type="text/css"
@@ -35,8 +35,8 @@
                 <form class="form" role="form" autocomplete="off">
                     <div class="form-group">
                         <label for="inputResetPasswordEmail">Email</label>
-                        <input type="email" class="form-control" id="inputResetPasswordEmail" required="">
-                        <span id="helpResetPasswordEmail" class="form-text small text-muted">
+                        <input type="email" class="form-control ps-2" id="inputResetPasswordEmail" required="">
+                        <span id="helpResetPasswordEmail" class="form-text small text-muted ms-1">
                                 Password reset instructions will be sent to this email address.
                             </span>
                     </div>

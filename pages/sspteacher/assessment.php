@@ -144,6 +144,12 @@ $userReference = $database->getReference("users/" . $uid . "/result");
             <div class="input-group input-group-outline">
               <label class="form-label">Type here...</label>
               <input type="text" class="form-control">
+              <select name="tsearch" id="" class="form-label border-0 bg-transparent mt-advsearch cursor-pointer">
+                <option value="tb1">Assessed Table</option>
+                <option value="tb2">Physical Table</option>\
+                <option value="tb3">Mental Table</option>
+                <option value="tb4">Good Condition Table</option>
+              </select>
             </div>
           </div>
         </div>
@@ -155,8 +161,8 @@ $userReference = $database->getReference("users/" . $uid . "/result");
         <div class="col-12">
           <div class="card my-4">
             <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
-              <div class="bg-gradient-faded-success shadow-dark border-radius-lg pt-4 pb-3">
-                <h6 class="text-white text-capitalize ps-3">Students Record</h6>
+              <div class="bg-gradient-faded-dark shadow-dark border-radius-lg pt-4 pb-3">
+                <h6 class="text-white text-capitalize ps-3">Students Assessed</h6>
               </div>
             </div>
             <div class="card-body px-0 pb-2">
@@ -235,7 +241,7 @@ $userReference = $database->getReference("users/" . $uid . "/result");
             </div>
             <div class="fixed-table-pagination">
               <div class="float-left pagination">
-                <button type="button" class="btn btn-outline-success mt-2 ms-1 mb-1">
+                <button type="button" class="btn btn-outline-dark mt-2 ms-1 mb-1">
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer" viewBox="0 0 16 16">
                   <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"></path>
                   <path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z"></path>
@@ -245,7 +251,7 @@ $userReference = $database->getReference("users/" . $uid . "/result");
               <div class="float-right pagination">
                 <ul class="pagination">
                   <li class="page-item page-pre"><a class="page-link" aria-label="previous page" href="">« Previous</a></li>
-                  <li class="page-item active bg-gradient-faded-success-vertical border-radius-2xl"><a class="page-link" aria-label="to page 1" href="">1</a></li>
+                  <li class="page-item active bg-gradient-faded-dark-vertical border-radius-2xl"><a class="page-link" aria-label="to page 1" href="">1</a></li>
                   <li class="page-item"><a class="page-link" aria-label="to page 2" href="">2</a></li>
                   <li class="page-item"><a class="page-link" aria-label="to page 3" href="">3</a></li>
                   <li class="page-item"><a class="page-link" aria-label="to page 4" href="">4</a></li>
@@ -262,7 +268,7 @@ $userReference = $database->getReference("users/" . $uid . "/result");
           <div class="card my-4">
             <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
               <div class="bg-gradient-faded-warning shadow-dark border-radius-lg pt-4 pb-3">
-                <h6 class="text-white text-capitalize ps-3">History of Contacted Student</h6>
+                <h6 class="text-white text-capitalize ps-3">Need to Refer(Physical)</h6>
               </div>
             </div>
             <div class="card-body px-0 pb-2">
@@ -476,6 +482,376 @@ $userReference = $database->getReference("users/" . $uid . "/result");
                 <ul class="pagination">
                   <li class="page-item page-pre"><a class="page-link" aria-label="previous page" href="">« Previous</a></li>
                   <li class="page-item active bg-gradient-faded-warning-vertical border-radius-2xl"><a class="page-link" aria-label="to page 1" href="">1</a></li>
+                  <li class="page-item"><a class="page-link" aria-label="to page 2" href="">2</a></li>
+                  <li class="page-item"><a class="page-link" aria-label="to page 3" href="">3</a></li>
+                  <li class="page-item"><a class="page-link" aria-label="to page 4" href="">4</a></li>
+                  <li class="page-item"><a class="page-link" aria-label="to page 5" href="">5</a></li>
+                  <li class="page-item"><a class="page-link" aria-label="next page" href="">Next »</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <div class="card my-4">
+            <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+              <div class="bg-gradient-faded-success shadow-dark border-radius-lg pt-4 pb-3">
+                <h6 class="text-white text-capitalize ps-3">Need to Refer(Mental)</h6>
+              </div>
+            </div>
+            <div class="card-body px-0 pb-2">
+              <div class="table-responsive p-0">
+                <table class="table align-items-center justify-content-center mb-0">
+                  <thead>
+                    <tr>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Names</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Subject</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Section</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Contact</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2">Date</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <div class="d-flex px-2 py-1">
+                          <div>
+                            <img src="../../assets/img/team-2.jpg" class="avatar avatar-sm me-3 border-radius-lg" alt="user1">
+                          </div>
+                          <div class="d-flex flex-column justify-content-center">
+                            <h6 class="mb-0 text-sm">Arniel C. Fernandez</h6>
+                            <p class="text-xs text-secondary mb-0">farniel1588@gmail.com</p>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <p class="text-xs font-weight-bold mb-0">SSP-001</p>
+                      </td>
+                      <td>
+                        <p class="text-xs font-weight-bold mb-0">3BSITSYSDEV-1</p>
+                      </td>
+                      <td>
+                        <p class="text-xs font-weight-bold mb-0">09491050876</p>
+                      </td>
+                      <td class="align-middle text-center">
+                        <span class="text-secondary text-xs font-weight-bold">23/04/18</span>
+                      </td>
+                      <td class="align-middle">
+                        <a href="javascript:;" class="text-sm font-weight-bold text-xs badge badge-sm bg-gradient-warning" data-toggle="tooltip" data-original-title="Edit user">
+                          Contacted
+                        </a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="d-flex px-2 py-1">
+                          <div>
+                            <img src="../../assets/img/team-2.jpg" class="avatar avatar-sm me-3 border-radius-lg" alt="user1">
+                          </div>
+                          <div class="d-flex flex-column justify-content-center">
+                            <h6 class="mb-0 text-sm">Arniel C. Fernandez</h6>
+                            <p class="text-xs text-secondary mb-0">farniel1588@gmail.com</p>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <p class="text-xs font-weight-bold mb-0">SSP-001</p>
+                      </td>
+                      <td>
+                        <p class="text-xs font-weight-bold mb-0">3BSITSYSDEV-1</p>
+                      </td>
+                      <td>
+                        <p class="text-xs font-weight-bold mb-0">09491050876</p>
+                      </td>
+                      <td class="align-middle text-center">
+                        <span class="text-secondary text-xs font-weight-bold">23/04/18</span>
+                      </td>
+                      <td class="align-middle">
+                        <a href="javascript:;" class="text-sm font-weight-bold text-xs badge badge-sm bg-gradient-warning" data-toggle="tooltip" data-original-title="Edit user">
+                          Contacted
+                        </a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="d-flex px-2 py-1">
+                          <div>
+                            <img src="../../assets/img/team-2.jpg" class="avatar avatar-sm me-3 border-radius-lg" alt="user1">
+                          </div>
+                          <div class="d-flex flex-column justify-content-center">
+                            <h6 class="mb-0 text-sm">Arniel C. Fernandez</h6>
+                            <p class="text-xs text-secondary mb-0">farniel1588@gmail.com</p>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <p class="text-xs font-weight-bold mb-0">SSP-001</p>
+                      </td>
+                      <td>
+                        <p class="text-xs font-weight-bold mb-0">3BSITSYSDEV-1</p>
+                      </td>
+                      <td>
+                        <p class="text-xs font-weight-bold mb-0">09491050876</p>
+                      </td>
+                      <td class="align-middle text-center">
+                        <span class="text-secondary text-xs font-weight-bold">23/04/18</span>
+                      </td>
+                      <td class="align-middle">
+                        <a href="javascript:;" class="text-sm font-weight-bold text-xs badge badge-sm bg-gradient-warning" data-toggle="tooltip" data-original-title="Edit user">
+                          Contacted
+                        </a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="fixed-table-pagination">
+              <div class="float-left pagination">
+                <button type="button" class="btn btn-outline-success mt-2 ms-1 mb-1">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer" viewBox="0 0 16 16">
+                  <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"></path>
+                  <path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z"></path>
+                  </svg> Print
+                </button>
+              </div>
+              <div class="float-right pagination">
+                <ul class="pagination">
+                  <li class="page-item page-pre"><a class="page-link" aria-label="previous page" href="">« Previous</a></li>
+                  <li class="page-item active bg-gradient-faded-success-vertical border-radius-2xl"><a class="page-link" aria-label="to page 1" href="">1</a></li>
+                  <li class="page-item"><a class="page-link" aria-label="to page 2" href="">2</a></li>
+                  <li class="page-item"><a class="page-link" aria-label="to page 3" href="">3</a></li>
+                  <li class="page-item"><a class="page-link" aria-label="to page 4" href="">4</a></li>
+                  <li class="page-item"><a class="page-link" aria-label="to page 5" href="">5</a></li>
+                  <li class="page-item"><a class="page-link" aria-label="next page" href="">Next »</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <div class="card my-4">
+            <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+              <div class="bg-gradient-faded-info shadow-dark border-radius-lg pt-4 pb-3">
+                <h6 class="text-white text-capitalize ps-3">List of Good Condition</h6>
+              </div>
+            </div>
+            <div class="card-body px-0 pb-2">
+              <div class="table-responsive p-0">
+                <table class="table align-items-center justify-content-center mb-0">
+                  <thead>
+                    <tr>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Names</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Subject</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Section</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Contact</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2">Date</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <div class="d-flex px-2 py-1">
+                          <div>
+                            <img src="../../assets/img/team-2.jpg" class="avatar avatar-sm me-3 border-radius-lg" alt="user1">
+                          </div>
+                          <div class="d-flex flex-column justify-content-center">
+                            <h6 class="mb-0 text-sm">Arniel C. Fernandez</h6>
+                            <p class="text-xs text-secondary mb-0">farniel1588@gmail.com</p>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <p class="text-xs font-weight-bold mb-0">SSP-001</p>
+                      </td>
+                      <td>
+                        <p class="text-xs font-weight-bold mb-0">3BSITSYSDEV-1</p>
+                      </td>
+                      <td>
+                        <p class="text-xs font-weight-bold mb-0">09491050876</p>
+                      </td>
+                      <td class="align-middle text-center">
+                        <span class="text-secondary text-xs font-weight-bold">23/04/18</span>
+                      </td>
+                      <td class="align-middle">
+                        <a href="javascript:;" class="text-sm font-weight-bold text-xs badge badge-sm bg-gradient-warning" data-toggle="tooltip" data-original-title="Edit user">
+                          Contacted
+                        </a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="d-flex px-2 py-1">
+                          <div>
+                            <img src="../../assets/img/team-2.jpg" class="avatar avatar-sm me-3 border-radius-lg" alt="user1">
+                          </div>
+                          <div class="d-flex flex-column justify-content-center">
+                            <h6 class="mb-0 text-sm">Arniel C. Fernandez</h6>
+                            <p class="text-xs text-secondary mb-0">farniel1588@gmail.com</p>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <p class="text-xs font-weight-bold mb-0">SSP-001</p>
+                      </td>
+                      <td>
+                        <p class="text-xs font-weight-bold mb-0">3BSITSYSDEV-1</p>
+                      </td>
+                      <td>
+                        <p class="text-xs font-weight-bold mb-0">09491050876</p>
+                      </td>
+                      <td class="align-middle text-center">
+                        <span class="text-secondary text-xs font-weight-bold">23/04/18</span>
+                      </td>
+                      <td class="align-middle">
+                        <a href="javascript:;" class="text-sm font-weight-bold text-xs badge badge-sm bg-gradient-warning" data-toggle="tooltip" data-original-title="Edit user">
+                          Contacted
+                        </a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="d-flex px-2 py-1">
+                          <div>
+                            <img src="../../assets/img/team-2.jpg" class="avatar avatar-sm me-3 border-radius-lg" alt="user1">
+                          </div>
+                          <div class="d-flex flex-column justify-content-center">
+                            <h6 class="mb-0 text-sm">Arniel C. Fernandez</h6>
+                            <p class="text-xs text-secondary mb-0">farniel1588@gmail.com</p>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <p class="text-xs font-weight-bold mb-0">SSP-001</p>
+                      </td>
+                      <td>
+                        <p class="text-xs font-weight-bold mb-0">3BSITSYSDEV-1</p>
+                      </td>
+                      <td>
+                        <p class="text-xs font-weight-bold mb-0">09491050876</p>
+                      </td>
+                      <td class="align-middle text-center">
+                        <span class="text-secondary text-xs font-weight-bold">23/04/18</span>
+                      </td>
+                      <td class="align-middle">
+                        <a href="javascript:;" class="text-sm font-weight-bold text-xs badge badge-sm bg-gradient-warning" data-toggle="tooltip" data-original-title="Edit user">
+                          Contacted
+                        </a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="d-flex px-2 py-1">
+                          <div>
+                            <img src="../../assets/img/team-2.jpg" class="avatar avatar-sm me-3 border-radius-lg" alt="user1">
+                          </div>
+                          <div class="d-flex flex-column justify-content-center">
+                            <h6 class="mb-0 text-sm">Arniel C. Fernandez</h6>
+                            <p class="text-xs text-secondary mb-0">farniel1588@gmail.com</p>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <p class="text-xs font-weight-bold mb-0">SSP-001</p>
+                      </td>
+                      <td>
+                        <p class="text-xs font-weight-bold mb-0">3BSITSYSDEV-1</p>
+                      </td>
+                      <td>
+                        <p class="text-xs font-weight-bold mb-0">09491050876</p>
+                      </td>
+                      <td class="align-middle text-center">
+                        <span class="text-secondary text-xs font-weight-bold">23/04/18</span>
+                      </td>
+                      <td class="align-middle">
+                        <a href="javascript:;" class="text-sm font-weight-bold text-xs badge badge-sm bg-gradient-warning" data-toggle="tooltip" data-original-title="Edit user">
+                          Contacted
+                        </a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="d-flex px-2 py-1">
+                          <div>
+                            <img src="../../assets/img/team-2.jpg" class="avatar avatar-sm me-3 border-radius-lg" alt="user1">
+                          </div>
+                          <div class="d-flex flex-column justify-content-center">
+                            <h6 class="mb-0 text-sm">Arniel C. Fernandez</h6>
+                            <p class="text-xs text-secondary mb-0">farniel1588@gmail.com</p>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <p class="text-xs font-weight-bold mb-0">SSP-001</p>
+                      </td>
+                      <td>
+                        <p class="text-xs font-weight-bold mb-0">3BSITSYSDEV-1</p>
+                      </td>
+                      <td>
+                        <p class="text-xs font-weight-bold mb-0">09491050876</p>
+                      </td>
+                      <td class="align-middle text-center">
+                        <span class="text-secondary text-xs font-weight-bold">23/04/18</span>
+                      </td>
+                      <td class="align-middle">
+                        <a href="javascript:;" class="text-sm font-weight-bold text-xs badge badge-sm bg-gradient-warning" data-toggle="tooltip" data-original-title="Edit user">
+                          Contacted
+                        </a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="d-flex px-2 py-1">
+                          <div>
+                            <img src="../../assets/img/team-2.jpg" class="avatar avatar-sm me-3 border-radius-lg" alt="user1">
+                          </div>
+                          <div class="d-flex flex-column justify-content-center">
+                            <h6 class="mb-0 text-sm">Arniel C. Fernandez</h6>
+                            <p class="text-xs text-secondary mb-0">farniel1588@gmail.com</p>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <p class="text-xs font-weight-bold mb-0">SSP-001</p>
+                      </td>
+                      <td>
+                        <p class="text-xs font-weight-bold mb-0">3BSITSYSDEV-1</p>
+                      </td>
+                      <td>
+                        <p class="text-xs font-weight-bold mb-0">09491050876</p>
+                      </td>
+                      <td class="align-middle text-center">
+                        <span class="text-secondary text-xs font-weight-bold">23/04/18</span>
+                      </td>
+                      <td class="align-middle">
+                        <a href="javascript:;" class="text-sm font-weight-bold text-xs badge badge-sm bg-gradient-warning" data-toggle="tooltip" data-original-title="Edit user">
+                          Contacted
+                        </a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="fixed-table-pagination">
+              <div class="float-left pagination">
+                <button type="button" class="btn btn-outline-info mt-2 ms-1 mb-1">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer" viewBox="0 0 16 16">
+                  <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"></path>
+                  <path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z"></path>
+                  </svg> Print
+                </button>
+              </div>
+              <div class="float-right pagination">
+                <ul class="pagination">
+                  <li class="page-item page-pre"><a class="page-link" aria-label="previous page" href="">« Previous</a></li>
+                  <li class="page-item active bg-gradient-faded-info-vertical border-radius-2xl"><a class="page-link" aria-label="to page 1" href="">1</a></li>
                   <li class="page-item"><a class="page-link" aria-label="to page 2" href="">2</a></li>
                   <li class="page-item"><a class="page-link" aria-label="to page 3" href="">3</a></li>
                   <li class="page-item"><a class="page-link" aria-label="to page 4" href="">4</a></li>

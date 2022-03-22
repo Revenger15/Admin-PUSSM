@@ -130,6 +130,10 @@
             <div class="input-group input-group-outline">
               <label class="form-label">Type here...</label>
               <input type="text" class="form-control">
+              <select name="tsearch" id="" class="form-label border-0 bg-transparent mt-advsearch cursor-pointer">
+                <option value="Mentalt">Mental Table</option>
+                <option value="Physicalt">Physical Table</option>
+              </select>
             </div>
           </div>
           <ul class="navbar-nav  justify-content-end">

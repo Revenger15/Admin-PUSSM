@@ -157,15 +157,15 @@ $userReference = $database->getReference("users/" . $uid . "/result");
         <div class="col-12">
           <div class="card my-4">
             <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
-              <div class="bg-gradient-faded-success shadow-dark border-radius-lg pt-4 pb-3">
+              <div class="bg-gradient-faded-dark shadow-dark border-radius-lg pt-4 pb-3">
                 <h6 class="text-white text-capitalize ps-3">User History</h6>
               </div>
             </div>
-            <div class="page-content page-container" id="page-content">
-    <div class="card-body px-0 pb-2">
-        <div class="table-responsive p-0">
-            <div class="col-xl-12">
-                <div>
+          <div class="page-content page-container" id="page-content">
+            <div class="card-body px-0 pb-2">
+              <div class="table-responsive p-0">
+                <div class="col-xl-12">
+                  <div>
                     <div class="card-block">
                         <div class="row m-b-25">
                             <div class="col-auto p-r-0">

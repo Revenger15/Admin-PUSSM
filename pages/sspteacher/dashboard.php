@@ -87,26 +87,26 @@
           </a>
         </li>
         <li class="nav-item">
-              <a class="nav-link dropdown-toggle pt-1 px-0" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <div class="media d-flex align-items-center ps-3 pt-2">
-                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                      <i class="material-icons opacity-10">settings</i>
-                    </div>
-                  <div class="media-body ms-2 text-dark align-items-center d-none d-lg-block">
-                    <span class="nav-link-text text-white">Setting</span>
-                  </div>
+          <a class="nav-link dropdown-toggle pt-1 px-0" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <div class="media d-flex align-items-center ps-3 pt-2">
+                <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                  <i class="material-icons opacity-10">settings</i>
                 </div>
-              </a>
-              <div class="dropdown-menu dashboard-dropdown dropdown-menu-start mt-2 py-1 bg-light">
-                  <select class="dropdown-item d-flex align-items-center bg-transparent" aria-label=".form-select-lg example">
-                      <option selected>School Year</option>
-                      <option value="1">SY-21/22</option>
-                      <option value="2">SY-22/23</option>
-                      <option value="3">SY-23/24</option>
-                      <option value="3">SY-24/25</option>
-                      <option value="3">SY-25/26</option>
-                  </select>
+              <div class="media-body ms-2 text-dark align-items-center d-none d-lg-block">
+                <span class="nav-link-text text-white">Setting</span>
               </div>
+            </div>
+          </a>
+          <div class="dropdown-menu dashboard-dropdown dropdown-menu-start mt-2 py-1 bg-light">
+              <select class="dropdown-item d-flex align-items-center bg-transparent" aria-label=".form-select-lg example">
+                <option selected>School Year</option>
+                <option value="1">SY-21/22</option>
+                <option value="2">SY-22/23</option>
+                <option value="3">SY-23/24</option>
+                <option value="3">SY-24/25</option>
+                <option value="3">SY-25/26</option>
+              </select>
+          </div>
         </li>
       </ul>
     </div>
@@ -149,22 +149,22 @@
             <li class="nav-item dropdown ms-lg-3">
               <a class="nav-link dropdown-toggle pt-1 px-0" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 <div class="media d-flex align-items-center">
-                  <img class="icon-xs rounded-circle" alt="Image placeholder" src="../../assets\img\team-4.jpg">
+                  <img class="icon-xs rounded-circle" alt="Image placeholder" src="../../assets\img\ficon.png">
                   <div class="media-body ms-2 text-dark align-items-center d-none d-lg-block">
-                    <span class="mb-0 font-small fw-bold text-gray-900">SSP Adviser (Name)</span>
+                    <span class="mb-0 font-small fw-bold text-gray-900">Welcome, "Name" (Adviser)</span>
                   </div>
                 </div>
               </a>
               <div class="dropdown-menu dashboard-dropdown dropdown-menu-end mt-2 py-1">
-                  <a class="dropdown-item d-flex align-items-center" href="#" data-bs-toggle="modal" data-bs-target="#editTaskModal" draggable="false">
+                  <a class="dropdown-item d-flex align-items-center" href="profile.php" data-bs-toggle="modal" data-bs-target="#editTaskModal" draggable="false">
                     <svg class="dropdown-icon me-2 icon-sm" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 20 20">
                       <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
                       <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
                     </svg>
-                    My Profile 
+                    &nbsp; My Profile 
                   </a>
-                  <a class="dropdown-item d-flex align-items-center" href="#" data-bs-toggle="modal" data-bs-target="#editTaskModal2" draggable="false">
-                    <svg class="dropdown-icon me-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                  <a class="dropdown-item d-flex align-items-center" href="changepass.php" data-bs-toggle="modal" data-bs-target="#editTaskModal2" draggable="false">
+                    <svg class="dropdown-icon me-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                       <path d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 1 1 0-5.86 2.929 2.929 0 0 1 0 5.858z"></path>
                     </svg>
                     Change Password

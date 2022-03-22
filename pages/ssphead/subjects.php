@@ -142,6 +142,10 @@ $userReference = $database->getReference("users/" . $uid . "/result");
             <div class="input-group input-group-outline">
               <label class="form-label">Type here...</label>
               <input type="text" class="form-control">
+              <select name="tsearch" id="" class="form-label border-0 bg-transparent mt-advsearch cursor-pointer">
+                <option value="tb1">Assigning Table</option>
+                <option value="tb2">Assigned Table</option>
+              </select>
             </div>
           </div>
           <ul class="navbar-nav  justify-content-end">
@@ -180,7 +184,7 @@ $userReference = $database->getReference("users/" . $uid . "/result");
                             <td>
                               <div class="d-flex px-2 py-1">
                                 <div>
-                                  <img src="../../assets/img/team-1.png" class="avatar avatar-sm me-3 border-radius-lg" alt="user1">
+                                  <img src="../../assets/img/ficon.png" class="avatar avatar-sm me-3 border-radius-lg" alt="user1">
                                 </div>
                                 <div class="d-flex flex-column justify-content-center">
                                   <h6 class="mb-0 text-sm text-start">Angelica Fernandez Vidal</h6>
@@ -250,7 +254,7 @@ $userReference = $database->getReference("users/" . $uid . "/result");
           <div class="card my-4">
             <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
               <div class="bg-gradient-faded-success shadow-dark border-radius-lg pt-4 pb-3">
-                <h6 class="text-white text-capitalize ps-3">List of Advisers</h6>
+                <h6 class="text-white text-capitalize ps-3">List of Advisers Assigned</h6>
               </div>
             </div>
             <div class="card-body px-0 pb-2">
@@ -270,7 +274,7 @@ $userReference = $database->getReference("users/" . $uid . "/result");
                       <td>
                         <div class="d-flex px-2 py-1">
                           <div>
-                            <img src="../../assets/img/team-2.jpg" class="avatar avatar-sm me-3 border-radius-lg" alt="user1">
+                            <img src="../../assets/img/micon.png" class="avatar avatar-sm me-3 border-radius-lg" alt="user1">
                           </div>
                           <div class="d-flex flex-column justify-content-center">
                             <h6 class="mb-0 text-sm">Arniel C. Fernandez</h6>

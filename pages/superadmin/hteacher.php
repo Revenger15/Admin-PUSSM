@@ -49,14 +49,6 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white " href="assessment.php">
-            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="material-icons opacity-10">table_view</i>
-            </div>
-            <span class="nav-link-text ms-1">Assessment</span>
-          </a>
-        </li>
-        <li class="nav-item">
           <a class="nav-link text-whitee active bg-gradient-faded-dark-vertical" href="#">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">assignment</i>
@@ -140,7 +132,7 @@
                       <td>
                         <div class="d-flex px-2 py-1">
                           <div>
-                            <img src="../../assets/img/team-1.png" class="avatar avatar-sm me-3 border-radius-lg" alt="user1">
+                            <img src="../../assets/img/ficon.png" class="avatar avatar-sm me-3 border-radius-lg" alt="user1">
                           </div>
                           <div class="d-flex flex-column justify-content-center">
                             <h6 class="mb-0 text-sm text-start">Angelica Fernandez Vidal</h6>
@@ -197,50 +189,68 @@
                   <form method="POST" enctype="multipart/form-data" name="teacher-register" id="teacher-register">
                     <p>Fill up:</p>
                     <div class="input-group input-group-outline mb-3">
+                        <select class="form-control" id="" required="">
+                            <option value="" selected>-Select Gender-</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Prefer-not-to-say">Prefer not to say</option>
+                        </select>
+                      <div class="invalid-feedback">
+                        Please provide gender.
+                      </div>
+                    </div>
+                    <div class="input-group input-group-outline mb-3">
+                        <select class="form-control" id="" required="">
+                            <option value="" selected>-Select Department-</option>
+                            <option value="CITE">CITE</option>
+                            <option value="CEA">CEA</option>
+                            <option value="CAS">CAS</option>
+                            <option value="CHS">CHS</option>
+                            <option value="CSS">CSS</option>
+                            <option value="PUCO">PUCO</option>
+                        </select>
+                      <div class="invalid-feedback">
+                        Please provide a valid Department.
+                      </div>
+                    </div>
+                    <div class="input-group input-group-outline mb-3">
                       <label class="form-label">LastName</label>
-                      <input type="text" name="lName" class="form-control" required>
+                      <input type="text" name="lName" class="form-control" required="">
                       <div class="invalid-feedback">
                         Please provide a valid LastName.
                       </div>
                     </div>
                     <div class="input-group input-group-outline mb-3">
                       <label class="form-label">FirstName</label>
-                      <input type="text" name="fName" class="form-control" required>
+                      <input type="text" name="fName" class="form-control" required="">
                       <div class="invalid-feedback">
                         Please provide a valid FirstName.
                       </div>
                     </div>
                     <div class="input-group input-group-outline mb-3">
                       <label class="form-label">MiddleName</label>
-                      <input type="text" name="mName" class="form-control" required>
+                      <input type="text" name="mName" class="form-control" required="">
                       <div class="invalid-feedback">
                         Please provide a valid MiddleName.
                       </div>
                     </div>
                     <div class="input-group input-group-outline mb-3">
-                      <label class="form-label">Department</label>
-                      <input type="text" name="mName" class="form-control" required>
-                      <div class="invalid-feedback">
-                        Please provide a valid Department.
-                      </div>
-                    </div>
-                    <div class="input-group input-group-outline mb-3">
                       <label class="form-label">Employee Number</label>
-                      <input type="text" name="empNo" class="form-control" required>
+                      <input type="text" name="empNo" class="form-control" required="">
                       <div class="invalid-feedback">
                         Please provide a valid Employee Number.
                       </div>
                     </div>
                     <div class="input-group input-group-outline mb-3">
                       <label class="form-label">Email</label>
-                      <input type="email" name="email" class="form-control" required>
+                      <input type="email" name="email" class="form-control" required="">
                       <div class="invalid-feedback">
                         Please provide a valid Email.
                       </div>
                     </div>
                     <div class="input-group input-group-outline mb-3">
                       <label class="form-label">Password</label>
-                      <input type="password" name="password" id="password" class="form-control" style="border-radius: 0.375em;" required>
+                      <input type="password" name="password" id="password" class="form-control" style="border-radius: 0.375em;" required="">
                       <button style="position:absolute; cursor: pointer; z-index: 3; width: 9%; border: none; background: none; right: 0%; top: 50%; transform: translate(0%, -50%);" id="togglePassword">
                         <i id="password-icon" class="fa fa-eye-slash"></i>
                       </button>
@@ -307,7 +317,7 @@
   <script>
     $('a#dl-template').attr({
       target: '_blank',
-      href: 'PUSSM_Teacher-Template.csv'
+      href: 'PUSSM_HeadTeacher-Template.csv'
     });
 
     $('#btn-account').click(function() {

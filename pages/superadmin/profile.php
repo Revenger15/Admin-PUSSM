@@ -33,7 +33,7 @@
         <div class="row gx-4 mb-2">
           <div class="col-auto">
             <div class="avatar avatar-xl position-relative">
-              <img src="../../assets/img/ficon.png" alt="profile_image" class="w-100 border-radius-lg shadow-sm">
+              <img src="../../assets/img/micon.png" alt="profile_image" class="w-100 border-radius-lg shadow-sm">
             </div>
           </div>
           <div class="col-auto my-auto">
@@ -42,7 +42,7 @@
                 Silver Swan
               </h5>
               <p class="mb-0 font-weight-normal text-sm">
-                SSP Adviser
+                CSDL
               </p>
             </div>
           </div> 
@@ -60,12 +60,11 @@
                 <div class="card-body p-3">
                   <ul class="list-group">
                     <li class="list-group-item border-0 ps-0 pt-0 text-sm"><strong class="text-dark">Full Name:</strong> &nbsp; Silver S. Swan</li>
-                    <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Gender:</strong> &nbsp; Female</li>
+                    <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Gender:</strong> &nbsp; Male</li>
                     <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Mobile:</strong> &nbsp; (+63)123 123 1234</li>
                     <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Email:</strong> &nbsp; Datoputi@mail.com</li>
-                    <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Subject Assigned:</strong> &nbsp; SSP-000</li>
-                    <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Section Handled:</strong> &nbsp; 1bsit-00, 2bsit-01, 2bsit-02</li>
-                    <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Department:</strong> &nbsp; CITE</li>
+                    <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Position:</strong> &nbsp; CEO</li>
+                    <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark"></strong></li>
                   </ul>
                 </div>
               </div>
@@ -81,55 +80,40 @@
                 </div>
                 <div class="card-body p-3">
                   <form class="form" role="form" autocomplete="off">
-                      <div class="form-group mt-1">
-                          <label class="mb-0" for="">Fullname</label>
-                          <input type="textfield" class="form-control ps-2" id="" required="">
-                      </div>
-                      <div class="form-group mt-1">
-                          <label class="mb-0" for="">Gender</label>
-                          <select class="form-control ps-2" id="" required="">
-                              <option value="" selected>-select-</option>
-                              <option value="Male">Male</option>
-                              <option value="Female">Female</option>
-                              <option value="Prefer-not-to-say">Prefer not to say</option>
-                          </select>
-                      </div>
-                      <div class="form-group mt-1">
-                          <label class="mb-0" for="">Number</label>
-                          <input type="textfield" class="form-control ps-2" id="" required="">
-                      </div>
-                      <div class="form-group mt-1">
-                          <label class="mb-0" for="">Email</label>
-                          <input type="textfield" class="form-control ps-2" id="" required="">
-                      </div>
-                      <div class="form-group mt-1">
-                          <label class="mb-0" for="">Subject Assigned</label>
-                          <input type="textfield" class="form-control ps-2" id="" required="">
-                      </div>
-                      <div class="form-group mt-1">
-                          <label class="mb-0" for="">Section Assigned</label>
-                          <input type="textfield" class="form-control ps-2" id="" required="">
-                      </div>
-                      <div class="form-group mt-1">
-                          <label class="mb-0" for="">Department</label>
-                          <select class="form-control ps-2" id="" required="">
-                              <option value="" selected>-select-</option>
-                              <option value="CITE">CITE</option>
-                              <option value="CEA">CEA</option>
-                              <option value="CAS">CAS</option>
-                              <option value="CHS">CHS</option>
-                              <option value="CSS">CSS</option>
-                              <option value="PUCO">PUCO</option>
-                          </select>
-                      </div>
+                    <div class="form-group mt-1">
+                        <label class="mb-0" for="">Fullname</label>
+                        <input type="textfield" class="form-control ps-2" id="" >
+                    </div>
+                    <div class="form-group mt-1">
+                        <label class="mb-0" for="">Gender</label>
+                        <select class="form-control ps-2" id="" >
+                            <option value="" selected>-select-</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Prefer-not-to-say">Prefer not to say</option>
+                        </select>
+                    </div>
+                    <div class="form-group mt-1">
+                        <label class="mb-0" for="">Number</label>
+                        <input type="textfield" class="form-control ps-2" id="" >
+                    </div>
+                    <div class="form-group mt-1">
+                        <label class="mb-0" for="">Email</label>
+                        <input type="textfield" class="form-control ps-2" id="" >
+                    </div>
+                    <div class="form-group mt-1">
+                        <label class="mb-0" for="">Position</label>
+                        <input type="textfield" class="form-control ps-2" id="" >
+                    </div>
                     <center>
-                      <div class="form-group pt-2">
-                          <button type="submit" class="btn btn-success btn-lg float-right">Update</button>
-                      </div>
+                    <div class="form-group pt-2">
+                        <button type="submit" class="btn btn-success btn-lg float-right">Update</button>
+                    </div>
                     </center>
                   </form>
                 </div>
               </div>
+            </div>
           </div>
       </div>
     </div>
