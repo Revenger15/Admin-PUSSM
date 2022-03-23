@@ -23,11 +23,51 @@
 </head>
 
 <body>
-    <div class="container-fluid py-4">
-        <div role="progressbar" aria-valuenow="69" aria-valuemin="0" aria-valuemax="100" style="--value:69"><p class="text-xs font-weight-bold mb-0">Physical</p></div>
-        <div role="progressbar" aria-valuenow="69" aria-valuemin="0" aria-valuemax="100" style="--value:69"><p class="text-xs font-weight-bold mb-0">Mental</p></div>
-        <div role="progressbar" aria-valuenow="69" aria-valuemin="0" aria-valuemax="100" style="--value:69"><p class="text-xs font-weight-bold mb-0">Over All</p></div>
+  <div class="" id="userInformation" tabindex="-1" role="dialog" aria-labelledby="userInformationLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="userInformationlLabel">Student Record</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" id="user-info-modal">
+          <p>Name: </p>
+          <p>Gender: </p>
+          <p>Email: </p>
+          <p>Subject: </p>
+          <p>Section: </p>
+          <p>Contact Number: </p>
+          <div>
+            <p>Results</p>
+            <p>Date: </p>
+          </div>
+        </div>
+        <div class="container-fluid py-4">
+        <div style="display: flex; justify-content: space-around;">
+        <!-- "color-warning" css color -->
+          <div>  
+            <div role="progressbar" aria-valuenow="69" aria-valuemin="0" aria-valuemax="100" style="--value:69"><p class="text-xs font-weight-bold mb-0">Physical</p></div>
+          </div>
+        <!-- "color-success" css color -->
+          <div>  
+            <div role="progressbar" aria-valuenow="69" aria-valuemin="0" aria-valuemax="100" style="--value:69"><p class="text-xs font-weight-bold mb-0">Physical</p></div>
+          </div>
+        <!-- "color-info" css color -->
+          <div>  
+            <div role="progressbar" aria-valuenow="69" aria-valuemin="0" aria-valuemax="100" style="--value:69"><p class="text-xs font-weight-bold mb-0">Physical</p></div>
+          </div>
+        </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success">Refer(Guidance)</button>
+          <button type="button" class="btn btn-warning">Refer(Nurse)</button>
+          <button type="button" class="btn btn-info">Good Condition</button>
+        </div>
+      </div>
     </div>
+  </div>
 </body>
 
 </html>

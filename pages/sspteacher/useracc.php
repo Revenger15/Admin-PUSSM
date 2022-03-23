@@ -210,26 +210,34 @@ $userReference = $database->getReference("users/" . $uid . "/result");
               </div>
             </div>
             <div class="fixed-table-pagination">
-              <div class="float-left pagination">
-                <button type="button" class="btn btn-outline-warning mt-2 ms-1 mb-1">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer" viewBox="0 0 16 16">
-                  <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"></path>
-                  <path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z"></path>
-                  </svg> Print
-                </button>
+                <div class="float-left pagination">
+                  <button type="button" class="btn btn-outline-warning mt-2 ms-1 mb-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer" viewBox="0 0 16 16">
+                    <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"></path>
+                    <path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z"></path>
+                    </svg> Print
+                  </button>
+                </div>
+                <div class="float-left pagination">
+                  <select class="btn btn-outline-warning mt-2 ms-1 mb-1" name="page" id="">
+                    <option value="e3" Selected>5 entities</option>
+                    <option value="e5">15 entities</option>
+                    <option value="e5">25 entities</option>
+                    <option value="e5">50 entities</option>
+                  </select>
+                </div>
+                <div class="float-right pagination">
+                  <ul class="pagination">
+                    <li class="page-item"><a class="page-link" aria-label="previous page" href="">« Prev</a></li>
+                    <li class="page-item active bg-gradient-faded-warning-vertical border-radius-2xl"><a class="page-link" aria-label="to page 1" href="">1</a></li>
+                    <li class="page-item"><a class="page-link" aria-label="to page 2" href="">2</a></li>
+                    <li class="page-item"><a class="page-link" aria-label="to page 3" href="">3</a></li>
+                    <li class="page-item"><a class="page-link" aria-label="to page 3" href="">...</a></li>
+                    <li class="page-item"><a class="page-link" aria-label="to page 3" href="">10</a></li>
+                    <li class="page-item"><a class="page-link" aria-label="next page" href="">Next »</a></li>
+                  </ul>
+                </div>
               </div>
-              <div class="float-right pagination">
-                <ul class="pagination">
-                  <li class="page-item page-pre"><a class="page-link" aria-label="previous page" href="">« Previous</a></li>
-                  <li class="page-item active bg-gradient-faded-warning-vertical border-radius-2xl"><a class="page-link" aria-label="to page 1" href="">1</a></li>
-                  <li class="page-item"><a class="page-link" aria-label="to page 2" href="">2</a></li>
-                  <li class="page-item"><a class="page-link" aria-label="to page 3" href="">3</a></li>
-                  <li class="page-item"><a class="page-link" aria-label="to page 4" href="">4</a></li>
-                  <li class="page-item"><a class="page-link" aria-label="to page 5" href="">5</a></li>
-                  <li class="page-item"><a class="page-link" aria-label="next page" href="">Next »</a></li>
-                </ul>
-              </div>
-            </div>
           </div>
         </div>
       </div>

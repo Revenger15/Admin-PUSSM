@@ -17128,11 +17128,12 @@ fieldset:disabled .btn {
   border-radius: 50%;
 }
 .bg-login {
-  background-color: #63d471;
-  background-image: linear-gradient(315deg, #63d471 0%, #233329 74%);
-  background-repeat: content;
+  background: linear-gradient(to top left, #336600 22%, #99cc00 100%);
   background-size: 100%, 100%;
   opacity: 0.8;
+}
+.login-btn {
+  background: linear-gradient(to top left, #336600 22%, #99cc00 100%);
 }
 
 .avatar-xxl {
@@ -21789,7 +21790,7 @@ hr.horizontal.gray-light {
   padding: 0;
   margin: 0 3px;
   border-radius: 15px !important;
-  width: 100px;
+  width: 60px;
   height: 36px;
   font-size: 0.875rem;
 }

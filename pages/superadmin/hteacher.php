@@ -85,6 +85,7 @@
     <section>
     <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" navbar-scroll="true">
       <div class="container-fluid py-1 px-3">
+      <img class="icon-shape me-2" src="../../assets\img\favicon.png" alt="">
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
             <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Admin</a></li>
@@ -154,6 +155,110 @@
                         </ul>
                       </td>
                     </tr>
+                    <tr>
+                      <td>
+                        <div class="d-flex px-2 py-1">
+                          <div>
+                            <img src="../../assets/img/ficon.png" class="avatar avatar-sm me-3 border-radius-lg" alt="user1">
+                          </div>
+                          <div class="d-flex flex-column justify-content-center">
+                            <h6 class="mb-0 text-sm text-start">Angelica Fernandez Vidal</h6>
+                            <p class="text-xs text-secondary mb-0">avfernandez.up@phinmaed.com</p>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <p class="text-xs font-weight-bold mb-0"></p>
+                      </td>
+                      <td>
+                        <p class="text-xs font-weight-bold mb-0">CITE</p>
+                      </td>
+                      <td class="align-middle">
+                      </td>
+                      <td>
+                        <ul class="list-unstyled mb-0 d-flex">
+                          <li><a href="#" class="text-danger" data-toggle="tooltip" title="" data-original-title="Delete"><i class="far fa-trash-alt"></i></a></li>
+                        </ul>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="d-flex px-2 py-1">
+                          <div>
+                            <img src="../../assets/img/ficon.png" class="avatar avatar-sm me-3 border-radius-lg" alt="user1">
+                          </div>
+                          <div class="d-flex flex-column justify-content-center">
+                            <h6 class="mb-0 text-sm text-start">Angelica Fernandez Vidal</h6>
+                            <p class="text-xs text-secondary mb-0">avfernandez.up@phinmaed.com</p>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <p class="text-xs font-weight-bold mb-0"></p>
+                      </td>
+                      <td>
+                        <p class="text-xs font-weight-bold mb-0">CITE</p>
+                      </td>
+                      <td class="align-middle">
+                      </td>
+                      <td>
+                        <ul class="list-unstyled mb-0 d-flex">
+                          <li><a href="#" class="text-danger" data-toggle="tooltip" title="" data-original-title="Delete"><i class="far fa-trash-alt"></i></a></li>
+                        </ul>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="d-flex px-2 py-1">
+                          <div>
+                            <img src="../../assets/img/ficon.png" class="avatar avatar-sm me-3 border-radius-lg" alt="user1">
+                          </div>
+                          <div class="d-flex flex-column justify-content-center">
+                            <h6 class="mb-0 text-sm text-start">Angelica Fernandez Vidal</h6>
+                            <p class="text-xs text-secondary mb-0">avfernandez.up@phinmaed.com</p>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <p class="text-xs font-weight-bold mb-0"></p>
+                      </td>
+                      <td>
+                        <p class="text-xs font-weight-bold mb-0">CITE</p>
+                      </td>
+                      <td class="align-middle">
+                      </td>
+                      <td>
+                        <ul class="list-unstyled mb-0 d-flex">
+                          <li><a href="#" class="text-danger" data-toggle="tooltip" title="" data-original-title="Delete"><i class="far fa-trash-alt"></i></a></li>
+                        </ul>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="d-flex px-2 py-1">
+                          <div>
+                            <img src="../../assets/img/ficon.png" class="avatar avatar-sm me-3 border-radius-lg" alt="user1">
+                          </div>
+                          <div class="d-flex flex-column justify-content-center">
+                            <h6 class="mb-0 text-sm text-start">Angelica Fernandez Vidal</h6>
+                            <p class="text-xs text-secondary mb-0">avfernandez.up@phinmaed.com</p>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <p class="text-xs font-weight-bold mb-0"></p>
+                      </td>
+                      <td>
+                        <p class="text-xs font-weight-bold mb-0">CITE</p>
+                      </td>
+                      <td class="align-middle">
+                      </td>
+                      <td>
+                        <ul class="list-unstyled mb-0 d-flex">
+                          <li><a href="#" class="text-danger" data-toggle="tooltip" title="" data-original-title="Delete"><i class="far fa-trash-alt"></i></a></li>
+                        </ul>
+                      </td>
+                    </tr>
                   </tbody>
                 </table>
               </div>
@@ -167,9 +272,15 @@
                   </svg> Print
                 </button>
               </div>
+              <div class="float-left pagination">
+                <select class="btn btn-outline-success mt-2 ms-1 mb-1" name="page" id="">
+                  <option value="e3">3 entities</option>
+                  <option value="e5" Selected>5 entities</option>
+                </select>
+              </div>
               <div class="float-right pagination">
                 <ul class="pagination">
-                  <li class="page-item page-pre"><a class="page-link" aria-label="previous page" href="">« Previous</a></li>
+                  <li class="page-item"><a class="page-link" aria-label="previous page" href="">« Prev</a></li>
                   <li class="page-item active bg-gradient-faded-success-vertical border-radius-2xl"><a class="page-link" aria-label="to page 1" href="">1</a></li>
                   <li class="page-item"><a class="page-link" aria-label="to page 2" href="">2</a></li>
                   <li class="page-item"><a class="page-link" aria-label="to page 3" href="">3</a></li>
