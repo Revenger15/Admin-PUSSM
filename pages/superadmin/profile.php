@@ -1,10 +1,51 @@
 <?php
-// error_reporting(E_ERROR | E_PARSE);
 include '../../includes/dbconfig.php';
+if (session_status() !== PHP_SESSION_NONE) {
+  session_start();
+}
 $_SESSION['uid'] = 'eOnUIApmfOP7ntvx8iydcm8E82j2';
 
-$userInfo = $database->getReference('users/' . $_SESSION['uid'])->getValue();
+$dbUser = $database->getReference('users/' . $_SESSION['uid']);
+$userInfo = $dbUser->getValue();
 $auth = $firebase->createAuth();
+$email = $auth->getUser($_SESSION['uid'])->__get('email');
+
+if (isset($_POST['email'])) {
+  $firstname = $_POST['firstname'];
+  $middlename = $_POST['middlename'];
+  $lastname = $_POST['lastname'];
+  $gender = $_POST['gender'];
+  $contact = $_POST['contactnumber'];
+  $newEmail = $_POST['email'];
+  $position = $_POST['position'];
+
+  if ($email != $newEmail) {
+    $auth->changeUserEmail($_SESSION['uid'], $newEmail);
+    $email = $newEmail;
+  }
+
+  $dbUser->update([
+    "firstname" => $firstname,
+    "middlename" => $middlename,
+    "lastname" => $lastname,
+    "gender" => $gender,
+    "contact" => $contact,
+    "email" => $email,
+    "position" => $position
+  ]);
+  echo '
+    <script>
+      alert("Updated Information!");
+      if (\'referrer\' in document) {
+        window.location = document.referrer;
+        /* OR */
+        //location.replace(document.referrer);
+    } else {
+        window.history.back();
+    }
+    </script>';
+  exit();
+}
 ?>
 <div class="modal" id="profile" tabindex="-1" role="dialog" aria-labelledby="profileLabel" aria-hidden="true">
   <div class="modal-dialog modal-xl" role="document">
@@ -54,7 +95,7 @@ $auth = $firebase->createAuth();
                       <li class="list-group-item border-0 ps-0 pt-0 text-sm"><strong class="text-dark">Full Name:</strong> &nbsp; <?php echo $userInfo['firstname'] . ' ' . $userInfo['middlename'] . ' ' . $userInfo['lastname']; ?></li>
                       <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Gender:</strong> &nbsp; <?php echo $userInfo['gender']; ?></li>
                       <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Mobile:</strong> &nbsp; <?php echo $userInfo['contact']; ?></li>
-                      <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Email:</strong> &nbsp; <?php echo $auth->getUser($_SESSION['uid'])->__get('email'); ?></li>
+                      <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Email:</strong> &nbsp; <?php echo $email ?></li>
                       <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Position:</strong> &nbsp; <?php echo $userInfo['position']; ?></li>
                       <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark"></strong></li>
                     </ul>
@@ -71,31 +112,39 @@ $auth = $firebase->createAuth();
                     </div>
                   </div>
                   <div class="card-body p-3">
-                    <form class="form" role="form" autocomplete="off">
+                    <form class="form" role="form" action="profile.php" method="POST" autocomplete="off">
                       <div class="form-group mt-1">
-                        <label class="mb-0" for="">Fullname</label>
-                        <input type="textfield" class="form-control ps-2" id="name">
+                        <label class="mb-0" for="">First Name</label>
+                        <input type="text" name="firstname" class="form-control ps-2" id="firstname" value="<?php echo $userInfo['firstname'] ?>" required>
+                      </div>
+                      <div class="form-group mt-1">
+                        <label class="mb-0" for="">Middle Name</label>
+                        <input type="text" name="middlename" class="form-control ps-2" id="middlename" value="<?php echo $userInfo['middlename'] ?>" required>
+                      </div>
+                      <div class="form-group mt-1">
+                        <label class="mb-0" for="">Last Name</label>
+                        <input type="text" name="lastname" class="form-control ps-2" id="lastname" value="<?php echo $userInfo['lastname'] ?>" required>
                       </div>
                       <div class="form-group mt-1">
                         <label class="mb-0" for="">Gender</label>
-                        <select class="form-control ps-2" id="gender">
-                          <option value="" selected>-select-</option>
+                        <select class="form-control ps-2" name="gender" id="gender" required>
+                          <option value="" disabled selected>-select-</option>
                           <option value="Male">Male</option>
                           <option value="Female">Female</option>
-                          <option value="Prefer-not-to-say">Prefer not to say</option>
+                          <option value="Prefer not to say">Prefer not to say</option>
                         </select>
                       </div>
                       <div class="form-group mt-1">
                         <label class="mb-0" for="">Contact Number</label>
-                        <input type="tel" class="form-control ps-2" id="contactnumber">
+                        <input type="tel" name="contactnumber" class="form-control ps-2" id="contactnumber" value="<?php echo $userInfo['contact'] ?>" required>
                       </div>
                       <div class="form-group mt-1">
                         <label class="mb-0" for="">Email</label>
-                        <input type="email" class="form-control ps-2" id="email">
+                        <input type="email" name="email" class="form-control ps-2" id="email" value="<?php echo $email ?>" required>
                       </div>
                       <div class="form-group mt-1">
                         <label class="mb-0" for="">Position</label>
-                        <input type="textfield" class="form-control ps-2" id="position">
+                        <input type="text" name="position" class="form-control ps-2" id="position" value="<?php echo $userInfo['position'] ?>" required>
                       </div>
                       <center>
                         <div class="form-group pt-2">
@@ -113,3 +162,7 @@ $auth = $firebase->createAuth();
     </div>
   </div>
 </div>
+
+<script>
+  $("#gender").val("<?php echo $userInfo['gender']?>");
+</script>
