@@ -222,7 +222,7 @@ if (isset($_POST['register'])) {
                   </div>
                 </div>
                 <div class="card-body px-0 pb-2">
-                  <div class="table-responsive p-0" style="max-height: 25rem">
+                  <div class="table-responsive p-0">
                     <table class="table align-items-center justify-content-center mb-0">
                       <thead>
                         <tr>
@@ -379,8 +379,8 @@ if (isset($_POST['register'])) {
                   </div>
                   <div class="float-left pagination">
                     <select class="btn btn-outline-success mt-2 ms-1 mb-1" name="page" id="">
-                      <option value="e3">3 entities</option>
-                      <option value="e5" Selected>5 entities</option>
+                      <option value="e3">3 entries</option>
+                      <option value="e5" Selected>5 entries</option>
                     </select>
                   </div>
                   <div class="float-right pagination">

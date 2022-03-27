@@ -75,7 +75,7 @@ if (isset($_POST['email'])) {
                     <?php echo $userInfo['firstname'] . ' ' . $userInfo['middlename'] . ' ' . $userInfo['lastname']; ?>
                   </h5>
                   <p class="mb-0 font-weight-normal text-sm">
-                    Cum Sex Daddy Lick
+                    CSDL
                   </p>
                 </div>
               </div>

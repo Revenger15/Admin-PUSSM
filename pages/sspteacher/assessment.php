@@ -251,10 +251,10 @@ $userReference = $database->getReference("users/" . $uid . "/result");
                 </div>
                 <div class="float-left pagination">
                   <select class="btn btn-outline-dark mt-2 ms-1 mb-1" name="page" id="">
-                    <option value="e3" Selected>5 entities</option>
-                    <option value="e5">15 entities</option>
-                    <option value="e5">25 entities</option>
-                    <option value="e5">50 entities</option>
+                    <option value="e3" Selected>5 entries</option>
+                    <option value="e5">15 entries</option>
+                    <option value="e5">25 entries</option>
+                    <option value="e5">50 entries</option>
                   </select>
                 </div>
                 <div class="float-right pagination">
@@ -399,10 +399,10 @@ $userReference = $database->getReference("users/" . $uid . "/result");
                 </div>
                 <div class="float-left pagination">
                   <select class="btn btn-outline-warning mt-2 ms-1 mb-1" name="page" id="">
-                    <option value="e3" Selected>5 entities</option>
-                    <option value="e5">15 entities</option>
-                    <option value="e5">25 entities</option>
-                    <option value="e5">50 entities</option>
+                    <option value="e3" Selected>5 entries</option>
+                    <option value="e5">15 entries</option>
+                    <option value="e5">25 entries</option>
+                    <option value="e5">50 entries</option>
                   </select>
                 </div>
                 <div class="float-right pagination">
@@ -547,10 +547,10 @@ $userReference = $database->getReference("users/" . $uid . "/result");
                 </div>
                 <div class="float-left pagination">
                   <select class="btn btn-outline-success mt-2 ms-1 mb-1" name="page" id="">
-                    <option value="e3" Selected>5 entities</option>
-                    <option value="e5">15 entities</option>
-                    <option value="e5">25 entities</option>
-                    <option value="e5">50 entities</option>
+                    <option value="e3" Selected>5 entries</option>
+                    <option value="e5">15 entries</option>
+                    <option value="e5">25 entries</option>
+                    <option value="e5">50 entries</option>
                   </select>
                 </div>
                 <div class="float-right pagination">
@@ -785,10 +785,10 @@ $userReference = $database->getReference("users/" . $uid . "/result");
                 </div>
                 <div class="float-left pagination">
                   <select class="btn btn-outline-info mt-2 ms-1 mb-1" name="page" id="">
-                    <option value="e3" Selected>5 entities</option>
-                    <option value="e5">15 entities</option>
-                    <option value="e5">25 entities</option>
-                    <option value="e5">50 entities</option>
+                    <option value="e3" Selected>5 entries</option>
+                    <option value="e5">15 entries</option>
+                    <option value="e5">25 entries</option>
+                    <option value="e5">50 entries</option>
                   </select>
                 </div>
                 <div class="float-right pagination">

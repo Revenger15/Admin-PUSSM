@@ -201,10 +201,10 @@ $userReference = $database->getReference("users/" . $uid . "/result");
               </div>
               <div class="float-left pagination">
                 <select class="btn btn-outline-dark mt-2 ms-1 mb-1" name="page" id="">
-                  <option value="e3" Selected>5 entities</option>
-                  <option value="e5">10 entities</option>
-                  <option value="e5">20 entities</option>
-                  <option value="e5">50 entities</option>
+                  <option value="e3" Selected>5 entries</option>
+                  <option value="e5">10 entries</option>
+                  <option value="e5">20 entries</option>
+                  <option value="e5">50 entries</option>
                 </select>
               </div>
               <div class="float-right pagination">

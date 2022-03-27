@@ -32,7 +32,7 @@
             </div>
             <div class="card-body">
                 <form class="form" role="form" autocomplete="off">
-                    <div class="form-group mt-1">
+                    <div class="form-group">
                         <label for="">Current Password</label>
                         <input type="password" class="form-control ps-2" id="" required="">
                     </div>

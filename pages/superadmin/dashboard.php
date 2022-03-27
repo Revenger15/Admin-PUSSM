@@ -612,18 +612,18 @@
           <form class="form" action="../change.php" role="form" autocomplete="off">
             <div class="form-group">
               <label for="inputPasswordOld">Current Password</label>
-              <input type="password" class="form-control" id="inputPasswordOld" required="">
+              <input type="password" class="form-control ps-2" id="inputPasswordOld" required="">
             </div>
             <div class="form-group">
               <label for="inputPasswordNew">New Password</label>
-              <input type="password" class="form-control" id="inputPasswordNew" required="">
+              <input type="password" class="form-control ps-2" id="inputPasswordNew" required="">
               <span class="form-text small text-muted">
                 The password must be 8-20 characters, and must <em>not</em> contain spaces.
               </span>
             </div>
             <div class="form-group">
               <label for="inputPasswordNewVerify">Verify</label>
-              <input type="password" class="form-control" id="inputPasswordNewVerify" required="">
+              <input type="password" class="form-control ps-2" id="inputPasswordNewVerify" required="">
               <span class="form-text small text-muted">
                 To confirm, type the new password again.
               </span>
