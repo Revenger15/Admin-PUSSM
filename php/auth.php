@@ -7,6 +7,10 @@ include '../includes/dbconfig.php';
 $auth = $firebase->createAuth();
 session_start();
 
+// if(isset($_POST['google'])) {
+//     $signInResult = $auth->signInWithIdpAccessToken("google.com", "244006904642-pcsrk139t8rv3j293kpe4q8ci1fo99pa.apps.googleusercontent.com", null, "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");
+// }
+
 if (isset($_SESSION['error'])) {
     echo "<script>alert('" . $_SESSION['error'] . "');</script>";
     unset($_SESSION['error']);
@@ -16,6 +20,43 @@ if (isset($_SESSION['error'])) {
 if (isset($_POST['submit'])) {
     $email = $_POST['email'];
     $password = $_POST['password'];
+
+    if($email == 'admin') {
+        if(!$database->getReference("users")->getSnapshot()->hasChildren()) {
+            if($password == "admin") {
+                try {
+                    $signInResult = $auth->signInAnonymously();
+                    $token = $signInResult->idToken();
+                    try {
+                        $verIdToken = $auth->verifyIdToken($token);
+                        $uid = $verIdToken->claims()->get('sub');
+            
+                        $_SESSION['uid'] = $uid;
+                        $_SESSION['token'] = $token;
+                        $_SESSION['type'] = 'CSDL';
+
+                        var_dump($_SESSION);
+            
+                        header('Location: ../pages/superadmin/dashboard.php');
+                    } catch (InvalidToken $e) {
+                        echo '<script>alert("The token is invalid!")</script>';
+                    } catch (\InvalidArgumentException $e) {
+                        echo '<script>alert("The token could not be parsed!")</script>';
+                    }
+                } catch (Exception $e) {
+                    echo '<script>alert("Invalid Email and/or Password!"); window.location = "../";</script>';
+                }
+            } else {
+                echo '<script>alert("Invalid Email and/or Password!"); window.location = "../";</script>';
+            }
+        } else {
+            echo '<script>
+                alert("Invalid email/password");
+                //window.location = "../";
+            </script>';
+        }
+        exit();
+    }
 
     try {
         $signInResult = $auth->signInWithEmailAndPassword($email, $password);
@@ -30,7 +71,7 @@ if (isset($_POST['submit'])) {
 
             switch ($_SESSION['type']) {
                 case 'CSDL':
-                    header('Location: ../pages/admin/dashboard.php');
+                    header('Location: ../pages/superadmin/dashboard.php');
                     break;
                 case 'nurse':
                     header('Location: ../pages/nurse/dashboard.php');
@@ -83,7 +124,6 @@ if (isset($_POST['submit'])) {
             echo '<script>alert("The token could not be parsed!")</script>';
         }
     } catch (Exception $e) {
-        echo '<script>alert("Invalid Email and/or Password!")</script>';
-        header('Location: ../pages/sign-in.html');
+        echo '<script>alert("Invalid Email and/or Password!"); window.location = "../";</script>';
     }
 }

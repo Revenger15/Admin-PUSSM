@@ -39,7 +39,7 @@
                 </div>
               </div>
               <div class="card-body bg-gradient-faded-light">
-                <form action="../php/auth.php" method="POST" class="text-start">
+                <form action="../php/auth.php" id="frmLogin" method="POST" class="text-start">
                   <!-- Removed Dropdown -->
                   <!-- <div style="
                   float: center;
@@ -60,7 +60,7 @@
                   </div> -->
                   <div class="input-group input-group-outline my-3">
                     <label class="form-label">Email</label>
-                    <input type="email" name="email" class="form-control" required>
+                    <input type="email" name="email" id="email" class="form-control" required>
                   </div>
                   <div class="input-group input-group-outline mb-3">
                     <label class="form-label">Password</label>
@@ -74,7 +74,7 @@
                   <div class="text-center fs-6"> <a href="../pages\forgotpass.php">Reset password?</a> </div>
                   <div class="text-center">
                     <!-- <button onclick="window.location='dashboard.html'" type="button" class="btn bg-gradient-secondary w-100 my-4 mb-2">Log in</button> -->
-                    <button type="submit" name="submit" class="btn login-btn text-white w-100 my-4 mb-2">Log in</button>
+                    <button type="submit" onclick="checkData()" name="submit" class="btn login-btn text-white w-100 my-4 mb-2">Log in</button>
                   </div>
                 </form>
               </div>
@@ -114,6 +114,7 @@
   <script src="../assets/js/core/bootstrap.min.js"></script>
   <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
   <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
   <script>
     var win = navigator.platform.indexOf('Win') > -1;
     if (win && document.querySelector('#sidenav-scrollbar')) {
@@ -121,6 +122,16 @@
         damping: '0.5'
       }
       Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+    }
+
+    function checkData() {
+      if ($('#email').val() == 'admin') {
+        // alert($('#email').val());
+        $('#email').get(0).type = 'text';
+        $('#frmLogin').submit();
+      } else {
+        $('#email').get(0).type = 'email';
+      }
     }
   </script>
   <!-- Github buttons -->
