@@ -1,3 +1,26 @@
+<?php
+include '../includes/dbconfig.php';
+
+if(isset($_POST['email'])) {
+    $email = $_POST['email'];
+
+    $auth = $firebase->createAuth();
+
+    try {
+        $auth->sendPasswordResetLink($email);
+        echo '
+            <script>alert("Password Reset link has been sent! Please kindly check your inbox/spam for the email");
+            window.location = "sign-in.php"</script>
+        ';
+        exit();
+    } catch (Kreait\Firebase\Auth\SendActionLink\FailedToSendActionLink $e) {
+        echo '
+            <script>alert("Email address not found! Please double check if the email is correct");</script>
+        ';
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -39,12 +62,12 @@
                 </div>
               </div>
               <div class="card-body bg-gradient-faded-light">
-                <form action="../php/auth.php" method="POST" class="text-start">
+                <form action="forgotpass.php" method="POST" class="text-start">
                   <div class="input-group input-group-outline my-3">
                     <label class="form-label">Email</label>
                     <input type="email" name="email" class="form-control" required>
                   </div>
-                  <div class="text-center fs-6"> <a href="../pages\sign-in.html">Back to Login.</a> </div>
+                  <div class="text-center fs-6"> <a href="sign-in.html">Back to Login.</a> </div>
                   <div class="text-center">
                     <!-- <button onclick="window.location='dashboard.html'" type="button" class="btn bg-gradient-secondary w-100 my-4 mb-2">Log in</button> -->
                     <button type="submit" name="submit" class="btn login-btn text-white w-100 my-4 mb-2">Reset</button>
