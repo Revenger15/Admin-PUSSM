@@ -187,7 +187,7 @@
             </div>
             <hr class="dark horizontal my-0">
             <div class="card-footer p-3">
-              <p class="mb-0"><span class="text-success text-sm font-weight-bolder">+55% </span>than last month</p>
+              <p class="mb-0"><span class="text-success text-sm font-weight-bolder">±0% </span>than last month</p>
             </div>
           </div>
         </div>
@@ -205,7 +205,7 @@
             </div>
             <hr class="dark horizontal my-0">
             <div class="card-footer p-3">
-              <p class="mb-0"><span class="text-success text-sm font-weight-bolder">+3% </span>than last month</p>
+              <p class="mb-0"><span class="text-success text-sm font-weight-bolder">±0% </span>than last month</p>
             </div>
           </div>
         </div>
@@ -223,7 +223,7 @@
             </div>
             <hr class="dark horizontal my-0">
             <div class="card-footer p-3">
-              <p class="mb-0"><span class="text-danger text-sm font-weight-bolder">-2%</span> than last month</p>
+              <p class="mb-0"><span class="text-danger text-sm font-weight-bolder">±0%</span> than last month</p>
             </div>
           </div>
         </div>
@@ -241,7 +241,7 @@
             </div>
             <hr class="dark horizontal my-0">
             <div class="card-footer p-3">
-              <p class="mb-0"><span class="text-success text-sm font-weight-bolder"> 50 </span>students Assessed</p>
+              <p class="mb-0"><span class="text-success text-sm font-weight-bolder"> 0 </span>students Assessed</p>
             </div>
           </div>
         </div>
@@ -377,7 +377,7 @@
           borderRadius: 4,
           borderSkipped: false,
           backgroundColor: "rgba(255, 255, 255, .8)",
-          data: [20, 10, 22, 50, 20, 10, 22, 50, 10, 40, 22, 50],
+          data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
           maxBarThickness: 6
         }, ],
       },
@@ -463,7 +463,7 @@
           borderWidth: 4,
           backgroundColor: "transparent",
           fill: true,
-          data: [14, 8, 13, 27, 14, 8, 13, 27, 8, 40, 13, 40],
+          data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
           maxBarThickness: 6
 
         }],
@@ -545,7 +545,7 @@
           borderWidth: 4,
           backgroundColor: "transparent",
           fill: true,
-          data: [6, 2, 9, 23, 6, 2, 9, 23, 2, 40, 9, 10],
+          data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
           maxBarThickness: 6
 
         }],

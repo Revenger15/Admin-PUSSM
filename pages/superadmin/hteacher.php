@@ -260,110 +260,6 @@ if (isset($_POST['register'])) {
                             </ul>
                           </td>
                         </tr>
-                        <tr>
-                          <td>
-                            <div class="d-flex px-2 py-1">
-                              <div>
-                                <img src="../../assets/img/ficon.png" class="avatar avatar-sm me-3 border-radius-lg" alt="user1">
-                              </div>
-                              <div class="d-flex flex-column justify-content-center">
-                                <h6 class="mb-0 text-sm text-start">Angelica Fernandez Vidal</h6>
-                                <p class="text-xs text-secondary mb-0">avfernandez.up@phinmaed.com</p>
-                              </div>
-                            </div>
-                          </td>
-                          <td>
-                            <p class="text-xs font-weight-bold mb-0"></p>
-                          </td>
-                          <td>
-                            <p class="text-xs font-weight-bold mb-0">CITE</p>
-                          </td>
-                          <td class="align-middle">
-                          </td>
-                          <td>
-                            <ul class="list-unstyled mb-0 d-flex">
-                              <li><a href="#" class="text-danger" data-toggle="tooltip" title="" data-original-title="Delete"><i class="far fa-trash-alt"></i></a></li>
-                            </ul>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            <div class="d-flex px-2 py-1">
-                              <div>
-                                <img src="../../assets/img/ficon.png" class="avatar avatar-sm me-3 border-radius-lg" alt="user1">
-                              </div>
-                              <div class="d-flex flex-column justify-content-center">
-                                <h6 class="mb-0 text-sm text-start">Angelica Fernandez Vidal</h6>
-                                <p class="text-xs text-secondary mb-0">avfernandez.up@phinmaed.com</p>
-                              </div>
-                            </div>
-                          </td>
-                          <td>
-                            <p class="text-xs font-weight-bold mb-0"></p>
-                          </td>
-                          <td>
-                            <p class="text-xs font-weight-bold mb-0">CITE</p>
-                          </td>
-                          <td class="align-middle">
-                          </td>
-                          <td>
-                            <ul class="list-unstyled mb-0 d-flex">
-                              <li><a href="#" class="text-danger" data-toggle="tooltip" title="" data-original-title="Delete"><i class="far fa-trash-alt"></i></a></li>
-                            </ul>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            <div class="d-flex px-2 py-1">
-                              <div>
-                                <img src="../../assets/img/ficon.png" class="avatar avatar-sm me-3 border-radius-lg" alt="user1">
-                              </div>
-                              <div class="d-flex flex-column justify-content-center">
-                                <h6 class="mb-0 text-sm text-start">Angelica Fernandez Vidal</h6>
-                                <p class="text-xs text-secondary mb-0">avfernandez.up@phinmaed.com</p>
-                              </div>
-                            </div>
-                          </td>
-                          <td>
-                            <p class="text-xs font-weight-bold mb-0"></p>
-                          </td>
-                          <td>
-                            <p class="text-xs font-weight-bold mb-0">CITE</p>
-                          </td>
-                          <td class="align-middle">
-                          </td>
-                          <td>
-                            <ul class="list-unstyled mb-0 d-flex">
-                              <li><a href="#" class="text-danger" data-toggle="tooltip" title="" data-original-title="Delete"><i class="far fa-trash-alt"></i></a></li>
-                            </ul>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            <div class="d-flex px-2 py-1">
-                              <div>
-                                <img src="../../assets/img/ficon.png" class="avatar avatar-sm me-3 border-radius-lg" alt="user1">
-                              </div>
-                              <div class="d-flex flex-column justify-content-center">
-                                <h6 class="mb-0 text-sm text-start">Angelica Fernandez Vidal</h6>
-                                <p class="text-xs text-secondary mb-0">avfernandez.up@phinmaed.com</p>
-                              </div>
-                            </div>
-                          </td>
-                          <td>
-                            <p class="text-xs font-weight-bold mb-0"></p>
-                          </td>
-                          <td>
-                            <p class="text-xs font-weight-bold mb-0">CITE</p>
-                          </td>
-                          <td class="align-middle">
-                          </td>
-                          <td>
-                            <ul class="list-unstyled mb-0 d-flex">
-                              <li><a href="#" class="text-danger" data-toggle="tooltip" title="" data-original-title="Delete"><i class="far fa-trash-alt"></i></a></li>
-                            </ul>
-                          </td>
-                        </tr>
                       </tbody>
                     </table>
                   </div>
@@ -415,7 +311,7 @@ if (isset($_POST['register'])) {
                         Please provide gender.
                       </div>
                     </div>
-                    <div class="input-group input-group-outline mb8-3">
+                    <div class="input-group input-group-outline mb-3">
                       <select class="form-control" id="" required="">
                         <option value="" selected>-Select Department-</option>
                         <option value="CITE">CITE</option>
