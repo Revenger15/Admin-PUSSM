@@ -172,9 +172,11 @@ $userReference = $database->getReference("users/" . $uid . "/result");
                     <thead>
                       <tr>
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Names</th>
-                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Contact</th>
+
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Subject</th>
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Section</th>
+                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">SEM/AY</th>                        
+                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Contact</th>
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-3">Delete</th>
                       </tr>
                     </thead>
@@ -191,14 +193,18 @@ $userReference = $database->getReference("users/" . $uid . "/result");
                             </div>
                           </div>
                         </td>
-                        <td>
-                          <p class="text-xs font-weight-bold mb-0">09987654321</p>
-                        </td>
+
                         <td>
                           <p class="text-xs font-weight-bold mb-0">SSP-000</p>
                         </td>
                         <td>
                           <span class="text-xs font-weight-bold mb-0">BSIT-00</span>
+                        </td>
+                        <td>
+                          <span class="text-xs font-weight-bold mb-0">1SEM/2021-2022</span>
+                        </td>                        
+                        <td>
+                          <p class="text-xs font-weight-bold mb-0">09987654321</p>
                         </td>
                         <td>
                           <button type="button" class="btn btn-outline-danger mt-2 ms-1 mb-1">

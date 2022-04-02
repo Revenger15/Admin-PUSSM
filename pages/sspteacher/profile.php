@@ -1,3 +1,52 @@
+<?php
+include '../../includes/dbconfig.php';
+if (session_status() !== PHP_SESSION_NONE) {
+  session_start();
+}
+$_SESSION['uid'] = 'eOnUIApmfOP7ntvx8iydcm8E82j2';
+
+$dbUser = $database->getReference('users/' . $_SESSION['uid']);
+$userInfo = $dbUser->getValue();
+$auth = $firebase->createAuth();
+$email = $auth->getUser($_SESSION['uid'])->__get('email');
+
+if (isset($_POST['email'])) {
+  $firstname = $_POST['firstname'];
+  $middlename = $_POST['middlename'];
+  $lastname = $_POST['lastname'];
+  $gender = $_POST['gender'];
+  $contact = $_POST['contactnumber'];
+  $newEmail = $_POST['email'];
+  $department = $_POST['department'];
+
+  if ($email != $newEmail) {
+    $auth->changeUserEmail($_SESSION['uid'], $newEmail);
+    $email = $newEmail;
+  }
+
+  $dbUser->update([
+    "firstname" => $firstname,
+    "middlename" => $middlename,
+    "lastname" => $lastname,
+    "gender" => $gender,
+    "contact" => $contact,
+    "email" => $email,
+    "department" => $department,
+  ]);
+  echo '
+    <script>
+      alert("Updated Information!");
+      if (\'referrer\' in document) {
+        window.location = document.referrer;
+        /* OR */
+        //location.replace(document.referrer);
+    } else {
+        window.history.back();
+    }
+    </script>';
+  exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -80,40 +129,40 @@
                   </div>
                 </div>
                 <div class="card-body p-3">
-                  <form class="form" role="form" autocomplete="off">
+                <form class="form" role="form" action="profile.php" method="POST" autocomplete="off">
                       <div class="form-group mt-1">
-                          <label class="mb-0" for="">Fullname</label>
-                          <input type="textfield" class="form-control ps-2" id="" required="">
+                        <label class="mb-0" for="">First Name</label>
+                        <input type="text" name="firstname" class="form-control ps-2" id="firstname" value="<?php echo $userInfo['firstname'] ?>" required>
                       </div>
                       <div class="form-group mt-1">
-                          <label class="mb-0" for="">Gender</label>
-                          <select class="form-control ps-2" id="" required="">
-                              <option value="" selected>-select-</option>
-                              <option value="Male">Male</option>
-                              <option value="Female">Female</option>
-                              <option value="Prefer-not-to-say">Prefer not to say</option>
-                          </select>
+                        <label class="mb-0" for="">Middle Name</label>
+                        <input type="text" name="middlename" class="form-control ps-2" id="middlename" value="<?php echo $userInfo['middlename'] ?>" required>
                       </div>
                       <div class="form-group mt-1">
-                          <label class="mb-0" for="">Number</label>
-                          <input type="textfield" class="form-control ps-2" id="" required="">
+                        <label class="mb-0" for="">Last Name</label>
+                        <input type="text" name="lastname" class="form-control ps-2" id="lastname" value="<?php echo $userInfo['lastname'] ?>" required>
                       </div>
                       <div class="form-group mt-1">
-                          <label class="mb-0" for="">Email</label>
-                          <input type="textfield" class="form-control ps-2" id="" required="">
+                        <label class="mb-0" for="">Gender</label>
+                        <select class="form-control ps-2" name="gender" id="gender" required>
+                          <option value="" disabled selected>-select-</option>
+                          <option value="Male">Male</option>
+                          <option value="Female">Female</option>
+                          <option value="Prefer not to say">Prefer not to say</option>
+                        </select>
                       </div>
                       <div class="form-group mt-1">
-                          <label class="mb-0" for="">Subject Assigned</label>
-                          <input type="textfield" class="form-control ps-2" id="" required="">
+                        <label class="mb-0" for="">Contact Number</label>
+                        <input type="tel" name="contactnumber" class="form-control ps-2" id="contactnumber" value="<?php echo $userInfo['contact'] ?>" required>
                       </div>
                       <div class="form-group mt-1">
-                          <label class="mb-0" for="">Section Assigned</label>
-                          <input type="textfield" class="form-control ps-2" id="" required="">
+                        <label class="mb-0" for="">Email</label>
+                        <input type="email" name="email" class="form-control ps-2" id="email" value="<?php echo $email ?>" required>
                       </div>
                       <div class="form-group mt-1">
                           <label class="mb-0" for="">Department</label>
-                          <select class="form-control ps-2" id="" required="">
-                              <option value="" selected>-select-</option>
+                          <select class="form-control ps-2" name="department" id="department" required>
+                              <option value="" disabled selected>-select</option>
                               <option value="CITE">CITE</option>
                               <option value="CEA">CEA</option>
                               <option value="CAS">CAS</option>
@@ -122,12 +171,12 @@
                               <option value="PUCO">PUCO</option>
                           </select>
                       </div>
-                    <center>
-                      <div class="form-group pt-2">
+                      <center>
+                        <div class="form-group pt-2">
                           <button type="submit" class="btn btn-success btn-lg float-right">Update</button>
-                      </div>
-                    </center>
-                  </form>
+                        </div>
+                      </center>
+                    </form>
                 </div>
               </div>
           </div>

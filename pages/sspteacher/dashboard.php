@@ -100,11 +100,10 @@
           <div class="dropdown-menu dashboard-dropdown dropdown-menu-start mt-2 py-1 bg-light">
               <select class="dropdown-item d-flex align-items-center bg-transparent" aria-label=".form-select-lg example">
                 <option selected>School Year</option>
-                <option value="1">SY-21/22</option>
-                <option value="2">SY-22/23</option>
-                <option value="3">SY-23/24</option>
-                <option value="3">SY-24/25</option>
-                <option value="3">SY-25/26</option>
+                <option value="1" selected>1SEM | AY-21/22</option>
+                <option value="2">2SEM | AY-21/22</option>
+                <option value="3">1SEM | AY-22/23</option>
+                <option value="4">2SEM | AY-22/23</option>
               </select>
           </div>
         </li>

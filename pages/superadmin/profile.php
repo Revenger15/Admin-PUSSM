@@ -17,7 +17,6 @@ if (isset($_POST['email'])) {
   $gender = $_POST['gender'];
   $contact = $_POST['contactnumber'];
   $newEmail = $_POST['email'];
-  $position = $_POST['position'];
 
   if ($email != $newEmail) {
     $auth->changeUserEmail($_SESSION['uid'], $newEmail);
@@ -31,7 +30,6 @@ if (isset($_POST['email'])) {
     "gender" => $gender,
     "contact" => $contact,
     "email" => $email,
-    "position" => $position
   ]);
   echo '
     <script>
@@ -75,7 +73,7 @@ if (isset($_POST['email'])) {
                     <?php echo $userInfo['firstname'] . ' ' . $userInfo['middlename'] . ' ' . $userInfo['lastname']; ?>
                   </h5>
                   <p class="mb-0 font-weight-normal text-sm">
-                    CSDL
+                    SSP HEAD
                   </p>
                 </div>
               </div>
@@ -96,7 +94,6 @@ if (isset($_POST['email'])) {
                       <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Gender:</strong> &nbsp; <?php echo $userInfo['gender']; ?></li>
                       <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Mobile:</strong> &nbsp; <?php echo $userInfo['contact']; ?></li>
                       <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Email:</strong> &nbsp; <?php echo $email ?></li>
-                      <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Position:</strong> &nbsp; <?php echo $userInfo['position']; ?></li>
                       <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark"></strong></li>
                     </ul>
                   </div>
@@ -112,8 +109,8 @@ if (isset($_POST['email'])) {
                     </div>
                   </div>
                   <div class="card-body p-3">
-                    <form class="form" role="form" action="profile.php" method="POST" autocomplete="off">
-                      <div class="form-group mt-1">
+                  <form class="form" role="form" autocomplete="off">
+                    <div class="form-group mt-1">
                         <label class="mb-0" for="">First Name</label>
                         <input type="text" name="firstname" class="form-control ps-2" id="firstname" value="<?php echo $userInfo['firstname'] ?>" required>
                       </div>
@@ -126,30 +123,38 @@ if (isset($_POST['email'])) {
                         <input type="text" name="lastname" class="form-control ps-2" id="lastname" value="<?php echo $userInfo['lastname'] ?>" required>
                       </div>
                       <div class="form-group mt-1">
-                        <label class="mb-0" for="">Gender</label>
-                        <select class="form-control ps-2" name="gender" id="gender" required>
-                          <option value="" disabled selected>-select-</option>
-                          <option value="Male">Male</option>
-                          <option value="Female">Female</option>
-                          <option value="Prefer not to say">Prefer not to say</option>
-                        </select>
+                          <label class="mb-0" for="">Gender</label>
+                          <select class="form-control ps-2" id="" >
+                              <option value="" selected>-select</option>
+                              <option value="Male">Male</option>
+                              <option value="Female">Female</option>
+                              <option value="Prefer-not-to-say">Prefer not to say</option>
+                          </select>
                       </div>
                       <div class="form-group mt-1">
-                        <label class="mb-0" for="">Contact Number</label>
-                        <input type="tel" name="contactnumber" class="form-control ps-2" id="contactnumber" value="<?php echo $userInfo['contact'] ?>" required>
+                          <label class="mb-0" for="">Number</label>
+                          <input type="textfield" class="form-control ps-2" id="" >
                       </div>
                       <div class="form-group mt-1">
-                        <label class="mb-0" for="">Email</label>
-                        <input type="email" name="email" class="form-control ps-2" id="email" value="<?php echo $email ?>" required>
+                          <label class="mb-0" for="">Email</label>
+                          <input type="textfield" class="form-control ps-2" id="" >
                       </div>
                       <div class="form-group mt-1">
-                        <label class="mb-0" for="">Position</label>
-                        <input type="text" name="position" class="form-control ps-2" id="position" value="<?php echo $userInfo['position'] ?>" required>
+                          <label class="mb-0" for="">Department</label>
+                          <select class="form-control ps-2" id="" >
+                              <option value="" selected>-select</option>
+                              <option value="CITE">CITE</option>
+                              <option value="CEA">CEA</option>
+                              <option value="CAS">CAS</option>
+                              <option value="CHS">CHS</option>
+                              <option value="CSS">CSS</option>
+                              <option value="PUCO">PUCO</option>
+                          </select>
                       </div>
                       <center>
-                        <div class="form-group pt-2">
+                      <div class="form-group pt-2">
                           <button type="submit" class="btn btn-success btn-lg float-right">Update</button>
-                        </div>
+                      </div>
                       </center>
                     </form>
                   </div>

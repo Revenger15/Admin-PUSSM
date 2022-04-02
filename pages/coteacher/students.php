@@ -1,108 +1,3 @@
-<?php
-include '../../includes/dbconfig.php';
-session_start();
-
-if (isset($_POST['register'])) {
-} elseif (isset($_POST['page'])) {
-  $page = $_POST['page'];
-  $search = $_POST['search'];
-  $nEntries = $_POST['nEntries'];
-
-  fetchData($page, $search, $nEntries);
-
-  if (function_exists('fetchData')) {
-    function fetchData($page, $search, $nEntries)
-    {
-      include '../../includes/dbconfig.php';
-
-      $dbUser = $database->getReference('users');
-      $dbHead = $database->getReference('ssphead');
-      $list = $dbHead->getValue();
-      $userData = [];
-      $filteredData = [];
-
-      //Get user data
-      if ($list != '') {
-        foreach ($list as $key => $value) {
-          $userData[$value] = $database->getChild($uid)->getValue();
-        }
-      }
-
-      if ($userData != [] && $search != '') {
-        foreach ($userData as $uid => $data) {
-          foreach ($data as $key => $value) {
-            if (str_icontains($value, $search)) {
-              $filteredData[$uid] = $data;
-            }
-          }
-        }
-      } else {
-        $filteredData = $userData;
-      }
-
-      echo '
-      <table class="table align-items-center justify-content-center mb-0">
-      <thead>
-        <tr>
-          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Names</th>
-          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"></th>
-          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Department</th>
-          <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2"></th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-      ';
-
-      if ($filteredData != []) {
-        $numChild = count($filteredData);
-        $tPage = ceil($numChild / $nEntries);
-        $page = ($page > $tPage) ? 1 : $page;
-
-        $pagedData = array_slice($filteredData, ($page - 1) * $nEntries);
-
-        foreach ($pagedData as $uid => $data) {
-          echo '
-          <tr>
-          <td>
-            <div class="d-flex px-2 py-1">
-              <div>
-                <img src="../../assets/img/ficon.png" class="avatar avatar-sm me-3 border-radius-lg" alt="user1">
-              </div>
-              <div class="d-flex flex-column justify-content-center">
-                <h6 class="mb-0 text-sm text-start">'.$data['firstname'].' '.$data['middlename'].' '.$data['lastname'].'</h6>
-                <p class="text-xs text-secondary mb-0">'.$data['email'].'</p>
-              </div>
-            </div>
-          </td>
-          <td>
-            <p class="text-xs font-weight-bold mb-0"></p>
-          </td>
-          <td>
-            <p class="text-xs font-weight-bold mb-0">'.$data['department'].'</p>
-          </td>
-          <td class="align-middle">
-          </td>
-          <td>
-            <ul class="list-unstyled mb-0 d-flex">
-              <li><a href="#" class="text-danger" data-toggle="tooltip" title="" data-original-title="Delete"><i class="far fa-trash-alt"></i></a></li>
-            </ul>
-          </td>
-        </tr>
-          ';
-        }
-      } else {
-        echo '
-        <tr>
-          <td colspan="5">No data found</td>
-        </tr>
-        ';
-      }
-    }
-  }
-}
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -112,7 +7,7 @@ if (isset($_POST['register'])) {
   <link rel="apple-touch-icon" sizes="76x76" href="../../assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../../assets/img/favicon.png">
   <title>
-    Head Teachers
+    Students
   </title>
   <!--     Fonts and icons     -->
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
@@ -139,7 +34,7 @@ if (isset($_POST['register'])) {
     <div class="sidenav-header">
       <i class="fas fa-times p-3 cursor-pointer text-white opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
       <a class="navbar-brand m-0" target="_blank">
-        <span class="ms-1 font-weight-bold text-white fs-2">Create</span>
+        <span class="ms-1 font-weight-bold text-white fs-2">Students</span>
       </a>
     </div>
     <hr class="horizontal light mt-0 mb-2">
@@ -154,14 +49,39 @@ if (isset($_POST['register'])) {
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-whitee active bg-gradient-faded-dark-vertical" href="#">
+          <a class="nav-link text-whitee" href="teachers.php">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">assignment</i>
             </div>
-            <span class="nav-link-text ms-1">Head Teachers</span>
+            <span class="nav-link-text ms-1">Teachers</span>
           </a>
         </li>
-
+        <li class="nav-item">
+          <a class="nav-link text-white" href="subjects.php">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10">table_view</i>
+            </div>
+            <span class="nav-link-text ms-1">Subjects</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white active bg-gradient-faded-dark-vertical" href="#">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10">assignment</i>
+            </div>
+            <span class="nav-link-text ms-1">Students</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" href="useracc.php">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-person-fill material-icons" viewBox="0 0 16 16">
+              <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0zm2 5.755V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-.245S4 12 8 12s5 1.755 5 1.755z"/>
+            </svg>
+            </div>
+            <span class="nav-link-text ms-1">User Accounts</span>
+          </a>
+        </li>
         <li class="nav-item">
           <a class="nav-link text-white" href="userlogs.php">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -169,8 +89,7 @@ if (isset($_POST['register'])) {
             </div>
             <span class="nav-link-text ms-1">User Log</span>
           </a>
-        </li>
-
+        </li> 
         <li class="nav-item mt-3">
           <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">___________________________________</h6>
         </li>
@@ -183,193 +102,143 @@ if (isset($_POST['register'])) {
             <span class="nav-link-text ms-1">Log Out</span>
           </a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link dropdown-toggle pt-1 px-0" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <div class="media d-flex align-items-center ps-3 pt-2">
+                <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                  <i class="material-icons opacity-10">settings</i>
+                </div>
+              <div class="media-body ms-2 text-dark align-items-center d-none d-lg-block">
+                <span class="nav-link-text text-white">Setting</span>
+              </div>
+            </div>
+          </a>
+          <div class="dropdown-menu dashboard-dropdown dropdown-menu-start mt-2 py-1 bg-light">
+              <select class="dropdown-item d-flex align-items-center bg-transparent" aria-label=".form-select-lg example">
+                <option selected>School Year</option>
+                <option value="1" selected>1SEM | AY-21/22</option>
+                <option value="2">2SEM | AY-21/22</option>
+                <option value="3">1SEM | AY-22/23</option>
+                <option value="4">2SEM | AY-22/23</option>
+              </select>
+          </div>
+        </li>
       </ul>
     </div>
   </aside>
   <main class="main-content  mt-0">
     <section>
-      <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" navbar-scroll="true">
-        <div class="container-fluid py-1 px-3">
-          <img class="icon-shape me-2" src="../../assets\img\favicon.png" alt="">
-          <nav aria-label="breadcrumb">
-            <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
-              <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Admin</a></li>
-              <li class="breadcrumb-item text-sm text-dark active" aria-current="page">PHINMA-UPang Student Support Module</li>
-            </ol>
-            <h6 class="font-weight-bolder mb-0">Head Teachers</h6>
-          </nav>
-          <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
-            <div class="col-5 pe-md-3 d-flex align-items-center">
-              <div class="input-group input-group-outline">
-                <label class="form-label">Type here...</label>
-                <input type="text" class="form-control">
-              </div>
-            </div>
-            <ul class="navbar-nav  justify-content-end">
-            </ul>
-          </div>
-        </div>
-      </nav>
-      <!-- end of nav -->
-      <div class="page-header ">
+      <div class="page-header min-vh-100">
         <div class="container">
           <div class="row">
             <div class="col-6 d-lg-flex d-none h-100 my-auto pe-0 position-absolute top-0 start-0 text-center justify-content-center flex-column">
-              <div class="card my-4">
-                <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
-                  <div class="bg-gradient-faded-success  shadow-dark border-radius-lg pt-4 pb-3">
-                    <h6 class="text-white text-capitalize ps-3">Lists of SSP Head Teachers</h6>
-                  </div>
-                </div>
-                <div class="card-body px-0 pb-2">
-                  <div class="table-responsive p-0">
-                    <table class="table align-items-center justify-content-center mb-0">
-                      <thead>
-                        <tr>
-                          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Names</th>
-                          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"></th>
-                          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Department</th>
-                          <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2"></th>
-                          <th></th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>
-                            <div class="d-flex px-2 py-1">
-                              <div>
-                                <img src="../../assets/img/ficon.png" class="avatar avatar-sm me-3 border-radius-lg" alt="user1">
-                              </div>
-                              <div class="d-flex flex-column justify-content-center">
-                                <h6 class="mb-0 text-sm text-start">Angelica Fernandez Vidal</h6>
-                                <p class="text-xs text-secondary mb-0">avfernandez.up@phinmaed.com</p>
-                              </div>
-                            </div>
-                          </td>
-                          <td>
-                            <p class="text-xs font-weight-bold mb-0"></p>
-                          </td>
-                          <td>
-                            <p class="text-xs font-weight-bold mb-0">CITE</p>
-                          </td>
-                          <td class="align-middle">
-                          </td>
-                          <td>
-                            <ul class="list-unstyled mb-0 d-flex">
-                              <li><a href="#" class="text-danger" data-toggle="tooltip" title="" data-original-title="Delete"><i class="far fa-trash-alt"></i></a></li>
-                            </ul>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-                <div class="fixed-table-pagination">
-                  <div class="float-left pagination">
-                    <button type="button" class="btn btn-outline-success mt-2 ms-1 mb-1">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer" viewBox="0 0 16 16">
-                        <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"></path>
-                        <path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z"></path>
-                      </svg> Print
-                    </button>
-                  </div>
-                  <div class="float-left pagination">
-                    <select class="btn btn-outline-success mt-2 ms-1 mb-1" name="page" id="">
-                      <option value="e3">3 entries</option>
-                      <option value="e5" Selected>5 entries</option>
-                    </select>
-                  </div>
-                  <div class="float-right pagination">
-                    <ul class="pagination">
-                      <li class="page-item"><a class="page-link" aria-label="previous page" href="">« Prev</a></li>
-                      <li class="page-item active bg-gradient-faded-success-vertical border-radius-2xl"><a class="page-link" aria-label="to page 1" href="">1</a></li>
-                      <li class="page-item"><a class="page-link" aria-label="to page 2" href="">2</a></li>
-                      <li class="page-item"><a class="page-link" aria-label="to page 3" href="">3</a></li>
-                      <li class="page-item"><a class="page-link" aria-label="next page" href="">Next »</a></li>
-                    </ul>
-                  </div>
-                </div>
+              <div class="position-relative bg-gradient-primary h-100 m-3 px-7 border-radius-lg d-flex flex-column justify-content-center" style="background-image: url('../../assets/img/illustrations/illustration-signup.jpg'); background-size: cover;">
               </div>
             </div>
             <div class="col-xl-4 col-lg-5 col-md-7 d-flex flex-column ms-auto me-auto ms-lg-auto me-lg-5">
               <div class="card card-plain">
                 <div class="card-header">
                   <h4 class="font-weight-bolder">Create Account</h4>
-                  <p class="mb-0">Account for the SSP HEAD</p>
+                  <p class="mb-0">Enter email and password to register</p>
                 </div>
                 <div class="card-body">
                   <form method="POST" enctype="multipart/form-data" name="teacher-register" id="teacher-register">
-                    <p>Fill up:</p>
-                    <div class="input-group input-group-outline mb-3">
-                      <select class="form-control" id="" required="">
-                        <option value="" selected>-Select Gender-</option>
-                        <option value="Male">Male</option>
-                        <option value="Female">Female</option>
-                        <option value="Prefer not to say">Prefer not to say</option>
-                      </select>
+                    <p>Batch Sign up:</p>
+                    <div class="custom-file">
+                      <input type="file" accept=".csv" name="batch-csv" class="custom-file-input" id="customFile" onchange="csvInput();">
+                      <label class="custom-file-label" for="customFile" id="fileLabel">No File Selected (.csv)</label>
+                      <a href="#dl-template" id="dl-template" onclick="templateModal();" style="float: right;">Download Template</a>
+                    </div>
+                    <p class="mt-4">Single Sign up:</p>
+                    <div class="input-group input-group-outline mb-1">
+                        <select class="form-control" id="" required="">
+                            <option value="" selected>-select gender-</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Prefer-not-to-say">Prefer not to say</option>
+                        </select>
                       <div class="invalid-feedback">
                         Please provide gender.
                       </div>
                     </div>
-                    <div class="input-group input-group-outline mb-3">
-                      <select class="form-control" id="" required="">
-                        <option value="" selected>-Select Department-</option>
-                        <option value="CITE">CITE</option>
-                        <option value="CEA">CEA</option>
-                        <option value="CMA">CMA</option>
-                        <option value="CAS">CAS</option>
-                        <option value="CHS">CHS</option>
-                        <option value="CELA">CELA</option>
-                        <option value="SHS">SHS</option>
-                        <option value="PUCO">PUCO</option>
-                      </select>
+                    <div class="input-group input-group-outline mb-1">
+                        <select class="form-control" id="" required="">
+                            <option value="" selected>-Select Department-</option>
+                            <option value="CITE">CITE</option>
+                            <option value="CEA">CEA</option>
+                            <option value="CAS">CAS</option>
+                            <option value="CHS">CHS</option>
+                            <option value="CSS">CSS</option>
+                            <option value="PUCO">PUCO</option>
+                        </select>
                       <div class="invalid-feedback">
                         Please provide a valid Department.
                       </div>
                     </div>
-                    <div class="input-group input-group-outline mb-3">
+                    <div class="input-group input-group-outline mb-2">
                       <label class="form-label">LastName</label>
-                      <input type="text" name="lName" class="form-control" required="">
+                      <input type="text" name="lName" class="form-control" required>
                       <div class="invalid-feedback">
                         Please provide a valid LastName.
                       </div>
                     </div>
-                    <div class="input-group input-group-outline mb-3">
+                    <div class="input-group input-group-outline mb-2">
                       <label class="form-label">FirstName</label>
-                      <input type="text" name="fName" class="form-control" required="">
+                      <input type="text" name="fName" class="form-control" required>
                       <div class="invalid-feedback">
                         Please provide a valid FirstName.
                       </div>
                     </div>
-                    <div class="input-group input-group-outline mb-3">
+                    <div class="input-group input-group-outline mb-2">
                       <label class="form-label">MiddleName</label>
-                      <input type="text" name="mName" class="form-control" required="">
+                      <input type="text" name="mName" class="form-control" required>
                       <div class="invalid-feedback">
                         Please provide a valid MiddleName.
                       </div>
                     </div>
-                    <div class="input-group input-group-outline mb-3">
-                      <label class="form-label">Employee Number</label>
-                      <input type="text" name="empNo" class="form-control" required="">
+                    <div class="input-group input-group-outline mb-2">
+                      <label class="form-label">ID Number</label>
+                      <input type="text" name="lName" class="form-control" required>
                       <div class="invalid-feedback">
-                        Please provide a valid Employee Number.
+                        Please provide a valid ID Number.
                       </div>
                     </div>
-                    <div class="input-group input-group-outline mb-3">
+                    <div class="input-group input-group-outline mb-2">
+                      <label class="form-label">Subject</label>
+                      <input type="text" name="lName" class="form-control" required>
+                      <div class="invalid-feedback">
+                        Please provide a Subject.
+                      </div>
+                    </div>
+                    <div class="input-group input-group-outline mb-2">
+                      <label class="form-label">Section</label>
+                      <input type="text" name="lName" class="form-control" required>
+                      <div class="invalid-feedback">
+                        Please provide a Section.
+                      </div>
+                    </div>
+                    <div class="input-group input-group-outline mb-2">
+                      <label class="form-label">Contact Number</label>
+                      <input type="text" name="empNo" class="form-control" required>
+                      <div class="invalid-feedback">
+                        Please provide a valid Number.
+                      </div>
+                    </div>
+                    <div class="input-group input-group-outline mb-2">
                       <label class="form-label">Email</label>
-                      <input type="email" name="email" class="form-control" required="">
+                      <input type="email" name="email" class="form-control" required>
                       <div class="invalid-feedback">
                         Please provide a valid Email.
                       </div>
                     </div>
                     <div class="input-group input-group-outline mb-3">
                       <label class="form-label">Password</label>
-                      <input type="password" name="password" id="password" class="form-control" style="border-radius: 0.375em;" required="">
-                      <button type="button" style="position:absolute; cursor: pointer; z-index: 3; width: 9%; border: none; background: none; right: 0%; top: 50%; transform: translate(0%, -50%);" id="togglePassword">
+                      <input type="password" name="password" id="password" class="form-control" style="border-radius: 0.375em;" required>
+                      <button style="position:absolute; cursor: pointer; z-index: 3; width: 9%; border: none; background: none; right: 0%; top: 50%; transform: translate(0%, -50%);" id="togglePassword">
                         <i id="password-icon" class="fa fa-eye-slash"></i>
                       </button>
                       <div class="invalid-feedback">
-                        Please provide Password.
+                        Please provide a Password.
                       </div>
                     </div>
                     <div class="text-center">
@@ -384,6 +253,10 @@ if (isset($_POST['register'])) {
       </div>
     </section>
   </main>
+  <!-- validation -->
+  <script src="../pages\ssphead\validation.js"></script>
+
+
   <!-- JQuery -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
 
@@ -431,7 +304,7 @@ if (isset($_POST['register'])) {
   <script>
     $('a#dl-template').attr({
       target: '_blank',
-      href: 'PUSSM_HeadTeacher-Template.csv'
+      href: 'PUSSM_Student-Template.csv'
     });
 
     $('#btn-account').click(function() {
