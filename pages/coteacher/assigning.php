@@ -73,9 +73,12 @@ $userReference = $database->getReference("users/" . $uid . "/result");
         <li class="nav-item">
           <a class="nav-link text-white active bg-gradient-faded-dark-vertical" href="#">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="material-icons opacity-10">table_view</i>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+              <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+              <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+            </svg>
             </div>
-            <span class="nav-link-text ms-1">Subjects</span>
+            <span class="nav-link-text ms-1">Assigning</span>
           </a>
         </li>
         <li class="nav-item">
@@ -175,7 +178,7 @@ $userReference = $database->getReference("users/" . $uid . "/result");
           <div class="card my-4">
             <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
               <div class="bg-gradient-faded-dark shadow-dark border-radius-lg pt-4 pb-3">
-                <h6 class="text-white text-capitalize ps-3">Teacher Asigning</h6>
+                <h6 class="text-white text-capitalize ps-3">To be Asign</h6>
               </div>
             </div>
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css" integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous" />
@@ -188,8 +191,8 @@ $userReference = $database->getReference("users/" . $uid . "/result");
                         <thead>
                           <tr>
                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Names</th>
-                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Subject</th>
-                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Section</th>
+                            <!-- <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Subject</th>
+                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Section</th> -->
                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2">SEM/AY</th>
                             <th></th>
                           </tr>
@@ -207,7 +210,7 @@ $userReference = $database->getReference("users/" . $uid . "/result");
                                 </div>
                               </div>
                             </td> 
-                            <td>
+                            <!-- <td>
                               <select class="form-select text-start border-0" aria-label=".form-select-lg example">
                                 <option selected>-Subject-</option>
                                 <option value="1">SSP-001</option>
@@ -226,16 +229,13 @@ $userReference = $database->getReference("users/" . $uid . "/result");
                                 <option value="3">BSIT-04</option>
                                 <option value="3">BSIT-05</option>
                               </select>
-                            </td>
+                            </td> -->
                             <td>
                               <p class="text-xs font-weight-bold mb-0 text-center">1SEM/2021-2022</p>
                             </td>
                             <td>
                               <button type="button" class="btn btn-dark mt-2 ms-1 mb-1">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-upload" viewBox="0 0 16 16">
-                                  <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
-                                  <path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z"/>
-                                </svg>
+                                Assign
                               </button>
                             </td>
                           </tr>    
@@ -294,7 +294,7 @@ $userReference = $database->getReference("users/" . $uid . "/result");
                     <tr>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Names</th>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Subject</th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Section</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder  opacity-7 ps-2">Section</th>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2">SEM/AY</th>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-4">Reassign</th>
                     </tr>
@@ -313,10 +313,12 @@ $userReference = $database->getReference("users/" . $uid . "/result");
                         </div>
                       </td>
                       <td>
-                        <p class="text-xs font-weight-bold mb-0">SSP-000</p>
+                        <p class="text-xs font-weight-bold mb-0">NST-001</p>
                       </td>
                       <td>
-                        <span class="text-xs font-weight-bold mb-0">BSIT-00</span>
+                        <span class="text-xs font-weight-bold mb-0">BSIT-01,</span>
+                        <span class="text-xs font-weight-bold mb-0">BSIT-02,</span>
+                        <span class="text-xs font-weight-bold mb-0">BSIT-03</span>
                       </td>
                       <td>
                         <p class="text-xs font-weight-bold mb-0 text-center">1SEM/2021-2022</p>
@@ -347,7 +349,22 @@ $userReference = $database->getReference("users/" . $uid . "/result");
                   <option value="e3" Selected>5 entries</option>
                   <option value="e5">15 entries</option>
                   <option value="e5">25 entries</option>
-                  <option value="e5">50 entries</option>
+                </select>
+              </div>
+              <div class="float-left pagination">
+                <select class="btn btn-outline-success mt-2 ms-1 mb-1" name="page" id="">
+                  <option value="">-subject-</option>
+                  <option value="" Selected>NST-001</option>
+                  <option value="">NST-002</option>
+                  <option value="">SSP-001</option>
+                  <option value="">SSP-002</option>
+                  <option value="">SSP-003</option>
+                  <option value="">SSP-004</option>
+                  <option value="">SSP-005</option>
+                  <option value="">SSP-006</option>
+                  <option value="">SSP-007</option>
+                  <option value="">SSP-008</option>
+                  <option value="">SSP-009</option>
                 </select>
               </div>
               <div class="float-right pagination">
@@ -473,49 +490,54 @@ $userReference = $database->getReference("users/" . $uid . "/result");
     }
   </script>
 
-  <div class="modal fade" id="userInformation" tabindex="-1" role="dialog" aria-labelledby="userInformationLabel" aria-hidden="true">
+  <div class="modal fade" id="assigning" tabindex="-1" role="dialog" aria-labelledby="assigningLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="userInformationlLabel">Student Record</h5>
+          <h5 class="modal-title" id="assigningLabel">Teacher Assigning</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body" id="user-info-modal">
-          <p>Name: </p>
-          <p>Section: </p>
-          <p>Contact Number: </p>
-          <div>
-            <p>Results</p>
-            <p>Date: </p>
-          </div>
-          <p>Actions</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary">Refer(Nurse)</button>
-          <button type="button" class="btn btn-primary">Mark Contacted</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- <div id="userInformation" class="modal">
-    <h1>Student Record</h1>
+    <h1>Assigning</h1>
     <p>Name: </p>
     <p>Section: </p>
     <p>Contact Number: </p>
+    <p class="text-center">Assign</p>
     <div>
-      <p>Results</p>
-      <p>Date: </p>
+      <tr>
+        <td>
+        <label for="">Subject</label>
+          <select class="form-select text-start border-1 ps-2" aria-label=".form-select-lg example">
+            <option selected>-select-</option>
+            <option value="">NST-001</option>
+            <option value="">NST-002</option>
+            <option value="">SSP-001</option>
+            <option value="">SSP-002</option>
+            <option value="">SSP-003</option>
+            <option value="">SSP-004</option>
+            <option value="">SSP-005</option>
+            <option value="">SSP-006</option>
+            <option value="">SSP-007</option>
+            <option value="">SSP-008</option>
+            <option value="">SSP-009</option>
+          </select>
+        </td>
+        <td>
+          <label for="">Section(put "," if multiple)</label>
+          <input type="text" class="form-control ps-2" id="" required="">
+        </td>
+      </tr>
+      <center>
+        <div class="form-group pt-2">
+          <button type="submit" class="btn btn-success btn-lg">ASSIGN</button>
+        </div>
+      </center>
     </div>
-    <p>Actions</p>
-    <div>
-      <button>Refer to Guidance</button>
-      <button>Refer to Nurse</button>
-      <button>Mark Contacted</button>
-    </div>
-  </div> -->
+  </div>
+  </div>
+</div>
 </body>
 
 </html>
