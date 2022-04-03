@@ -161,6 +161,7 @@ $userReference = $database->getReference("users/" . $uid . "/result");
                 <option value="tb2">Student Table</option>
               </select>
             </div>
+            <button class="btn bg-gradient-success mt-3 ms-1 ps-3 text-center font-monospace text-capitalize">Search</button>
           </div>
           <ul class="navbar-nav  justify-content-end">
           </ul>

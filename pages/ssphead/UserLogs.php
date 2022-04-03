@@ -142,6 +142,7 @@ $userReference = $database->getReference("users/" . $uid . "/result");
               <label class="form-label">Type here...</label>
               <input type="text" class="form-control">
             </div>
+            <button class="btn bg-gradient-success mt-3 ms-1 ps-3 text-center font-monospace text-capitalize">Search</button>
           </div>
           <ul class="navbar-nav  justify-content-end">
           </ul>

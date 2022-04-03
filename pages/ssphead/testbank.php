@@ -44,7 +44,7 @@ if (isset($_POST["load"])) {
       //$line is an array of the csv elements
 
       $usersRef->getChild($line[3])->update([
-        ' => $line[0],
+         => $line[0],
          => $line[0],
       ]);
 
@@ -182,6 +182,7 @@ if (isset($_POST["load"])) {
                   <option value="Physicalt">Physical Table</option>
                 </select>
               </div>
+              <button class="btn bg-gradient-success mt-3 ms-1 ps-3 text-center font-monospace text-capitalize">Search</button>
             </div>
             <ul class="navbar-nav  justify-content-end">
             </ul>
