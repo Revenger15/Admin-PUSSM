@@ -5,7 +5,7 @@
     use Kreait\Firebase\Factory;
     use Kreait\Firebase\ServiceAccount;
 
-    error_reporting(0);
+    // error_reporting(0);
 
     // $serviceAccount = ServiceAccount::fromJsonFile(__DIR__. 'react-ebe8e-firebase-adminsdk-edc3p-3832332702.json');
     $firebase = (new Factory)

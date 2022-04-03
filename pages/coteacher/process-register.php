@@ -31,6 +31,7 @@
     $auth = $firebase->createAuth();
     $usersRef = $database->getReference('users/');
 
+    // Batch Registration
     if ($csv['name'] != '') {
         // CSV Registration
         $file = fopen($csv['tmp_name'], 'r');
@@ -47,30 +48,40 @@
             echo '<td>' . $line[3] . '</td>';
             echo '<td>' . $line[4] . '</td>';
             echo '<td>' . $line[5] . '</td>';
+            echo '<td>' . $line[6] . '</td>';
+            echo '<td>' . $line[7] . '</td>';
             echo '</tr>';
 
-            // $userProperties = [
-            //     'uid' => $line[3],
-            //     'email' => $line[4],
-            //     'password' => $line[5],
-            //     'emailVerified' => true,
-            // ];
+            $userProperties = [
+                'uid' => $line[3],
+                'email' => $line[8],
+                'password' => $line[9],
+                'emailVerified' => true,
+            ];
 
-            // $createdUser = $auth->createUser($userProperties);
+            $createdUser = $auth->createUser($userProperties);
 
             $usersRef->getChild($line[3])->update([
                 'lastName' => $line[0],
                 'firstName' => $line[1],
                 'middleName' => $line[2],
                 'empNo' => $line[3],
-                'password' => $line[4]
+                'gender' => $line[4],
+                'subj' => $line[5],
+                'sect' => $line[6],
+                'cNo' => $line[7],
             ]);
 
+            $database->getReference("sspcoord")->update([
+                $line[3] => $line[3]
+            ]);
 
             // print_r($line);
             // echo '<br><br>';
         }
         fclose($file);
+
+    // Single Registration
     } else {
         $userProperties = [
             'uid' => $_POST['empNo'],
@@ -87,6 +98,12 @@
             'firstName' => $_POST['fName'],
             'middleName' => $_POST['mName'],
             'empNo' => $_POST['empNo'],
+            'gender' => $_POST['gender'],
+            'dept' => $_POST['dept'],
+        ]);
+
+        $database->getReference("sspcoord")->update([
+            $createdUser->uid => $createdUser->uid
         ]);
     }
     ?>

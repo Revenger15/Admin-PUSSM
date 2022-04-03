@@ -57,14 +57,14 @@
             echo '<td>' . $line[5] . '</td>';
             echo '</tr>';
 
-            // $userProperties = [
-            //     'uid' => $line[3],
-            //     'email' => $line[4],
-            //     'password' => $line[5],
-            //     'emailVerified' => true,
-            // ];
+            $userProperties = [
+                'uid' => $line[3],
+                'email' => $line[4],
+                'password' => $line[5],
+                'emailVerified' => true,
+            ];
 
-            // $createdUser = $auth->createUser($userProperties);
+            $createdUser = $auth->createUser($userProperties);
 
             $usersRef->getChild($line[3])->update([
                 'lastName' => $line[0],

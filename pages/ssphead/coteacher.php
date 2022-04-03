@@ -3,28 +3,27 @@ include '../../includes/dbconfig.php';
 session_start();
 
 if (isset($_POST['register'])) {
+  // Registration
 } elseif (isset($_POST['page'])) {
   $page = $_POST['page'];
   $search = $_POST['search'];
   $nEntries = $_POST['nEntries'];
 
-  fetchData($page, $search, $nEntries);
-
-  if (function_exists('fetchData')) {
+  if (!function_exists('fetchData')) {
     function fetchData($page, $search, $nEntries)
     {
       include '../../includes/dbconfig.php';
 
       $dbUser = $database->getReference('users');
-      $dbHead = $database->getReference('ssphead');
-      $list = $dbHead->getValue();
+      $dbCoords = $database->getReference('sspcoord');
+      $list = $dbCoords->getValue();
       $userData = [];
       $filteredData = [];
 
       //Get user data
       if ($list != '') {
         foreach ($list as $key => $value) {
-          $userData[$value] = $database->getChild($uid)->getValue();
+          $userData[$value] = $dbUser->getChild($value)->getValue();
         }
       }
 
@@ -41,6 +40,13 @@ if (isset($_POST['register'])) {
       }
 
       echo '
+      <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+        <div class="bg-gradient-faded-success  shadow-dark border-radius-lg pt-4 pb-3">
+          <h6 class="text-white text-capitalize ps-3">Lists of SSP CO Teachers</h6>
+        </div>
+      </div>
+      <div class="card-body px-0 pb-2">
+        <div class="table-responsive p-0">
       <table class="table align-items-center justify-content-center mb-0">
       <thead>
         <tr>
@@ -57,7 +63,7 @@ if (isset($_POST['register'])) {
       if ($filteredData != []) {
         $numChild = count($filteredData);
         $tPage = ceil($numChild / $nEntries);
-        $page = ($page > $tPage) ? 1 : $page;
+        $page = ($page <= $tPage && $page > 0) ? $page : 1;
 
         $pagedData = array_slice($filteredData, ($page - 1) * $nEntries);
 
@@ -70,8 +76,8 @@ if (isset($_POST['register'])) {
                 <img src="../../assets/img/ficon.png" class="avatar avatar-sm me-3 border-radius-lg" alt="user1">
               </div>
               <div class="d-flex flex-column justify-content-center">
-                <h6 class="mb-0 text-sm text-start">'.$data['firstname'].' '.$data['middlename'].' '.$data['lastname'].'</h6>
-                <p class="text-xs text-secondary mb-0">'.$data['email'].'</p>
+                <h6 class="mb-0 text-sm text-start">' . $data['firstname'] . ' ' . $data['middlename'] . ' ' . $data['lastname'] . '</h6>
+                <p class="text-xs text-secondary mb-0">' . $data['email'] . '</p>
               </div>
             </div>
           </td>
@@ -79,7 +85,7 @@ if (isset($_POST['register'])) {
             <p class="text-xs font-weight-bold mb-0"></p>
           </td>
           <td>
-            <p class="text-xs font-weight-bold mb-0">'.$data['department'].'</p>
+            <p class="text-xs font-weight-bold mb-0">' . $data['department'] . '</p>
           </td>
           <td class="align-middle">
           </td>
@@ -89,17 +95,97 @@ if (isset($_POST['register'])) {
             </ul>
           </td>
         </tr>
-          ';
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="fixed-table-pagination">
+  <div class="float-left pagination">
+    <button type="button" class="btn btn-outline-success mt-2 ms-1 mb-1">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer" viewBox="0 0 16 16">
+        <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"></path>
+        <path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z"></path>
+      </svg> Print
+    </button>
+  </div>
+  <div class="float-left pagination">
+    <select class="btn btn-outline-success mt-2 ms-1 mb-1" name="page" id="">
+      <option value="e3">3 entries</option>
+      <option value="e5" Selected>5 entries</option>
+    </select>
+  </div>
+  <div class="float-right pagination">
+    <ul class="pagination">';
+
+          // Pagination <<
+          echo '<li class="page-item"><a class="page-link"';
+          if ($page == 1) {
+            echo ' style="pointer-events: none;"';
+          }
+          echo ' aria-label="previous page" onclick="loadData(' . $page-1 . ', \''. $search. '\');">« Prev</a></li>';
+
+          // Pagination Number
+          for ($x = 1; $x <= $tPage; $x++) {
+            echo '<li class="page-item';
+            if ($x == $page) {
+              echo ' active bg-gradient-faded-success-vertical border-radius-2xl';
+            }
+            echo '"><a class="page-link" ';
+            if ($x == $page) {
+              echo ' style="pointer-events: none;"';
+            }
+            echo 'aria-label="to page ' . $x . '"  onclick="loadData(' . $x . ', \''. $search. '\');">' . $x . '</a></li>';
+          }
+
+          // Pagination >>
+          echo '<li class="page-item"><a class="page-link"';
+          if ($page == $tPage) {
+            echo ' style="pointer-events: none;"';
+          }
+          echo ' aria-label="next page" onclick="loadData(' . $page+1 . ', \''. $search. '\');">Next »</a></li>
+          </ul>
+        </div>
+      </div>';
         }
       } else {
         echo '
         <tr>
           <td colspan="5">No data found</td>
         </tr>
+        </tbody>
+    </table>
+  </div>
+</div>
+<div class="fixed-table-pagination">
+  <div class="float-left pagination">
+    <button type="button" class="btn btn-outline-success mt-2 ms-1 mb-1" disabled>
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer" viewBox="0 0 16 16">
+        <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"></path>
+        <path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z"></path>
+      </svg> Print
+    </button>
+  </div>
+  <div class="float-left pagination">
+    <select class="btn btn-outline-success mt-2 ms-1 mb-1" name="page" id="">
+      <option value="e3">3 entries</option>
+      <option value="e5" Selected>5 entries</option>
+    </select>
+  </div>
+  <div class="float-right pagination">
+    <ul class="pagination">
+      <li class="page-item"><a class="page-link" style="pointer-events: none;" aria-label="previous page" href="">« Prev</a></li>
+      <li class="page-item active bg-gradient-faded-success-vertical border-radius-2xl"><a class="page-link" style="pointer-events: none;" aria-label="to page 1" href="">1</a></li>
+      <li class="page-item"><a class="page-link" style="pointer-events: none;" aria-label="next page" href="">Next »</a></li>
+    </ul>
+  </div>
+</div>
         ';
       }
+      exit();
     }
   }
+
+  fetchData($page, $search, $nEntries);
 }
 ?>
 
@@ -201,22 +287,22 @@ if (isset($_POST['register'])) {
         <li class="nav-item">
           <a class="nav-link dropdown-toggle pt-1 px-0" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             <div class="media d-flex align-items-center ps-3 pt-2">
-                <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                  <i class="material-icons opacity-10">settings</i>
-                </div>
+              <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                <i class="material-icons opacity-10">settings</i>
+              </div>
               <div class="media-body ms-2 text-dark align-items-center d-none d-lg-block">
                 <span class="nav-link-text text-white">Setting</span>
               </div>
             </div>
           </a>
           <div class="dropdown-menu dashboard-dropdown dropdown-menu-start mt-2 py-1 bg-light">
-              <select class="dropdown-item d-flex align-items-center bg-transparent" aria-label=".form-select-lg example">
-                <option selected>School Year</option>
-                <option value="1" selected>1SEM | AY-21/22</option>
-                <option value="2">2SEM | AY-21/22</option>
-                <option value="3">1SEM | AY-22/23</option>
-                <option value="4">2SEM | AY-22/23</option>
-              </select>
+            <select class="dropdown-item d-flex align-items-center bg-transparent" aria-label=".form-select-lg example">
+              <option selected>School Year</option>
+              <option value="1" selected>1SEM | AY-21/22</option>
+              <option value="2">2SEM | AY-21/22</option>
+              <option value="3">1SEM | AY-22/23</option>
+              <option value="4">2SEM | AY-22/23</option>
+            </select>
           </div>
         </li>
       </ul>
@@ -251,7 +337,7 @@ if (isset($_POST['register'])) {
         <div class="container">
           <div class="row">
             <div class="col-6 d-lg-flex d-none h-100 my-auto pe-0 position-absolute top-0 start-0 text-center justify-content-center flex-column">
-              <div class="card my-4">
+              <div class="card my-4" id="dynTable">
                 <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                   <div class="bg-gradient-faded-success  shadow-dark border-radius-lg pt-4 pb-3">
                     <h6 class="text-white text-capitalize ps-3">Lists of SSP CO Teachers</h6>
@@ -310,9 +396,9 @@ if (isset($_POST['register'])) {
                     </button>
                   </div>
                   <div class="float-left pagination">
-                    <select class="btn btn-outline-success mt-2 ms-1 mb-1" name="page" id="">
-                      <option value="e3">3 entries</option>
-                      <option value="e5" Selected>5 entries</option>
+                    <select class="btn btn-outline-success mt-2 ms-1 mb-1" name="page" id="entries">
+                      <option value="3">3 entries</option>
+                      <option value="5" selected>5 entries</option>
                     </select>
                   </div>
                   <div class="float-right pagination">
@@ -331,13 +417,13 @@ if (isset($_POST['register'])) {
               <div class="card card-plain">
                 <div class="card-header">
                   <h4 class="font-weight-bolder">Create Account</h4>
-                  <p class="mb-0">Account for the SSP HEAD</p>
+                  <p class="mb-0">Account for SSP Coordinator</p>
                 </div>
                 <div class="card-body">
                   <form method="POST" enctype="multipart/form-data" name="teacher-register" id="teacher-register">
                     <p>Fill up:</p>
                     <div class="input-group input-group-outline mb-3">
-                      <select class="form-control" id="" required="">
+                      <select class="form-control" name="gender" id="gender" required="">
                         <option value="" selected>-Select Gender-</option>
                         <option value="Male">Male</option>
                         <option value="Female">Female</option>
@@ -348,7 +434,7 @@ if (isset($_POST['register'])) {
                       </div>
                     </div>
                     <div class="input-group input-group-outline mb-3">
-                      <select class="form-control" id="" required="">
+                      <select class="form-control" name="dept" id="dept" required="">
                         <option value="" selected>-Select Department-</option>
                         <option value="CITE">CITE</option>
                         <option value="CEA">CEA</option>
@@ -485,7 +571,6 @@ if (isset($_POST['register'])) {
 
       console.log("Created FormData, " + [...data.keys()] + " keys in data");
 
-      // console.log(new FormData($('#teacher-register')));
       console.log('started ajax')
       $.ajax({
         url: "process-register.php",
@@ -501,32 +586,24 @@ if (isset($_POST['register'])) {
           $("#content").html(data);
         }
       });
-      // $.ajax({
-      //   url: "process-register.php",
-      //   type: "POST",
-      //   dataType: "JSON",
-      //   data: data,
-      //   processData: false,
-      //   contentType: false,
-      //   success: function(data, textStatus, xhr) {
-      //     console.log(xhr.status);
-      //   },
-      //   complete: function(xhr, textStatus) {
-      //     console.log(xhr.status);
-      //   },
-      //   error: function(result) {
-      //     alert("hello1");
-      //     alert(result.status + ' ' + result.statusText);
-      //   }
-      // }).done(function(data) {
-      //   $("#proc-close").show();
-      //   $("#content").html(data);
-      //   // var modalBody = document.getElementById('user-info-modal');
-      //   // modalBody.html(data);
-      // }).always(function(jqXHR) {
-      //   console.log(jqXHR.status);
-      // });
     });
+
+    loadData(1, "");
+
+    function loadData(page, search) {
+      $.ajax({
+        url: "coteacher.php",
+        type: "POST",
+        data: {
+          "page" : page,
+          "search" : search,
+          "nEntries" : $("#entries").val()
+        }
+      }).done(function(data) {
+        console.log(data);
+        $("#dynTable").html(data);
+      });
+    }
 
     function csvInput() {
       var filename = $('input[type=file]').val().split('\\').pop();

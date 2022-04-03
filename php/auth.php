@@ -52,7 +52,7 @@ if (isset($_POST['submit'])) {
         } else {
             echo '<script>
                 alert("Invalid email/password");
-                //window.location = "../";
+                window.location = "../";
             </script>';
         }
         exit();
