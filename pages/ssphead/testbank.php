@@ -4,6 +4,9 @@ session_start();
 
 if (isset($_POST["load"])) {
   $load = $_POST["load"];
+  $page = $_POST["page"];
+  $search = $_POST["search"];
+  $nEntries = $_POST["entries"];
 
   if (!function_exists('fetchData')) {
     function fetchData($page, $search, $nEntries, $load)
@@ -24,31 +27,170 @@ if (isset($_POST["load"])) {
         $filteredData = $list;
       }
 
+      $e5  = ($nEntries == 5)  ? 'selected' : '';
+      $e15 = ($nEntries == 15) ? 'selected' : '';
+      $e25 = ($nEntries == 25) ? 'selected' : '';
+      $e50 = ($nEntries == 50) ? 'selected' : '';
+
+      echo '<div class="card-body px-0 pb-2">
+      <div class="table-responsive p-0">
+          <table class="table align-items-center justify-content-center mb-0">
+              <thead>
+                  <tr>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ">No.</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Question</th>
+                      <th></th>
+                  </tr>
+              </thead>
+              <tbody>';
+
       if ($filteredData != []) {
+        $numChild = count($filteredData);
+        $tPage = ceil($numChild / $nEntries);
+        $page = ($page <= $tPage && $page > 0) ? $page : 1;
+
+        $pagedData = array_slice($filteredData, ($page - 1) * $nEntries, $nEntries);
+        $cnt = ($page - 1) * $nEntries;
+
+        foreach ($pagedData as $id => $val) {
+          echo '<tr>
+          <td>
+              <h6 class="mb-0 text-sm justify-content-center">' . ++$cnt . '</h6>
+          </td>
+          <td>
+              <p class="text-s mb-0">' . $val . '</p>
+          </td>
+          <td>
+              <ul class="list-unstyled mb-0 d-flex">
+                  <li><a onclick="deleteItem(\'' . $id . '\', \'' . $load . '\')" class="text-danger" data-toggle="tooltip" title="" data-original-title="Delete"><i class="far fa-trash-alt"></i></a></li>
+              </ul>
+          </td>
+      </tr>';
+        }
+
+        echo '</tbody>
+        </table>
+    </div>
+</div>
+<div class="fixed-table-pagination">
+    <div class="float-left pagination">
+        <button type="button" class="btn btn-outline-success mt-2 ms-1 mb-1">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer" viewBox="0 0 16 16">
+                <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"></path>
+                <path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z"></path>
+            </svg> Print
+        </button>
+    </div>
+    <div class="float-left pagination">
+        <select class="btn btn-outline-success mt-2 ms-1 mb-1" name="page" id="ent' . $load . '">
+            <option value="5" ' . $e5 . '>5 entries</option>
+            <option value="15" ' . $e15 . '>15 entries</option>
+            <option value="25" ' . $e25 . '>25 entries</option>
+            <option value="50" ' . $e50 . '>50 entries</option>
+        </select>
+    </div>
+    <div class="float-right pagination">
+        <ul class="pagination">';
+
+        echo '<li class="page-item"><a class="page-link"';
+        if ($page == 1) {
+          echo ' style="pointer-events: none;"';
+        }
+        echo ' aria-label="previous page" onclick="loadData(' . $page - 1 . ', \'' . $search . '\', \'' . $load . '\');">« Prev</a></li>';
+
+        // Pagination Number
+        for ($x = 1; $x <= $tPage; $x++) {
+          echo '<li class="page-item';
+          if ($x == $page) {
+            echo ' active bg-gradient-faded-success-vertical border-radius-2xl';
+          }
+          echo '"><a class="page-link" ';
+          if ($x == $page) {
+            echo ' style="pointer-events: none;"';
+          }
+          echo 'aria-label="to page ' . $x . '"  onclick="loadData(' . $x . ', \'' . $search . '\', \'' . $load . '\');">' . $x . '</a></li>';
+        }
+
+        echo '<li class="page-item"><a class="page-link"';
+        if ($page == $tPage) {
+          echo ' style="pointer-events: none;"';
+        }
+        echo ' aria-label="next page" onclick="loadData(' . $page + 1 . ', \'' . $search . '\', \'' . $load . '\');">Next »</a></li>
+          </ul>
+        </div>
+      </div>';
+        // var_dump($list);
       } else {
+        echo '<tr>
+		    <td colspan="3">
+		        <h6 class="mb-0 text-sm justify-content-center">No data</h6>
+		    </td>
+		</tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="fixed-table-pagination">
+    <div class="float-left pagination">
+        <button type="button" class="btn btn-outline-success mt-2 ms-1 mb-1">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer" viewBox="0 0 16 16">
+                <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"></path>
+                <path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z"></path>
+            </svg> Print
+        </button>
+    </div>
+    <div class="float-left pagination">
+        <select class="btn btn-outline-success mt-2 ms-1 mb-1" name="page" id="ent' . $load . '">
+            <option value="5">5 entries</option>
+            <option value="15">15 entries</option>
+            <option value="25">25 entries</option>
+            <option value="50">50 entries</option>
+        </select>
+    </div>
+    <div class="float-right pagination">
+            <ul class="pagination">
+                <li class="page-item"><a style="pointer-events: none;" class="page-link" aria-label="previous page">« Prev</a></li>
+                <li class="page-item active bg-gradient-faded-success-vertical border-radius-2xl"><a class="page-link" aria-label="to page 1" style="pointer-events: none;">1</a></li>
+                <li class="page-item"><a style="pointer-events: none;" class="page-link" aria-label="next page">Next »</a></li>
+            </ul>
+    </div>
+</div>';
+        // var_dump($filteredData);
       }
+      exit();
     }
   }
-} elseif (isset($_POST['type'])) {
+
+  fetchData($page, $search, $nEntries, $load);
+} elseif (isset($_POST['question'])) {
+  // var_dump($_POST);
+  // var_dump($_FILES);
+  // exit();
   $type = $_POST['type'];
   $question = $database->getReference("tbank/" . $type . "q");
   $csv = $_FILES['batch-csv'];
+  echo '<h3>The Following data has been added:</h3>
+  <table class="result">
+      <tr>
+          <th>
+              Question
+          </th>
+      </tr>';
 
-  if ($csv['name' != '']) {
+  if ($csv['name'] != '') {
     // CSV Registration
     $file = fopen($csv['tmp_name'], 'r');
     while (($line = fgetcsv($file)) !== FALSE) {
-      if ($line[3] == 'Employee Number') {
+      if (str_contains($line[0], 'Question') && strlen($line[0]) <= 11) {
         continue;
       }
       //$line is an array of the csv elements
 
-      $usersRef->getChild($line[3])->update([
-         => $line[0],
-         => $line[0],
+      $question->update([
+        round(microtime(true) * 1000) => $line[0],
       ]);
 
-
+      echo '<tr><td>' . $line[0] . '</td></tr>';
       // print_r($line);
       // echo '<br><br>';
     }
@@ -58,6 +200,15 @@ if (isset($_POST["load"])) {
     $question->update([
       round(microtime(true) * 1000) => $input
     ]);
+    echo '<tr><td>' . $input . '</td></tr>';
+  }
+  exit();
+} elseif (isset($_POST['action'])) {
+  $action = $_POST['action'];
+  if ($action == 'delete') {
+    $cat = $_POST['category'];
+    $id = $_POST['id'];
+    $database->getReference('tbank/' . $cat . '/' . $id)->set(null);
   }
 }
 ?>
@@ -86,7 +237,6 @@ if (isset($_POST["load"])) {
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
   <link id="pagestyle" href="../../assets/css/material-dashboard.css?v=3.0.0" rel="stylesheet" />
-
 
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
@@ -176,13 +326,13 @@ if (isset($_POST["load"])) {
             <div class="col-5 pe-md-3 d-flex align-items-center">
               <div class="input-group input-group-outline">
                 <label class="form-label">Type here...</label>
-                <input type="text" class="form-control">
-                <select name="tsearch" id="" class="form-label border-0 bg-transparent mt-advsearch cursor-pointer">
-                  <option value="Mentalt">Mental Table</option>
-                  <option value="Physicalt">Physical Table</option>
+                <input type="text" class="form-control" id="inpSearch">
+                <select name="tsearch" id="searchTable" class="form-label border-0 bg-transparent mt-advsearch cursor-pointer">
+                  <option value="mental">Mental Table</option>
+                  <option value="physical">Physical Table</option>
                 </select>
               </div>
-              <button class="btn bg-gradient-success mt-3 ms-1 ps-3 text-center font-monospace text-capitalize">Search</button>
+              <button class="btn bg-gradient-success mt-3 ms-1 ps-3 text-center font-monospace text-capitalize" onclick="loadData(1, $('#inpSearch').val(), $('#searchTable').val());">Search</button>
             </div>
             <ul class="navbar-nav  justify-content-end">
             </ul>
@@ -201,74 +351,51 @@ if (isset($_POST["load"])) {
                     <h6 class="text-white text-capitalize ps-3">List of Mental Questions</h6>
                   </div>
                 </div>
-                <div class="card-body px-0 pb-2">
-                  <div class="table-responsive p-0">
-                    <table class="table align-items-center justify-content-center mb-0">
-                      <thead>
-                        <tr>
-                          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ">No.</th>
-                          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Question</th>
-                          <th></th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>
-                            <h6 class="mb-0 text-sm justify-content-center">1</h6>
-                          </td>
-                          <td>
-                            <p class="text-s mb-0">Having anxiety every night?</p>
-                          </td>
-                          <td>
-                            <ul class="list-unstyled mb-0 d-flex">
-                              <li><a href="#" class="text-danger" data-toggle="tooltip" title="" data-original-title="Delete"><i class="far fa-trash-alt"></i></a></li>
-                            </ul>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            <h6 class="mb-0 text-sm justify-content-center">2</h6>
-                          </td>
-                          <td>
-                            <p class="text-s mb-0">Having depression every night?</p>
-                          </td>
-                          <td>
-                            <ul class="list-unstyled mb-0 d-flex">
-                              <li><a href="#" class="text-danger" data-toggle="tooltip" title="" data-original-title="Delete"><i class="far fa-trash-alt"></i></a></li>
-                            </ul>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
+                <div id="datamental">
+                  <div class="card-body px-0 pb-2">
+                    <div class="table-responsive p-0">
+                      <table class="table align-items-center justify-content-center mb-0">
+                        <thead>
+                          <tr>
+                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ">No.</th>
+                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Question</th>
+                            <th></th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td colspan="3">
+                              <h6 class="mb-0 text-sm justify-content-center">Loading data</h6>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
-                </div>
-                <div class="fixed-table-pagination">
-                  <div class="float-left pagination">
-                    <button type="button" class="btn btn-outline-success mt-2 ms-1 mb-1">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer" viewBox="0 0 16 16">
-                        <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"></path>
-                        <path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z"></path>
-                      </svg> Print
-                    </button>
-                  </div>
-                  <div class="float-left pagination">
-                    <select class="btn btn-outline-success mt-2 ms-1 mb-1" name="page" id="">
-                      <option value="5" Selected>5 entries</option>
-                      <option value="15">15 entries</option>
-                      <option value="25">25 entries</option>
-                      <option value="50">50 entries</option>
-                    </select>
-                  </div>
-                  <div class="float-right pagination">
-                    <ul class="pagination">
-                      <li class="page-item"><a class="page-link" aria-label="previous page" href="">« Prev</a></li>
-                      <li class="page-item active bg-gradient-faded-success-vertical border-radius-2xl"><a class="page-link" aria-label="to page 1" href="">1</a></li>
-                      <li class="page-item"><a class="page-link" aria-label="to page 2" href="">2</a></li>
-                      <li class="page-item"><a class="page-link" aria-label="to page 3" href="">3</a></li>
-                      <li class="page-item"><a class="page-link" aria-label="to page 3" href="">...</a></li>
-                      <li class="page-item"><a class="page-link" aria-label="to page 3" href="">10</a></li>
-                      <li class="page-item"><a class="page-link" aria-label="next page" href="">Next »</a></li>
-                    </ul>
+                  <div class="fixed-table-pagination">
+                    <div class="float-left pagination">
+                      <button type="button" class="btn btn-outline-success mt-2 ms-1 mb-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer" viewBox="0 0 16 16">
+                          <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"></path>
+                          <path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z"></path>
+                        </svg> Print
+                      </button>
+                    </div>
+                    <div class="float-left pagination">
+                      <select class="btn btn-outline-success mt-2 ms-1 mb-1" name="page" id="entmental">
+                        <option value="5" Selected>5 entries</option>
+                        <option value="15">15 entries</option>
+                        <option value="25">25 entries</option>
+                        <option value="50">50 entries</option>
+                      </select>
+                    </div>
+                    <div class="float-right pagination">
+                      <ul class="pagination">
+                        <li class="page-item"><a class="page-link" aria-label="previous page">« Prev</a></li>
+                        <li class="page-item active bg-gradient-faded-success-vertical border-radius-2xl"><a class="page-link" aria-label="to page 1">1</a></li>
+                        <li class="page-item"><a class="page-link" aria-label="next page">Next »</a></li>
+                      </ul>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -280,12 +407,12 @@ if (isset($_POST["load"])) {
                   <p class="mb-0"></p>
                 </div>
                 <div class="card-body">
-                  <form method="POST" enctype="multipart/form-data" name="teacher-register" id="teacher-register">
+                  <form method="POST" enctype="multipart/form-data" name="men-question" id="men-question">
                     <p>Batch Create:</p>
                     <div class="custom-file">
-                      <input type="file" accept=".csv" name="batch-csv" class="custom-file-input" id="customFile" onchange="csvInput();">
+                      <input type="file" accept=".csv" name="batch-csv" class="custom-file-input" id="men-file" onchange="csvInput('men');">
                       <label class="custom-file-label" for="customFile" id="fileLabel">No File Selected (.csv)</label>
-                      <a href="#dl-template" id="dl-template" onclick="templateModal();" style="float: right;">Download Template</a>
+                      <a href="#dl-template" data-toggle="modal" data-target="#instructionBatch" style="float: right;">Download Template</a>
                     </div>
                     <div class="input-group input-group-outline mb-3">
                     </div>
@@ -293,10 +420,11 @@ if (isset($_POST["load"])) {
                     </div>
                     <p>Single Question:</p>
                     <div class="input-group input-group-outline mb-3">
-                      <textarea placeholder="Type here..." class="form-control bg-white" rows="5" id="texttable" name="question"></textarea>
+                      <textarea placeholder="Type here..." class="form-control bg-white" rows="5" id="men-single-question" name="question"></textarea>
+                      <input type="hidden" name="type" value="mental">
                     </div>
                     <div class="text-center">
-                      <button type="button" id="btn-account" class="btn btn-lg bg-gradient-success btn-lg w-100 mt-4 mb-0">Upload</button>
+                      <button type="button" onclick="addQuestion('men');" class="btn btn-lg bg-gradient-success btn-lg w-100 mt-4 mb-0">Upload</button>
                     </div>
                   </form>
                 </div>
@@ -316,74 +444,51 @@ if (isset($_POST["load"])) {
                     <h6 class="text-white text-capitalize ps-3">List of Physical Questions</h6>
                   </div>
                 </div>
-                <div class="card-body px-0 pb-2">
-                  <div class="table-responsive p-0">
-                    <table class="table align-items-center justify-content-center mb-0">
-                      <thead>
-                        <tr>
-                          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ">No.</th>
-                          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Question</th>
-                          <th></th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>
-                            <h6 class="mb-0 text-sm justify-content-center">1</h6>
-                          </td>
-                          <td>
-                            <p class="text-s mb-0">Do you do push-up every morning?</p>
-                          </td>
-                          <td>
-                            <ul class="list-unstyled mb-0 d-flex">
-                              <li><a href="#" class="text-danger" data-toggle="tooltip" title="" data-original-title="Delete"><i class="far fa-trash-alt"></i></a></li>
-                            </ul>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            <h6 class="mb-0 text-sm justify-content-center">2</h6>
-                          </td>
-                          <td>
-                            <p class="text-s mb-0">Do you do jogging every morning?</p>
-                          </td>
-                          <td>
-                            <ul class="list-unstyled mb-0 d-flex">
-                              <li><a href="#" class="text-danger" data-toggle="tooltip" title="" data-original-title="Delete"><i class="far fa-trash-alt"></i></a></li>
-                            </ul>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
+                <div id="dataphysical">
+                  <div class="card-body px-0 pb-2">
+                    <div class="table-responsive p-0">
+                      <table class="table align-items-center justify-content-center mb-0">
+                        <thead>
+                          <tr>
+                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ">No.</th>
+                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Question</th>
+                            <th></th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td colspan="3">
+                              <h6 class="mb-0 text-sm justify-content-center">Loading data</h6>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
-                </div>
-                <div class="fixed-table-pagination">
-                  <div class="float-left pagination">
-                    <button type="button" class="btn btn-outline-warning mt-2 ms-1 mb-1">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer" viewBox="0 0 16 16">
-                        <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"></path>
-                        <path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z"></path>
-                      </svg> Print
-                    </button>
-                  </div>
-                  <div class="float-left pagination">
-                    <select class="btn btn-outline-warning mt-2 ms-1 mb-1" name="page" id="">
-                      <option value="5" Selected>5 entries</option>
-                      <option value="15">15 entries</option>
-                      <option value="25">25 entries</option>
-                      <option value="50">50 entries</option>
-                    </select>
-                  </div>
-                  <div class="float-right pagination">
-                    <ul class="pagination">
-                      <li class="page-item"><a class="page-link" aria-label="previous page" href="">« Prev</a></li>
-                      <li class="page-item active bg-gradient-faded-warning-vertical border-radius-2xl"><a class="page-link" aria-label="to page 1" href="">1</a></li>
-                      <li class="page-item"><a class="page-link" aria-label="to page 2" href="">2</a></li>
-                      <li class="page-item"><a class="page-link" aria-label="to page 3" href="">3</a></li>
-                      <li class="page-item"><a class="page-link" aria-label="to page 3" href="">...</a></li>
-                      <li class="page-item"><a class="page-link" aria-label="to page 3" href="">10</a></li>
-                      <li class="page-item"><a class="page-link" aria-label="next page" href="">Next »</a></li>
-                    </ul>
+                  <div class="fixed-table-pagination">
+                    <div class="float-left pagination">
+                      <button type="button" class="btn btn-outline-warning mt-2 ms-1 mb-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer" viewBox="0 0 16 16">
+                          <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"></path>
+                          <path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z"></path>
+                        </svg> Print
+                      </button>
+                    </div>
+                    <div class="float-left pagination">
+                      <select class="btn btn-outline-warning mt-2 ms-1 mb-1" name="page" id="entphysical">
+                        <option value="5" Selected>5 entries</option>
+                        <option value="15">15 entries</option>
+                        <option value="25">25 entries</option>
+                        <option value="50">50 entries</option>
+                      </select>
+                    </div>
+                    <div class="float-right pagination">
+                      <ul class="pagination">
+                        <li class="page-item"><a class="page-link" aria-label="previous page">« Prev</a></li>
+                        <li class="page-item active bg-gradient-faded-warning-vertical border-radius-2xl"><a class="page-link" aria-label="to page 1">1</a></li>
+                        <li class="page-item"><a class="page-link" aria-label="next page">Next »</a></li>
+                      </ul>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -395,12 +500,12 @@ if (isset($_POST["load"])) {
                   <p class="mb-0"></p>
                 </div>
                 <div class="card-body">
-                  <form method="POST" enctype="multipart/form-data" name="teacher-register" id="teacher-register">
+                  <form method="POST" enctype="multipart/form-data" name="phy-question" id="phy-question">
                     <p>Batch Create:</p>
                     <div class="custom-file">
-                      <input type="file" accept=".csv" name="batch-csv" class="custom-file-input" id="customFile" onchange="csvInput();">
+                      <input type="file" accept=".csv" name="batch-csv" class="custom-file-input" id="customFile" onchange="csvInput('phy');">
                       <label class="custom-file-label" for="customFile" id="fileLabel">No File Selected (.csv)</label>
-                      <a href="#dl-template" id="dl-template" onclick="templateModal();" style="float: right;">Download Template</a>
+                      <a href="#dl-template" data-toggle="modal" data-target="#instructionBatch" style="float: right;">Download Template</a>
                     </div>
                     <div class="input-group input-group-outline mb-3">
                     </div>
@@ -408,10 +513,11 @@ if (isset($_POST["load"])) {
                     </div>
                     <p>Single Question:</p>
                     <div class="input-group input-group-outline mb-3">
-                      <textarea placeholder="Type here..." class="form-control bg-white" rows="5" id="texttable" name="question"></textarea>
+                      <textarea placeholder="Type here..." class="form-control bg-white" rows="5" id="phy-single-question" name="question"></textarea>
+                      <input type="hidden" name="type" value="physical">
                     </div>
                     <div class="text-center">
-                      <button type="button" id="btn-account" class="btn btn-lg bg-gradient-warning btn-lg w-100 mt-4 mb-0">Upload</button>
+                      <button type="button" onclick="addQuestion('phy');" class="btn btn-lg bg-gradient-warning btn-lg w-100 mt-4 mb-0">Upload</button>
                     </div>
                   </form>
                 </div>
@@ -467,21 +573,46 @@ if (isset($_POST["load"])) {
   <script src="../../assets/js/material-dashboard.min.js?v=3.0.0"></script>
 
   <script>
-    $('a#dl-template').attr({
-      target: '_blank',
-      href: 'PUSSM_MQuestions-Template.csv'
-    });
+    // $('#btn-account').click(function() {
 
-    $('#btn-account').click(function() {
+    // $.ajax({
+    //   url: "process-register.php",
+    //   type: "POST",
+    //   dataType: "JSON",
+    //   data: data,
+    //   processData: false,
+    //   contentType: false,
+    //   success: function(data, textStatus, xhr) {
+    //     console.log(xhr.status);
+    //   },
+    //   complete: function(xhr, textStatus) {
+    //     console.log(xhr.status);
+    //   },
+    //   error: function(result) {
+    //     alert("hello1");
+    //     alert(result.status + ' ' + result.statusText);
+    //   }
+    // }).done(function(data) {
+    //   $("#proc-close").show();
+    //   $("#content").html(data);
+    //   // var modalBody = document.getElementById('user-info-modal');
+    //   // modalBody.html(data);
+    // }).always(function(jqXHR) {
+    //   console.log(jqXHR.status);
+    // });
+    // });
+
+    function addQuestion(category) {
       $("#processing").modal({
         backdrop: 'static',
         keyboard: false
       });
+
       $("#processing").modal('show');
       $("#proc-close").hide();
 
-      var data = new FormData($('#teacher-register')[0]);
-      jQuery.each(jQuery('#customFile')[0].files, function(i, file) {
+      var data = new FormData($('#' + category + '-question')[0]);
+      jQuery.each(jQuery('#' + category + '-file')[0].files, function(i, file) {
         data.append('file-' + i, file);
       });
 
@@ -490,7 +621,7 @@ if (isset($_POST["load"])) {
       // console.log(new FormData($('#teacher-register')));
       console.log('started ajax')
       $.ajax({
-        url: "process-register.php",
+        url: "testbank.php",
         data: data,
         cache: false,
         contentType: false,
@@ -498,37 +629,27 @@ if (isset($_POST["load"])) {
         method: 'POST',
         type: 'POST', // For jQuery < 1.9
         success: function(data) {
-          $("#proc-dialog").addClass('modal-xl');
           $("#proc-close").show();
           $("#content").html(data);
         }
+      }).done(function(data) {
+        console.log(data);
       });
-      // $.ajax({
-      //   url: "process-register.php",
-      //   type: "POST",
-      //   dataType: "JSON",
-      //   data: data,
-      //   processData: false,
-      //   contentType: false,
-      //   success: function(data, textStatus, xhr) {
-      //     console.log(xhr.status);
-      //   },
-      //   complete: function(xhr, textStatus) {
-      //     console.log(xhr.status);
-      //   },
-      //   error: function(result) {
-      //     alert("hello1");
-      //     alert(result.status + ' ' + result.statusText);
-      //   }
-      // }).done(function(data) {
-      //   $("#proc-close").show();
-      //   $("#content").html(data);
-      //   // var modalBody = document.getElementById('user-info-modal');
-      //   // modalBody.html(data);
-      // }).always(function(jqXHR) {
-      //   console.log(jqXHR.status);
-      // });
-    });
+    }
+
+    function deleteItem(id, cat) {
+      if (confirm("Are you sure you want to delete this question?")) {
+        $.ajax({
+          url: "testbank.php",
+          type: "POST",
+          data: {
+            "id": id,
+            "category": cat,
+            "action": "delete"
+          }
+        });
+      }
+    }
 
     function csvInput() {
       var filename = $('input[type=file]').val().split('\\').pop();
@@ -539,7 +660,26 @@ if (isset($_POST["load"])) {
     }
 
     function templateModal() {
-      $("#instructionBatch").modal('show');
+      // $("#instructionBatch").modal('show');
+    }
+
+    loadData(1, "", "physical");
+    loadData(1, "", "mental");
+
+    function loadData(page, search, category) {
+      $.ajax({
+        url: "testbank.php",
+        type: "POST",
+        data: {
+          "load": category,
+          "page": page,
+          "search": search,
+          "entries": $("#ent" + category).val()
+        }
+      }).done(function(data) {
+        console.log(data);
+        $("#data" + category).html(data)
+      });
     }
   </script>
   <div class="modal" id="instructionBatch" tabindex="-1" role="dialog" aria-labelledby="instructionBatchLabel" aria-hidden="true">
@@ -547,7 +687,7 @@ if (isset($_POST["load"])) {
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="instructionBatchLabel">Batch User Sign Up Instructions</h5>
-          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
@@ -567,7 +707,8 @@ if (isset($_POST["load"])) {
           </ol>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" aria-label="Close">Close</button>
+          <a href="PUSSM_questions-Template.csv" download="PUSSM_questions-Template.csv" target="_blank" class="btn btn-secondary dl-template">Download Template</a>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close">Close</button>
         </div>
       </div>
     </div>
@@ -578,7 +719,7 @@ if (isset($_POST["load"])) {
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="processingLabel">Registration Status</h5>
-          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close" id="proc-close">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="proc-close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>

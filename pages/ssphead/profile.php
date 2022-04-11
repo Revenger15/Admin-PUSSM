@@ -1,6 +1,6 @@
 <?php
 include '../../includes/dbconfig.php';
-if (session_status() !== PHP_SESSION_NONE) {
+if (session_status() == PHP_SESSION_NONE) {
   session_start();
 }
 $_SESSION['uid'] = 'eOnUIApmfOP7ntvx8iydcm8E82j2';

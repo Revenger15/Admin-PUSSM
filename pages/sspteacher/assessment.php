@@ -3,7 +3,8 @@ include '../../includes/dbconfig.php';
 session_start();
 
 // DEBUG: UID
-$uid = "UP-21-090-F";
+// $uid = "UP-21-090-F";
+$uid = $_SESSION['uid'];
 
 $resultReference = $database->getReference("result");
 $userReference = $database->getReference("users/" . $uid . "/result");

@@ -109,12 +109,26 @@ $auth = $firebase->createAuth();
             </div>
           </a>
           <div class="dropdown-menu dashboard-dropdown dropdown-menu-start mt-2 py-1 bg-light">
-              <select class="dropdown-item d-flex align-items-center bg-transparent" aria-label=".form-select-lg example">
-                <option selected>School Year</option>
-                <option value="1" selected>1SEM | AY-21/22</option>
-                <option value="2">2SEM | AY-21/22</option>
-                <option value="3">1SEM | AY-22/23</option>
-                <option value="4">2SEM | AY-22/23</option>
+              <select class="dropdown-item d-flex align-items-center bg-transparent" aria-label=".form-select-lg example" onchange="acadYear(this)">
+              <option disabled selected>Select</option>
+                <?php
+                $sel = isset($_COOKIE['AY']) ? $_COOKIE('AY') : $database->getReference('system/current')->getValue();
+
+                if(!isset($_COOKIE['AY'])) {
+                  setcookie('AY', $sel, 14*24*60*60*1000); //14 days
+                }
+
+                $AY = $database->getReference('system/AY')->getValue();
+
+                foreach($AY as $key => $value) {
+                  echo '<option value="'. $key;
+                  if($key == $sel) {
+                    echo 'selected';
+                  }
+                  echo '">'. $value .'</option>';
+                }
+                ?>
+                <option value="add">Add</option>
               </select>
           </div>
         </li>
@@ -369,7 +383,7 @@ $auth = $firebase->createAuth();
           <p class="text-sm">Recommended: If just first login</p>
         </div>
         <div class="mt-2 text-center fs-7">
-          <button class="btn bg-gradient-dark px-3 mb-2 ms-2" id="show-modal" onclick="show-modal();">Change password</button>
+          <button class="btn bg-gradient-dark px-3 mb-2 ms-2" id="show-modal">Change password</button>
         </div>
       </div>
     </div>
@@ -675,11 +689,12 @@ $auth = $firebase->createAuth();
             </div>
           </form>
         </div>
-      </div>
+      </div>      
     </div>
   </div>
   <?php
   include 'profile.php';
+  include 'acadYear.php';
   ?>
 
 
