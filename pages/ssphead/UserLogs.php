@@ -2,11 +2,187 @@
 include '../../includes/dbconfig.php';
 session_start();
 
-// DEBUG: UID
-$uid = "UP-21-090-F";
+if(isset($_POST[''])) {
+  if (!function_exists('fetchData')) {
+    function fetchData($page, $search, $nEntries)
+    {
+      include '../../includes/dbconfig.php';
 
-$resultReference = $database->getReference("result");
-$userReference = $database->getReference("users/" . $uid . "/result");
+      $dbLogs = $database->getReference('system/logs');
+      $logs = $dbCoords->getValue();
+      $filteredData = [];
+
+      $numA = ($nEntries == 5) ? "selected" : "";
+
+      //Get user data
+      if ($list != '') {
+        foreach ($list as $key => $value) {
+          $userData[$value] = $dbUser->getChild($value)->getValue();
+        }
+      }
+
+      if ($userData != [] && $search != '') {
+        foreach ($userData as $uid => $data) {
+          foreach ($data as $key => $value) {
+            if (str_icontains($value, $search)) {
+              $filteredData[$uid] = $data;
+            }
+          }
+        }
+      } else {
+        $filteredData = $userData;
+      }
+
+      echo '
+      <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+        <div class="bg-gradient-faded-success  shadow-dark border-radius-lg pt-4 pb-3">
+          <h6 class="text-white text-capitalize ps-3">Lists of SSP CO Teachers</h6>
+        </div>
+      </div>
+      <div class="card-body px-0 pb-2">
+        <div class="table-responsive p-0">
+      <table class="table align-items-center justify-content-center mb-0">
+      <thead>
+        <tr>
+          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Names</th>
+          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"></th>
+          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Employee ID</th>
+          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Department</th>
+          <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2"></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+      ';
+
+      if ($filteredData != []) {
+        $numChild = count($filteredData);
+        $tPage = ceil($numChild / $nEntries);
+        $page = ($page <= $tPage && $page > 0) ? $page : 1;
+
+        $pagedData = array_slice($filteredData, ($page - 1) * $nEntries);
+
+        foreach ($pagedData as $uid => $data) {
+          echo '
+          <tr>
+          <td>
+            <div class="d-flex px-2 py-1">
+              <div>
+                <img src="../../assets/img/ficon.png" class="avatar avatar-sm me-3 border-radius-lg" alt="user1">
+              </div>
+              <div class="d-flex flex-column justify-content-center">
+                <h6 class="mb-0 text-sm text-start">' . $data['firstname'] . ' ' . $data['middlename'] . ' ' . $data['lastname'] . '</h6>
+                <p class="text-xs text-secondary mb-0">' . $data['email'] . '</p>
+              </div>
+            </div>
+          </td>
+          <td>
+            <p class="text-xs font-weight-bold mb-0"></p>
+          </td>
+          <td>
+            <p class="text-xs font-weight-bold mb-0">' . $uid . '</p>
+          </td>
+          <td>
+            <p class="text-xs font-weight-bold mb-0">' . $data['department'] . '</p>
+          </td>
+          <td class="align-middle">
+          </td>
+          <td>
+            <ul class="list-unstyled mb-0 d-flex">
+              <li><a onclick="deleteUser(\'$uid\', \'' . $data['firstname'] . ' ' . $data['middlename'] . ' ' . $data['lastname'] . '\')" class="text-danger" data-toggle="tooltip" title="" data-original-title="Delete"><i class="far fa-trash-alt"></i></a></li>
+            </ul>
+          </td>
+        </tr>';
+        }
+        echo '</tbody>
+            </table>
+          </div>
+        </div>
+        <div class="fixed-table-pagination">
+          <div class="float-left pagination">
+            <button type="button" class="btn btn-outline-success mt-2 ms-1 mb-1">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer" viewBox="0 0 16 16">
+                <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"></path>
+                <path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z"></path>
+              </svg> Print
+            </button>
+          </div>
+          <div class="float-left pagination">
+            <select class="btn btn-outline-success mt-2 ms-1 mb-1" name="page" id="entries">
+              <option value="3">3 entries</option>
+              <option value="5" ' . $numA . '>5 entries</option>
+            </select>
+          </div>
+          <div class="float-right pagination">
+            <ul class="pagination">';
+
+        // Pagination <<
+        echo '<li class="page-item"><a class="page-link"';
+        if ($page == 1) {
+          echo ' style="pointer-events: none;"';
+        }
+        echo ' aria-label="previous page" onclick="loadData(' . $page - 1 . ', \'' . $search . '\');">« Prev</a></li>';
+
+        // Pagination Number
+        for ($x = 1; $x <= $tPage; $x++) {
+          echo '<li class="page-item';
+          if ($x == $page) {
+            echo ' active bg-gradient-faded-success-vertical border-radius-2xl';
+          }
+          echo '"><a class="page-link" ';
+          if ($x == $page) {
+            echo ' style="pointer-events: none;"';
+          }
+          echo 'aria-label="to page ' . $x . '"  onclick="loadData(' . $x . ', \'' . $search . '\');">' . $x . '</a></li>';
+        }
+
+        // Pagination >>
+        echo '<li class="page-item"><a class="page-link"';
+        if ($page == $tPage) {
+          echo ' style="pointer-events: none;"';
+        }
+        echo ' aria-label="next page" onclick="loadData(' . $page + 1 . ', \'' . $search . '\');">Next »</a></li>
+          </ul>
+        </div>
+      </div>';
+      } else {
+        echo '
+              <tr>
+                <td colspan="5">No data found</td>
+              </tr>
+              </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="fixed-table-pagination">
+        <div class="float-left pagination">
+          <button type="button" class="btn btn-outline-success mt-2 ms-1 mb-1" disabled>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer" viewBox="0 0 16 16">
+              <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"></path>
+              <path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z"></path>
+            </svg> Print
+          </button>
+        </div>
+        <div class="float-left pagination">
+          <select class="btn btn-outline-success mt-2 ms-1 mb-1" name="page" id="entries">
+            <option value="3">3 entries</option>
+            <option value="5" ' . $numA . '>5 entries</option>
+          </select>
+        </div>
+        <div class="float-right pagination">
+          <ul class="pagination">
+            <li class="page-item"><a class="page-link" style="pointer-events: none;" aria-label="previous page" href="">« Prev</a></li>
+            <li class="page-item active bg-gradient-faded-success-vertical border-radius-2xl"><a class="page-link" style="pointer-events: none;" aria-label="to page 1" href="">1</a></li>
+            <li class="page-item"><a class="page-link" style="pointer-events: none;" aria-label="next page" href="">Next »</a></li>
+          </ul>
+        </div>
+      </div>
+        ';
+      }
+      exit();
+    }
+  }
+}
 ?>
 
 <!DOCTYPE html>
