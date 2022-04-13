@@ -9,7 +9,7 @@
 
     // $serviceAccount = ServiceAccount::fromJsonFile(__DIR__. 'react-ebe8e-firebase-adminsdk-edc3p-3832332702.json');
     $firebase = (new Factory)
-        ->withServiceAccount(__DIR__. '/assess-module-firebase-adminsdk-bgqta-e4cd5f3d27.json')
+        ->withServiceAccount(__DIR__. '/assess-module-firebase-adminsdk-bgqta-954fdae6f8.json')
         ->withDatabaseUri('https://assess-module-default-rtdb.firebaseio.com/');
 
     $database = $firebase->createDatabase();

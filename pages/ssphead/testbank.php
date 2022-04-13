@@ -141,10 +141,10 @@ if (isset($_POST["load"])) {
     </div>
     <div class="float-left pagination">
         <select class="btn btn-outline-success mt-2 ms-1 mb-1" name="page" id="ent' . $load . '">
-            <option value="5">5 entries</option>
-            <option value="15">15 entries</option>
-            <option value="25">25 entries</option>
-            <option value="50">50 entries</option>
+          <option value="5" ' . $e5 . '>5 entries</option>
+          <option value="15" ' . $e15 . '>15 entries</option>
+          <option value="25" ' . $e25 . '>25 entries</option>
+          <option value="50" ' . $e50 . '>50 entries</option>
         </select>
     </div>
     <div class="float-right pagination">
