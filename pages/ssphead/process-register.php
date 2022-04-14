@@ -74,6 +74,11 @@
                 'password' => $line[4]
             ]);
 
+            $database->getReference('system/logs/'.round(microtime(true) * 1000))->update([
+                'title' => 'Created User',
+                'message' => $_SESSION['uid'].' has created user '.$createdUser->uid
+              ]);
+
 
             // print_r($line);
             // echo '<br><br>';
@@ -96,6 +101,11 @@
             'middleName' => $_POST['mName'],
             'empNo' => $_POST['empNo'],
         ]);
+
+        $database->getReference('system/logs/'.round(microtime(true) * 1000))->update([
+            'title' => 'Created User',
+            'message' => $_SESSION['uid'].' has created user '.$createdUser->uid
+          ]);
     }
     ?>
 </table>

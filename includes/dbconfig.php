@@ -26,3 +26,7 @@
             }
         }
     }
+
+    if(!isset($_COOKIE['AY'])) {
+        setcookie("AY", $database->getReference('system/current')->getValue());
+    }

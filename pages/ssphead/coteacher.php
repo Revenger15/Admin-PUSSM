@@ -13,6 +13,11 @@ if (isset($_POST['action'])) {
     $dbUser->getChild($uid)->set(null);
     $dbCoords->getChild($uid)->set(null);
     $auth->deleteUser($uid);
+
+    $database->getReference('system/logs/'.round(microtime(true) * 1000))->update([
+      'title' => 'Deleted User',
+      'message' => $_SESSION['uid'].' has deleted user '.$uid
+    ]);
     exit();
   }
 } elseif (isset($_POST['page'])) {
