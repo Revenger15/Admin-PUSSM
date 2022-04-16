@@ -27,11 +27,11 @@
     // echo $_POST['file-0'];
     // var_dump($_FILES);
     // var_dump($_POST);
-    $csv = $_FILES['batch-csv'];
+    // $csv = $_FILES['batch-csv'];
     $auth = $firebase->createAuth();
     $usersRef = $database->getReference('users/');
 
-    if ($csv['name'] != '') {
+    if (false) {
         echo <<<HTML
             <style>
                 .result {
@@ -96,10 +96,16 @@
 
         $usersRef->getChild($createdUser->uid)->update([
             'email' => $_POST['email'],
-            'lastName' => $_POST['lName'],
-            'firstName' => $_POST['fName'],
-            'middleName' => $_POST['mName'],
+            'lastname' => $_POST['lName'],
+            'firstname' => $_POST['fName'],
+            'middlename' => $_POST['mName'],
             'empNo' => $_POST['empNo'],
+            'department' => $_POST['dept'],
+            'gender' => $_POST['gender'],
+        ]);
+
+        $database->getReference('system/sspcoord')->update([
+            $createdUser->uid => $createdUser->uid
         ]);
 
         $database->getReference('system/logs/'.round(microtime(true) * 1000))->update([

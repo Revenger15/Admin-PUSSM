@@ -568,9 +568,9 @@ if (isset($_POST['action'])) {
       $("#proc-close").hide();
 
       var data = new FormData($('#teacher-register')[0]);
-      jQuery.each(jQuery('#customFile')[0].files, function(i, file) {
-        data.append('file-' + i, file);
-      });
+      // jQuery.each(jQuery('#customFile')[0].files, function(i, file) {
+      //   data.append('file-' + i, file);
+      // });
 
       console.log("Created FormData, " + [...data.keys()] + " keys in data");
 

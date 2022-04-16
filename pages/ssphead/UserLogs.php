@@ -1,6 +1,7 @@
 <?php
 include '../../includes/dbconfig.php';
 session_start();
+date_default_timezone_set('Asia/Manila');
 
 if (isset($_POST['load'])) {
   $page = $_POST["page"];
@@ -47,7 +48,7 @@ if (isset($_POST['load'])) {
         $tPage = ceil($numChild / $nEntries);
         $page = ($page <= $tPage && $page > 0) ? $page : 1;
 
-        $pagedData = array_slice($filteredData, ($page - 1) * $nEntries);
+        $pagedData = array_slice($filteredData, ($page - 1) * $nEntries, $nEntries, true);
 
         foreach ($pagedData as $ts => $data) {
           echo '
@@ -62,7 +63,7 @@ if (isset($_POST['load'])) {
               <div class="col">
                 <h6 class="m-b-5">' . $data['title'] . '</h6>
                 <p class="text-muted m-b-0">' . $data['message'] . '</p>
-                <p class="text-muted m-b-0"><i class="mdi mdi-timer feather icon-clock m-r-10"></i>' . date('H:i:s', floor($ts / 1000)) . '</p>
+                <p class="text-muted m-b-0"><i class="mdi mdi-timer feather icon-clock m-r-10"></i>' . date('F j, Y, H:i:s', floor($ts / 1000)) . '</p>
               </div>
             </div>';
         }
