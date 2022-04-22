@@ -10,8 +10,10 @@ if (isset($_POST['action'])) {
     $dbUser = $database->getReference('users');
     $dbCoords = $database->getReference('system/sspcoord');
 
-    $dbUser->getChild($uid)->set(null);
-    $dbCoords->getChild($uid)->set(null);
+    echo $uid;
+
+    $dbUser->getChild($uid)->set(NULL);
+    $dbCoords->getChild($uid)->set(NULL);
     $auth->deleteUser($uid);
 
     $database->getReference('system/logs/'.round(microtime(true) * 1000))->update([
@@ -113,7 +115,7 @@ if (isset($_POST['action'])) {
           </td>
           <td>
             <ul class="list-unstyled mb-0 d-flex">
-              <li><a onclick="deleteUser(\'$uid\', \'' . $data['firstname'] . ' ' . $data['middlename'] . ' ' . $data['lastname'] . '\')" class="text-danger" data-toggle="tooltip" title="" data-original-title="Delete"><i class="far fa-trash-alt"></i></a></li>
+              <li><a onclick="deleteUser(\''. $uid .'\', \'' . $data['firstname'] . ' ' . $data['middlename'] . ' ' . $data['lastname'] . '\')" class="text-danger" data-toggle="tooltip" title="" data-original-title="Delete"><i class="far fa-trash-alt"></i></a></li>
             </ul>
           </td>
         </tr>';
@@ -588,6 +590,9 @@ if (isset($_POST['action'])) {
           $("#proc-close").show();
           $("#content").html(data);
         }
+      }).done(function(data) {
+        loadData(1, '');
+        document.getElementById("teacher-register").reset();
       });
     });
 
@@ -617,7 +622,10 @@ if (isset($_POST['action'])) {
             "uid": uid,
             "action": "delete"
           }
-        }).done(loadData("1", ""));
+        }).done(function(data) {
+          loadData("1", "");
+          console.log(data);
+        });
       }
     }
 

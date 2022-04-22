@@ -14,10 +14,13 @@
             Employee Number
         </th>
         <th>
-            Email
+            Gender
         </th>
         <th>
-            Password
+            Department
+        </th>
+        <th>
+            Email
         </th>
     </tr>
     <?php
@@ -31,87 +34,60 @@
     $auth = $firebase->createAuth();
     $usersRef = $database->getReference('users/');
 
-    if (false) {
-        echo <<<HTML
-            <style>
-                .result {
-                    table-layout: fixed;
-                    width: 100%;
-                }
-            </style>
-        HTML;
-        // CSV Registration
-        $file = fopen($csv['tmp_name'], 'r');
-        while (($line = fgetcsv($file)) !== FALSE) {
-            if ($line[3] == 'Employee Number') {
-                continue;
-            }
-            //$line is an array of the csv elements
+    $userProperties = [
+        'uid' => $_POST['empNo'],
+        'email' => $_POST['email'],
+        'password' => $_POST['password'],
+        'emailVerified' => true,
+    ];
 
-            echo '<tr>';
-            echo '<td>' . $line[0] . '</td>';
-            echo '<td>' . $line[1] . '</td>';
-            echo '<td>' . $line[2] . '</td>';
-            echo '<td>' . $line[3] . '</td>';
-            echo '<td>' . $line[4] . '</td>';
-            echo '<td>' . $line[5] . '</td>';
-            echo '</tr>';
+    $createdUser = $auth->createUser($userProperties);
 
-            $userProperties = [
-                'uid' => $line[3],
-                'email' => $line[4],
-                'password' => $line[5],
-                'emailVerified' => true,
-            ];
+    $usersRef->getChild($createdUser->uid)->update([
+        'email' => $_POST['email'],
+        'lastname' => $_POST['lName'],
+        'firstname' => $_POST['fName'],
+        'middlename' => $_POST['mName'],
+        'empNo' => $_POST['empNo'],
+        'department' => $_POST['dept'],
+        'gender' => $_POST['gender'],
+        'type' => 'sspcoord'
+    ]);
 
-            $createdUser = $auth->createUser($userProperties);
+    $database->getReference('system/sspcoord')->update([
+        $createdUser->uid => $createdUser->uid
+    ]);
 
-            $usersRef->getChild($line[3])->update([
-                'lastName' => $line[0],
-                'firstName' => $line[1],
-                'middleName' => $line[2],
-                'empNo' => $line[3],
-                'password' => $line[4]
-            ]);
-
-            $database->getReference('system/logs/'.round(microtime(true) * 1000))->update([
-                'title' => 'Created User',
-                'message' => $_SESSION['uid'].' has created user '.$createdUser->uid
-              ]);
-
-
-            // print_r($line);
-            // echo '<br><br>';
-        }
-        fclose($file);
-    } else {
-        $userProperties = [
-            'uid' => $_POST['empNo'],
-            'email' => $_POST['email'],
-            'password' => $_POST['password'],
-            'emailVerified' => true,
-        ];
-
-        $createdUser = $auth->createUser($userProperties);
-
-        $usersRef->getChild($createdUser->uid)->update([
-            'email' => $_POST['email'],
-            'lastname' => $_POST['lName'],
-            'firstname' => $_POST['fName'],
-            'middlename' => $_POST['mName'],
-            'empNo' => $_POST['empNo'],
-            'department' => $_POST['dept'],
-            'gender' => $_POST['gender'],
+    $database->getReference('system/logs/'.round(microtime(true) * 1000))->update([
+        'title' => 'Created User',
+        'message' => $_SESSION['uid'].' has created user '.$createdUser->uid
         ]);
 
-        $database->getReference('system/sspcoord')->update([
-            $createdUser->uid => $createdUser->uid
-        ]);
-
-        $database->getReference('system/logs/'.round(microtime(true) * 1000))->update([
-            'title' => 'Created User',
-            'message' => $_SESSION['uid'].' has created user '.$createdUser->uid
-          ]);
-    }
+    echo <<<HTML
+        <tr>
+            <td>
+                {$_POST['lName']}
+            </td>
+            <td>
+                {$_POST['fName']}
+            </td>
+            <td>
+                {$_POST['mName']}
+            </td>
+            <td>
+                {$_POST['empNo']}
+            </td>
+            <td>
+                {$_POST['gender']}
+            </td>
+            <td>
+                {$_POST['dept']}
+            </td>
+            <td>
+                {$_POST['email']}
+            </td>
+        </tr>
+    </table>
+    HTML;
     ?>
 </table>

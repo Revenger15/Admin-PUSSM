@@ -70,14 +70,17 @@ if (isset($_POST['submit'])) {
             $_SESSION['type'] = $database->getReference("users/" . $uid . "/type")->getValue();
 
             switch ($_SESSION['type']) {
-                case 'CSDL':
-                    header('Location: ../pages/superadmin/dashboard.php');
-                    break;
-                case 'nurse':
-                    header('Location: ../pages/nurse/dashboard.php');
-                    break;
+                // case 'CSDL':
+                //     header('Location: ../pages/superadmin/dashboard.php');
+                //     break;
+                // case 'nurse':
+                //     header('Location: ../pages/nurse/dashboard.php');
+                //     break;
                 case 'ssphead':
                     header('Location: ../pages/ssphead/dashboard.php');
+                    break;
+                case 'sspcoord':
+                    header('Location: ../pages/coteacher/dashboard.php');
                     break;
                 case 'sspteacher':
                     header('Location: ../pages/sspteacher/dashboard.php');

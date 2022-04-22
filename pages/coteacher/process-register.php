@@ -1,4 +1,4 @@
-<h3>The Following data has been added:</h3>
+<h3>The Following data has been added/updated:</h3>
 <table>
     <tr>
         <th>
@@ -11,7 +11,10 @@
             Middle Name
         </th>
         <th>
-            Employee Number
+            <?php echo ucfirst($_POST['reg-type']); ?> Number
+        </th>
+        <th>
+            Gender
         </th>
         <th>
             Email
@@ -19,92 +22,174 @@
         <th>
             Password
         </th>
-    </tr>
-    <?php
-    include '../../includes/dbconfig.php';
-    session_start();
+        <?php
+        include '../../includes/dbconfig.php';
+        session_start();
 
-    // echo $_POST['file-0'];
-    // var_dump($_FILES);
-    // var_dump($_POST);
-    $csv = $_FILES['batch-csv'];
-    $auth = $firebase->createAuth();
-    $usersRef = $database->getReference('users/');
+        $type = $_POST['reg-type'];
+        if ($type == 'student')
+            echo '
+        <th>
+            Department
+        </th>
+        <th>
+            Subject
+        </th>
+        <th>
+            Section
+        </th>
+        <th>
+            Contact Number
+        </th>
+        ';
+        echo '</tr>';
 
-    // Batch Registration
-    if ($csv['name'] != '') {
-        // CSV Registration
-        $file = fopen($csv['tmp_name'], 'r');
-        while (($line = fgetcsv($file)) !== FALSE) {
-            if ($line[3] == 'Employee Number') {
-                continue;
+        $csv = $_FILES['batch-csv'];
+        $auth = $firebase->createAuth();
+        $usersRef = $database->getReference('users/');
+
+        // Batch Registration
+        if ($csv['name'] != '') {
+            // CSV Registration
+            $file = fopen($csv['tmp_name'], 'r');
+            while (($line = fgetcsv($file)) !== FALSE) {
+                if ($line[3] == 'Employee Number') {
+                    continue;
+                }
+                //$line is an array of the csv elements
+
+                echo '<tr>';
+                echo '<td>' . $line[1] . '</td>';
+                echo '<td>' . $line[2] . '</td>';
+                echo '<td>' . $line[3] . '</td>';
+                echo '<td>' . $line[4] . '</td>';
+                echo '<td>' . $line[0] . '</td>';
+                echo '<td>' . $line[5] . '</td>';
+                echo '<td>' . $line[6] . '</td>';
+
+                $info = [
+                    'gender' => $line[0],
+                    'lastname' => $line[1],
+                    'firstname' => $line[2],
+                    'middlename' => $line[3],
+                    'empNo' => $line[4],
+                    'email' => $line[5],
+                    'type' => $type
+                ];
+
+                if ($type == 'student') {
+                    echo '<td>' . $line[7] . '</td>';
+                    echo '<td>' . $line[8] . '</td>';
+                    echo '<td>' . $line[9] . '</td>';
+                    echo '<td>' . $line[10] . '</td>';
+
+                    $addInfo = [
+                        'idnumber' => $line[4],
+                        'contact' => $line[10],
+                        'department' => $line[7],
+                    ];
+
+                    $acadInfo = [
+                        'subject' => $line[8],
+                        'section' => $line[9],
+                    ];
+
+                    unset($info['empNo']);
+                    $info = array_merge($info, $addInfo);
+
+                    $currAY = $database->getReference('system/current')->getValue();
+                    $database->getReference('data/'.$currAY.'/users/'.$line[4].'/info')->update($acadInfo);
+                } else {
+                    $database->getReference("system/sspcoord")->update([
+                        $line[4] => $line[4]
+                    ]);
+                }
+
+                echo '</tr>';
+
+                $userProperties = [
+                    'uid' => $line[4],
+                    'email' => $line[5],
+                    'password' => $line[6],
+                    'emailVerified' => true,
+                ];
+
+                try {
+                    $user = $auth->getUser($line[4]);
+                } catch (\Kreait\Firebase\Exception\Auth\UserNotFound $e) {
+                    $createdUser = $auth->createUser($userProperties);
+                }
+
+                $usersRef->getChild($line[4])->update($info);
             }
-            //$line is an array of the csv elements
+            fclose($file);
+            echo '</table>';
+
+            // Single Registration
+        } else {
 
             echo '<tr>';
-            echo '<td>' . $line[0] . '</td>';
-            echo '<td>' . $line[1] . '</td>';
-            echo '<td>' . $line[2] . '</td>';
-            echo '<td>' . $line[3] . '</td>';
-            echo '<td>' . $line[4] . '</td>';
-            echo '<td>' . $line[5] . '</td>';
-            echo '<td>' . $line[6] . '</td>';
-            echo '<td>' . $line[7] . '</td>';
+            echo '<td>' . $_POST['lastname'] . '</td>';
+            echo '<td>' . $_POST['firstname'] . '</td>';
+            echo '<td>' . $_POST['middlename'] . '</td>';
+            echo '<td>' . $_POST['idNum'] . '</td>';
+            echo '<td>' . $_POST['gender'] . '</td>';
+            echo '<td>' . $_POST['email'] . '</td>';
+            echo '<td>' . $_POST['password'] . '</td>';
+
+            $info = [
+                'gender' => $_POST['gender'],
+                'lastName' => $_POST['lastname'],
+                'firstName' => $_POST['firstname'],
+                'middleName' => $_POST['middlename'],
+                'empNo' => $_POST['idNum'],
+                'email' => $_POST['email'],
+                'type' => $type
+            ];
+
+            if ($type == 'student') {
+                echo '<td>' . $_POST['department'] . '</td>';
+                echo '<td>' . $_POST['section'] . '</td>';
+                echo '<td>' . $_POST['subject'] . '</td>';
+                echo '<td>' . $_POST['contact'] . '</td>';
+
+                $addInfo = [
+                    'idnumber' => $_POST['idNum'],
+                    'contact' => $_POST['contact'],
+                    'department' => $_POST['department'],
+                ];
+
+                $acadInfo = [
+                    'subject' => $_POST['subject'],
+                    'section' => $_POST['section'],
+                ];
+
+                unset($info['empNo']);
+                $info = array_merge($info, $addInfo);
+
+                $currAY = $database->getReference('system/current')->getValue();
+                $database->getReference('data/'.$currAY.'/users/'.$_POST['idNum'].'/info')->update($acadInfo);
+            } else {
+                $database->getReference("system/sspcoord")->update([
+                    $info['empNo'] => $info['empNo']
+                ]);
+            }
             echo '</tr>';
 
             $userProperties = [
-                'uid' => $line[3],
-                'email' => $line[8],
-                'password' => $line[9],
+                'uid' => $_POST['idNum'],
+                'email' => $_POST['email'],
+                'password' => $_POST['password'],
                 'emailVerified' => true,
             ];
 
-            $createdUser = $auth->createUser($userProperties);
+            try {
+                $user = $auth->getUser($_POST['idNum']);
+            } catch (\Kreait\Firebase\Exception\Auth\UserNotFound $e) {
+                $createdUser = $auth->createUser($userProperties);
+            }
 
-            $usersRef->getChild($line[3])->update([
-                'lastName' => $line[0],
-                'firstName' => $line[1],
-                'middleName' => $line[2],
-                'empNo' => $line[3],
-                'gender' => $line[4],
-                'subj' => $line[5],
-                'sect' => $line[6],
-                'cNo' => $line[7],
-            ]);
-
-            $database->getReference("sspcoord")->update([
-                $line[3] => $line[3]
-            ]);
-
-            // print_r($line);
-            // echo '<br><br>';
+            $usersRef->getChild($_POST['idNum'])->update($info);
         }
-        fclose($file);
-
-    // Single Registration
-    } else {
-        $userProperties = [
-            'uid' => $_POST['empNo'],
-            'email' => $_POST['email'],
-            'password' => $_POST['password'],
-            'emailVerified' => true,
-        ];
-
-        $createdUser = $auth->createUser($userProperties);
-
-        $usersRef->getChild($createdUser->uid)->update([
-            'email' => $_POST['email'],
-            'lastName' => $_POST['lName'],
-            'firstName' => $_POST['fName'],
-            'middleName' => $_POST['mName'],
-            'empNo' => $_POST['empNo'],
-            'gender' => $_POST['gender'],
-            'dept' => $_POST['dept'],
-        ]);
-
-        $database->getReference("sspcoord")->update([
-            $createdUser->uid => $createdUser->uid
-        ]);
-    }
-    ?>
+        ?>
 </table>

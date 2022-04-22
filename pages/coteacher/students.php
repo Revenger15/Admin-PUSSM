@@ -105,7 +105,7 @@
             <span class="nav-link-text ms-1">Log Out</span>
           </a>
         </li>
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <a class="nav-link dropdown-toggle pt-1 px-0" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             <div class="media d-flex align-items-center ps-3 pt-2">
                 <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -119,7 +119,7 @@
           <div class="dropdown-menu dashboard-dropdown dropdown-menu-start mt-2 py-1 bg-light">
               <select class="dropdown-item d-flex align-items-center bg-transparent" aria-label=".form-select-lg example" onchange="acadYear(this)">
               <option disabled selected>Select</option>
-              <?php
+              <-?php
               $sel = isset($_COOKIE['AY']) ? $_COOKIE['AY'] : $database->getReference('system/current')->getValue();
 
               if (!isset($_COOKIE['AY'])) {
@@ -139,7 +139,7 @@
               <option value="add">Add</option>
             </select>
           </div>
-        </li>
+        </li> -->
       </ul>
     </div>
   </aside>
@@ -168,7 +168,7 @@
                     </div>
                     <p class="mt-4">Single Sign up:</p>
                     <div class="input-group input-group-outline mb-1">
-                        <select class="form-control" id="" required="">
+                        <select class="form-control" name="gender" required="">
                             <option value="" selected>-select gender-</option>
                             <option value="Male">Male</option>
                             <option value="Female">Female</option>
@@ -179,7 +179,7 @@
                       </div>
                     </div>
                     <div class="input-group input-group-outline mb-1">
-                        <select class="form-control" id="" required="">
+                        <select class="form-control" name="department" required="">
                             <option value="" selected>-Select Department-</option>
                             <option value="CITE">CITE</option>
                             <option value="CEA">CEA</option>
@@ -194,49 +194,49 @@
                     </div>
                     <div class="input-group input-group-outline mb-2">
                       <label class="form-label">LastName</label>
-                      <input type="text" name="lName" class="form-control" required>
+                      <input type="text" name="lastname" class="form-control" required>
                       <div class="invalid-feedback">
                         Please provide a valid LastName.
                       </div>
                     </div>
                     <div class="input-group input-group-outline mb-2">
                       <label class="form-label">FirstName</label>
-                      <input type="text" name="fName" class="form-control" required>
+                      <input type="text" name="firstname" class="form-control" required>
                       <div class="invalid-feedback">
                         Please provide a valid FirstName.
                       </div>
                     </div>
                     <div class="input-group input-group-outline mb-2">
                       <label class="form-label">MiddleName</label>
-                      <input type="text" name="mName" class="form-control" required>
+                      <input type="text" name="middlename" class="form-control" required>
                       <div class="invalid-feedback">
                         Please provide a valid MiddleName.
                       </div>
                     </div>
                     <div class="input-group input-group-outline mb-2">
                       <label class="form-label">ID Number</label>
-                      <input type="text" name="lName" class="form-control" required>
+                      <input type="text" name="idNum" class="form-control" required>
                       <div class="invalid-feedback">
                         Please provide a valid ID Number.
                       </div>
                     </div>
                     <div class="input-group input-group-outline mb-2">
                       <label class="form-label">Subject</label>
-                      <input type="text" name="lName" class="form-control" required>
+                      <input type="text" name="subject" class="form-control" required>
                       <div class="invalid-feedback">
                         Please provide a Subject.
                       </div>
                     </div>
                     <div class="input-group input-group-outline mb-2">
                       <label class="form-label">Section</label>
-                      <input type="text" name="lName" class="form-control" required>
+                      <input type="text" name="section" class="form-control" required>
                       <div class="invalid-feedback">
                         Please provide a Section.
                       </div>
                     </div>
                     <div class="input-group input-group-outline mb-2">
                       <label class="form-label">Contact Number</label>
-                      <input type="text" name="empNo" class="form-control" required>
+                      <input type="text" name="contact" class="form-control" required>
                       <div class="invalid-feedback">
                         Please provide a valid Number.
                       </div>
@@ -338,6 +338,7 @@
       });
 
       console.log("Created FormData, " + [...data.keys()] + " keys in data");
+      data.set("reg-type", "student");
 
       // console.log(new FormData($('#teacher-register')));
       console.log('started ajax')
@@ -354,32 +355,9 @@
           $("#proc-close").show();
           $("#content").html(data);
         }
+      }).done(function() {
+        document.getElementById("teacher-register").reset();
       });
-      // $.ajax({
-      //   url: "process-register.php",
-      //   type: "POST",
-      //   dataType: "JSON",
-      //   data: data,
-      //   processData: false,
-      //   contentType: false,
-      //   success: function(data, textStatus, xhr) {
-      //     console.log(xhr.status);
-      //   },
-      //   complete: function(xhr, textStatus) {
-      //     console.log(xhr.status);
-      //   },
-      //   error: function(result) {
-      //     alert("hello1");
-      //     alert(result.status + ' ' + result.statusText);
-      //   }
-      // }).done(function(data) {
-      //   $("#proc-close").show();
-      //   $("#content").html(data);
-      //   // var modalBody = document.getElementById('user-info-modal');
-      //   // modalBody.html(data);
-      // }).always(function(jqXHR) {
-      //   console.log(jqXHR.status);
-      // });
     });
 
     function csvInput() {

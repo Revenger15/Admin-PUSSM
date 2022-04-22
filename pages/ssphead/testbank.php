@@ -49,7 +49,7 @@ if (isset($_POST["load"])) {
         $tPage = ceil($numChild / $nEntries);
         $page = ($page <= $tPage && $page > 0) ? $page : 1;
 
-        $pagedData = array_slice($filteredData, ($page - 1) * $nEntries, $nEntries);
+        $pagedData = array_slice($filteredData, ($page - 1) * $nEntries, $nEntries, true);
         $cnt = ($page - 1) * $nEntries;
 
         foreach ($pagedData as $id => $val) {
@@ -69,28 +69,28 @@ if (isset($_POST["load"])) {
         }
 
         echo '</tbody>
-        </table>
+            </table>
+        </div>
     </div>
-</div>
-<div class="fixed-table-pagination">
-    <div class="float-left pagination">
-        <button type="button" class="btn btn-outline-success mt-2 ms-1 mb-1">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer" viewBox="0 0 16 16">
-                <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"></path>
-                <path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z"></path>
-            </svg> Print
-        </button>
-    </div>
-    <div class="float-left pagination">
-        <select class="btn btn-outline-success mt-2 ms-1 mb-1" name="page" id="ent' . $load . '">
-            <option value="5" ' . $e5 . '>5 entries</option>
-            <option value="15" ' . $e15 . '>15 entries</option>
-            <option value="25" ' . $e25 . '>25 entries</option>
-            <option value="50" ' . $e50 . '>50 entries</option>
-        </select>
-    </div>
-    <div class="float-right pagination">
-        <ul class="pagination">';
+    <div class="fixed-table-pagination">
+        <div class="float-left pagination">
+            <button type="button" class="btn btn-outline-success mt-2 ms-1 mb-1">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer" viewBox="0 0 16 16">
+                    <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"></path>
+                    <path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z"></path>
+                </svg> Print
+            </button>
+        </div>
+        <div class="float-left pagination">
+            <select class="btn btn-outline-success mt-2 ms-1 mb-1" name="page" id="ent' . $load . '">
+                <option value="5" ' . $e5 . '>5 entries</option>
+                <option value="15" ' . $e15 . '>15 entries</option>
+                <option value="25" ' . $e25 . '>25 entries</option>
+                <option value="50" ' . $e50 . '>50 entries</option>
+            </select>
+        </div>
+        <div class="float-right pagination">
+            <ul class="pagination">';
 
         echo '<li class="page-item"><a class="page-link"';
         if ($page == 1) {
@@ -122,39 +122,39 @@ if (isset($_POST["load"])) {
         // var_dump($list);
       } else {
         echo '<tr>
-		    <td colspan="3">
-		        <h6 class="mb-0 text-sm justify-content-center">No data</h6>
-		    </td>
-		</tr>
-            </tbody>
-        </table>
-    </div>
-</div>
-<div class="fixed-table-pagination">
-    <div class="float-left pagination">
-        <button type="button" class="btn btn-outline-success mt-2 ms-1 mb-1">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer" viewBox="0 0 16 16">
-                <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"></path>
-                <path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z"></path>
-            </svg> Print
-        </button>
-    </div>
-    <div class="float-left pagination">
-        <select class="btn btn-outline-success mt-2 ms-1 mb-1" name="page" id="ent' . $load . '">
-          <option value="5" ' . $e5 . '>5 entries</option>
-          <option value="15" ' . $e15 . '>15 entries</option>
-          <option value="25" ' . $e25 . '>25 entries</option>
-          <option value="50" ' . $e50 . '>50 entries</option>
-        </select>
-    </div>
-    <div class="float-right pagination">
-            <ul class="pagination">
-                <li class="page-item"><a style="pointer-events: none;" class="page-link" aria-label="previous page">« Prev</a></li>
-                <li class="page-item active bg-gradient-faded-success-vertical border-radius-2xl"><a class="page-link" aria-label="to page 1" style="pointer-events: none;">1</a></li>
-                <li class="page-item"><a style="pointer-events: none;" class="page-link" aria-label="next page">Next »</a></li>
-            </ul>
-    </div>
-</div>';
+                <td colspan="3">
+                    <h6 class="mb-0 text-sm justify-content-center">No data</h6>
+                </td>
+            </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="fixed-table-pagination">
+            <div class="float-left pagination">
+                <button type="button" class="btn btn-outline-success mt-2 ms-1 mb-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer" viewBox="0 0 16 16">
+                        <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"></path>
+                        <path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z"></path>
+                    </svg> Print
+                </button>
+            </div>
+            <div class="float-left pagination">
+                <select class="btn btn-outline-success mt-2 ms-1 mb-1" name="page" id="ent' . $load . '">
+                  <option value="5" ' . $e5 . '>5 entries</option>
+                  <option value="15" ' . $e15 . '>15 entries</option>
+                  <option value="25" ' . $e25 . '>25 entries</option>
+                  <option value="50" ' . $e50 . '>50 entries</option>
+                </select>
+            </div>
+            <div class="float-right pagination">
+                    <ul class="pagination">
+                        <li class="page-item"><a style="pointer-events: none;" class="page-link" aria-label="previous page">« Prev</a></li>
+                        <li class="page-item active bg-gradient-faded-success-vertical border-radius-2xl"><a class="page-link" aria-label="to page 1" style="pointer-events: none;">1</a></li>
+                        <li class="page-item"><a style="pointer-events: none;" class="page-link" aria-label="next page">Next »</a></li>
+                    </ul>
+            </div>
+        </div>';
         // var_dump($filteredData);
       }
       exit();
@@ -204,12 +204,15 @@ if (isset($_POST["load"])) {
   }
   exit();
 } elseif (isset($_POST['action'])) {
+  echo 'YASSS';
   $action = $_POST['action'];
   if ($action == 'delete') {
+    echo 'YESS';
     $cat = $_POST['category'];
     $id = $_POST['id'];
-    $database->getReference('tbank/' . $cat . '/' . $id)->set(null);
+    $database->getReference('tbank/' . $cat . 'q/' . $id)->set(null);
   }
+  exit();
 }
 ?>
 
@@ -647,6 +650,9 @@ if (isset($_POST["load"])) {
             "category": cat,
             "action": "delete"
           }
+        }).done(function(data) {
+          console.log(data);
+          loadData(1, '', cat);
         });
       }
     }
