@@ -97,10 +97,16 @@
                     unset($info['empNo']);
                     $info = array_merge($info, $addInfo);
 
+                    // Register to AY Branch
                     $currAY = $database->getReference('system/current')->getValue();
-                    $database->getReference('data/'.$currAY.'/users/'.$line[4].'/info')->update($acadInfo);
+                    $database->getReference('data/' . $currAY . '/users/' . $line[4] . '/info')->update($acadInfo);
+
+                    // Register under Teacher
+                    $database->getReference('data/' . $currAY . '/users/' . $_SESSION['uid'] . '/students/' . $line[9] . '/' . $line[8])->update([
+                        $line[4] => $line[4]
+                    ]);
                 } else {
-                    $database->getReference("system/sspcoord")->update([
+                    $database->getReference("system/sspcoord/" . $_SESSION['uid'] . '/advisers')->update([
                         $line[4] => $line[4]
                     ]);
                 }
@@ -168,9 +174,14 @@
                 $info = array_merge($info, $addInfo);
 
                 $currAY = $database->getReference('system/current')->getValue();
-                $database->getReference('data/'.$currAY.'/users/'.$_POST['idNum'].'/info')->update($acadInfo);
+                $database->getReference('data/' . $currAY . '/users/' . $_POST['idNum'] . '/info')->update($acadInfo);
+
+                // Register under Teacher
+                $database->getReference('data/' . $currAY . '/users/' . $_SESSION['uid'] . '/students/' . $line[9] . '/' . $line[8])->update([
+                    $_POST['idNum'] => $_POST['idNum']
+                ]);
             } else {
-                $database->getReference("system/sspcoord")->update([
+                $database->getReference("system/sspcoord/" . $_SESSION['uid'] . '/advisers')->update([
                     $info['empNo'] => $info['empNo']
                 ]);
             }
