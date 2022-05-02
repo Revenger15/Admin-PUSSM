@@ -59,7 +59,8 @@ if (isset($_POST['page'])) {
         unset($filteredData);
 
         foreach ($temp as $uid => $data) {
-          if (array_key_exists('subject', $data) || array_key_exists('section', $data)) {
+          $advDB = $database->getReference('data/' . $currAY . '/adviser/' . $data['empNo'])->getValue();
+          if ($advDB != '') {
             unset($temp[$uid]);
           }
         }
@@ -131,19 +132,20 @@ if (isset($_POST['page'])) {
               </tr>
             ';
           } else {
-            if (!isset($data['section'])) {
+            $advDB = $database->getReference('data/' . $currAY . '/adviser/' . $data['empNo'])->getValue();
+            if (!isset($advDB)) {
               $sect = 'NOT YET ASSIGNED';
               $subj = 'NOT YET ASSIGNED';
             } else {
               $sect = '';
               $subj = '';
-              foreach ($data['section'] as $k => $v) {
-                $sect .= $v . ', ';
+              foreach ($advDB as $arrSubj => $arrSect) {
+                $subj .= $arrSubj . ', ';
+                foreach($arrSect as $k => $v) {
+                  $sect .= $v . ', ';
+                }
               }
 
-              foreach ($data['subject'] as $k => $v) {
-                $subj .= $v . ', ';
-              }
               $sect = substr($sect, 0, -2);
               $subj = substr($subj, 0, -2);
             }
@@ -155,7 +157,7 @@ if (isset($_POST['page'])) {
                 <span class="text-xs font-weight-bold mb-0">' . $sect . '</span>
               </td>
               <td>
-                <button type="button" class="btn btn-outline-' . $theme . ' mt-2 ms-1 mb-1"  onclick="editAssign(\'' . $uid . '\')">
+                <button type="button" class="btn btn-outline-' . $theme . ' mt-2 ms-1 mb-1"  onclick="assignUser(\'' . $uid . '\')">
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen-fill text-' . $theme . '" viewBox="0 0 16 16">
                     <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001z" />
                   </svg>
@@ -271,6 +273,109 @@ if (isset($_POST['page'])) {
   }
 
   fetchData($page, $search, $entries, $category);
+} elseif (isset($_POST['fetchDetails'])) {
+  if (!function_exists('fetchAssignment')) {
+    function fetchAssignment($uid)
+    {
+      include '../../includes/dbconfig.php';
+      $currAY = $database->getReference('system/current')->getValue();
+      $advDB = $database->getReference('data/' . $currAY . '/adviser/' . $uid);
+      $subjSect = $advDB->getValue();
+      if($subjSect != '') {
+        foreach ($subjSect as $subj => $sects) {
+          foreach ($sects as $k => $v) {
+            echo <<<HTML
+                    <tr>
+                        <td>
+                            {$subj}
+                        </td>
+                        <td>
+                            {$v}
+                        </td>
+                        <td>
+                            <button onclick="unassign('{$uid}', '{$subj}', '{$v}');">❎</button>
+                        </td>
+                    </tr>
+              HTML;
+          }
+        }
+      } else {
+        echo <<<HTML
+          <tr>
+            <td colspan="3">No data found</td>
+          </tr>
+        HTML;
+      }
+    }
+  }
+
+  $uid = $_POST['uid'];
+  $userInfo = $database->getReference('users/' . $uid)->getValue();
+  $name = $userInfo['firstname'] . ' ' . $userInfo['middlename'] . ' ' . $userInfo['lastname'];
+  $empNo = $userInfo['empNo'];
+
+  echo <<<HTML
+    <h3>Assigning</h3>
+    <p>Name: {$name}</p>
+    <p>Employee Number: {$empNo}</p>
+    <h5 class="text-center">Assign</h5>
+    <div id="tabAssign">
+      <table style="width: 100%;">
+        <tr>
+          <th>Subject</th>
+          <th>Section</th>
+          <th>Action</th>
+        </tr>
+  HTML;
+
+  fetchAssignment($uid);
+
+  echo <<<HTML
+      </table>
+    </div>
+    <br>
+    <div>
+      <label for="">Subject</label>
+      <form action="assigning.php" method="post">
+        <select class="form-select text-start border-1 ps-2" aria-label=".form-select-lg example" name="subj" required>
+          <option selected>-select-</option>
+          <option value="NST-001">NST-001</option>
+          <option value="NST-002">NST-002</option>
+          <option value="SSP-001">SSP-001</option>
+          <option value="SSP-002">SSP-002</option>
+          <option value="SSP-003">SSP-003</option>
+          <option value="SSP-004">SSP-004</option>
+          <option value="SSP-005">SSP-005</option>
+          <option value="SSP-006">SSP-006</option>
+          <option value="SSP-007">SSP-007</option>
+          <option value="SSP-008">SSP-008</option>
+          <option value="SSP-009">SSP-009</option>
+        </select>
+        <label for="">Section(put "," if multiple)</label>
+        <input type="text" class="form-control ps-2" name="sect" required="">
+        <input type="hidden" name="assignUser" value="{$uid}">
+        <center>
+          <div class="form-group pt-2">
+            <button type="submit" class="btn btn-success btn-lg">ASSIGN</button>
+          </div>
+        </center>
+      </form>
+    </div>
+  HTML;
+  exit();
+} elseif (isset($_POST['assignUser'])) {
+  $uid = $_POST['assignUser'];
+  $subj = $_POST['subj'];
+  $rawSect = $_POST['sect'];
+  $sect = explode(',', $rawSect);
+  var_dump($sect);
+  $currAY = $database->getReference('system/current')->getValue();
+  $advDB = $database->getReference('data/' . $currAY . '/adviser/' . $uid);
+  foreach($sect as $k => $v) {
+    $advDB->getChild($subj)->update([
+      trim($v) => trim($v)
+    ]);
+  }
 }
 ?>
 
@@ -403,9 +508,9 @@ if (isset($_POST['page'])) {
           <div class="col-5 pe-md-3 d-flex align-items-center">
             <div class="input-group input-group-outline">
               <label class="form-label">Type here...</label>
-              <input type="text" class="form-control">
+              <input type="text" id="inpSearch" class="form-control">
               <select name="tsearch" id="searchTable" class="form-label border-0 bg-transparent mt-advsearch cursor-pointer">
-                <option value="asssign">Assigning Table</option>
+                <option value="assign">Assigning Table</option>
                 <option value="assigned">Adviser Table</option>
               </select>
             </div>
@@ -695,10 +800,21 @@ if (isset($_POST['page'])) {
         console.log(data);
         $("#con" + cat).html(data);
       });
+    }
 
-      function editAssign(uid) {
-
-      }
+    function assignUser(uid) {
+      $('#assigning').modal('show');
+      $.ajax({
+        url: "assigning.php",
+        method: "POST",
+        type: "POST",
+        data: {
+          'uid': uid,
+          'fetchDetails' : ''
+        }
+      }).done(function(data) {
+        $('#user-info-modal').html(data)
+      });
     }
   </script>
 
@@ -714,8 +830,7 @@ if (isset($_POST['page'])) {
         <div class="modal-body" id="user-info-modal">
           <h3>Assigning</h3>
           <p>Name: </p>
-          <p>Section: </p>
-          <p>Contact Number: </p>
+          <p>Employee Number: </p>
           <h5 class="text-center">Assign</h5>
           <div id="tabAssign">
             <table style="width: 100%;">
@@ -731,32 +846,26 @@ if (isset($_POST['page'])) {
           </div>
           <br>
           <div>
-            <tr>
-              <td>
-                <label for="">Subject</label>
-                <select class="form-select text-start border-1 ps-2" aria-label=".form-select-lg example">
-                  <option selected>-select-</option>
-                  <option value="">NST-001</option>
-                  <option value="">NST-002</option>
-                  <option value="">SSP-001</option>
-                  <option value="">SSP-002</option>
-                  <option value="">SSP-003</option>
-                  <option value="">SSP-004</option>
-                  <option value="">SSP-005</option>
-                  <option value="">SSP-006</option>
-                  <option value="">SSP-007</option>
-                  <option value="">SSP-008</option>
-                  <option value="">SSP-009</option>
-                </select>
-              </td>
-              <td>
-                <label for="">Section(put "," if multiple)</label>
-                <input type="text" class="form-control ps-2" id="" required="">
-              </td>
-            </tr>
+            <label for="">Subject</label>
+            <select class="form-select text-start border-1 ps-2" aria-label=".form-select-lg example">
+              <option selected>-select-</option>
+              <option value="">NST-001</option>
+              <option value="">NST-002</option>
+              <option value="">SSP-001</option>
+              <option value="">SSP-002</option>
+              <option value="">SSP-003</option>
+              <option value="">SSP-004</option>
+              <option value="">SSP-005</option>
+              <option value="">SSP-006</option>
+              <option value="">SSP-007</option>
+              <option value="">SSP-008</option>
+              <option value="">SSP-009</option>
+            </select>
+            <label for="">Section(put "," if multiple)</label>
+            <input type="text" class="form-control ps-2" id="" required="">
             <center>
               <div class="form-group pt-2">
-                <button type="submit" class="btn btn-success btn-lg">ASSIGN</button>
+                <button type="button" class="btn btn-success btn-lg" disabled>ASSIGN</button>
               </div>
             </center>
           </div>
