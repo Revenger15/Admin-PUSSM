@@ -141,7 +141,7 @@ if (isset($_POST['page'])) {
               $subj = '';
               foreach ($advDB as $arrSubj => $arrSect) {
                 $subj .= $arrSubj . ', ';
-                foreach($arrSect as $k => $v) {
+                foreach ($arrSect as $k => $v) {
                   $sect .= $v . ', ';
                 }
               }
@@ -281,7 +281,7 @@ if (isset($_POST['page'])) {
       $currAY = $database->getReference('system/current')->getValue();
       $advDB = $database->getReference('data/' . $currAY . '/adviser/' . $uid);
       $subjSect = $advDB->getValue();
-      if($subjSect != '') {
+      if ($subjSect != '') {
         foreach ($subjSect as $subj => $sects) {
           foreach ($sects as $k => $v) {
             echo <<<HTML
@@ -371,11 +371,20 @@ if (isset($_POST['page'])) {
   var_dump($sect);
   $currAY = $database->getReference('system/current')->getValue();
   $advDB = $database->getReference('data/' . $currAY . '/adviser/' . $uid);
-  foreach($sect as $k => $v) {
+  foreach ($sect as $k => $v) {
     $advDB->getChild($subj)->update([
       trim($v) => trim($v)
     ]);
   }
+} elseif (isset($_POST['unassign'])) {
+  $uid = $_POST['unassign'];
+  $subj = $_POST['subj'];
+  $sect = $_POST['sect'];
+
+  $currAY = $database->getReference('system/current')->getValue();
+  $database->getReference('data/' . $currAY . '/adviser/' . $uid . '/' . $subj . '/' . $sect)->set(NULL);
+
+  exit();
 }
 ?>
 
@@ -781,8 +790,8 @@ if (isset($_POST['page'])) {
       });
     }
 
-    loadData(1, '', 'assign')
-    loadData(1, '', 'assigned')
+    loadData(1, '', 'assign');
+    loadData(1, '', 'assigned');
 
     function loadData(page, search, cat) {
       // Cat: assign, and assigned
@@ -810,10 +819,27 @@ if (isset($_POST['page'])) {
         type: "POST",
         data: {
           'uid': uid,
-          'fetchDetails' : ''
+          'fetchDetails': ''
         }
       }).done(function(data) {
         $('#user-info-modal').html(data)
+      });
+    }
+
+    function unassign(uid, subj, sect) {
+      $.ajax({
+        url: 'assigning.php',
+        method: 'POST',
+        type: 'POST',
+        data: {
+          'subj': subj,
+          'sect': sect,
+          'unassign': uid
+        },
+      }).done(function(data) {
+        assignUser(uid);
+        loadData(1, '', 'assign');
+        loadData(1, '', 'assigned');
       });
     }
   </script>

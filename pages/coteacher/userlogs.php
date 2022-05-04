@@ -1,12 +1,175 @@
 <?php
 include '../../includes/dbconfig.php';
 session_start();
+date_default_timezone_set('Asia/Manila');
 
-// DEBUG: UID
-$uid = "UP-21-090-F";
+if (isset($_POST['load'])) {
+  $page = $_POST["page"];
+  $search = $_POST["search"];
+  $entries = $_POST["entries"];
+  if (!function_exists('fetchData')) {
+    function fetchData($page, $search, $nEntries)
+    {
+      include '../../includes/dbconfig.php';
 
-$resultReference = $database->getReference("result");
-$userReference = $database->getReference("users/" . $uid . "/result");
+      $dbLogs = $database->getReference('system/logs');
+      $logs = $dbLogs->getValue();
+      $filteredData = [];
+
+      $e5  = ($nEntries == 5)  ? 'selected' : '';
+      $e10 = ($nEntries == 10) ? 'selected' : '';
+      $e20 = ($nEntries == 20) ? 'selected' : '';
+      $e50 = ($nEntries == 50) ? 'selected' : '';
+
+      //Get user data
+      if ($logs != [] && $search != '') {
+        foreach ($userData as $uid => $data) {
+          foreach ($data as $key => $value) {
+            if (str_icontains($value, $_SESSION['uid'])) {
+              if (str_icontains($value, $search)) {
+                $filteredData[$uid] = $data;
+              }
+            }
+          }
+        }
+      } else {
+        $filteredData = $logs;
+      }
+
+      echo '
+      <div class="page-content page-container" id="page-content">
+        <div class="card-body px-0 pb-2">
+          <div class="table-responsive p-0">
+              <div class="col-xl-12">
+                  <div>
+                      <div class="card-block">
+      ';
+
+      if ($filteredData != []) {
+        $numChild = count($filteredData);
+        $tPage = ceil($numChild / $nEntries);
+        $page = ($page <= $tPage && $page > 0) ? $page : 1;
+
+        $pagedData = array_slice($filteredData, ($page - 1) * $nEntries, $nEntries, true);
+
+        foreach ($pagedData as $ts => $data) {
+          echo '
+            <div class="row m-b-25">
+              <div class="col-auto p-r-0">
+                <div class="col">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-sticky" viewBox="0 0 16 16">
+                      <path d="M2.5 1A1.5 1.5 0 0 0 1 2.5v11A1.5 1.5 0 0 0 2.5 15h6.086a1.5 1.5 0 0 0 1.06-.44l4.915-4.914A1.5 1.5 0 0 0 15 8.586V2.5A1.5 1.5 0 0 0 13.5 1h-11zM2 2.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 .5.5V8H9.5A1.5 1.5 0 0 0 8 9.5V14H2.5a.5.5 0 0 1-.5-.5v-11zm7 11.293V9.5a.5.5 0 0 1 .5-.5h4.293L9 13.793z"/>
+                  </svg>
+                </div>     
+              </div>
+              <div class="col">
+                <h6 class="m-b-5">' . $data['title'] . '</h6>
+                <p class="text-muted m-b-0">' . $data['message'] . '</p>
+                <p class="text-muted m-b-0"><i class="mdi mdi-timer feather icon-clock m-r-10"></i>' . date('F j, Y, H:i:s', floor($ts / 1000)) . '</p>
+              </div>
+            </div>';
+        }
+        echo '
+                  </div>
+                </div>
+            </div>
+        </div>
+        </div>
+        </div>
+        <div class="fixed-table-pagination">
+        <div class="float-left pagination">
+        <button type="button" class="btn btn-outline-dark mt-2 ms-1 mb-1">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer" viewBox="0 0 16 16">
+          <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"></path>
+          <path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z"></path>
+          </svg> Print
+        </button>
+        </div>
+        <div class="float-left pagination">
+        <select class="btn btn-outline-dark mt-2 ms-1 mb-1" name="page" id="entries">
+          <option value="5" ' . $e5 . '>5 entries</option>
+          <option value="10" ' . $e10 . '>10 entries</option>
+          <option value="20" ' . $e20 . '>20 entries</option>
+          <option value="50" ' . $e50 . '>50 entries</option>
+        </select>
+        </div>
+        <div class="float-right pagination">
+        <ul class="pagination">';
+
+        // Pagination <<
+        echo '<li class="page-item"><a class="page-link"';
+        if ($page == 1) {
+          echo ' style="pointer-events: none;"';
+        }
+        echo ' aria-label="previous page" onclick="loadData(' . $page - 1 . ', \'' . $search . '\');">« Prev</a></li>';
+
+        // Pagination Number
+        for ($x = 1; $x <= $tPage; $x++) {
+          echo '<li class="page-item';
+          if ($x == $page) {
+            echo ' active bg-gradient-faded-success-vertical border-radius-2xl';
+          }
+          echo '"><a class="page-link" ';
+          if ($x == $page) {
+            echo ' style="pointer-events: none;"';
+          }
+          echo 'aria-label="to page ' . $x . '"  onclick="loadData(' . $x . ', \'' . $search . '\');">' . $x . '</a></li>';
+        }
+
+        // Pagination >>
+        echo '<li class="page-item"><a class="page-link"';
+        if ($page == $tPage) {
+          echo ' style="pointer-events: none;"';
+        }
+        echo ' aria-label="next page" onclick="loadData(' . $page + 1 . ', \'' . $search . '\');">Next »</a></li>
+          </ul>
+        </div>
+      </div>';
+      } else {
+        echo '
+                        <div class="row m-b-25">
+                          <div class="col">
+                            <h6 class="m-b-5">No data found</h6>
+                        </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="fixed-table-pagination">
+        <div class="float-left pagination">
+          <button type="button" class="btn btn-outline-dark mt-2 ms-1 mb-1">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer" viewBox="0 0 16 16">
+              <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"></path>
+              <path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z"></path>
+            </svg> Print
+          </button>
+        </div>
+        <div class="float-left pagination">
+          <select class="btn btn-outline-success mt-2 ms-1 mb-1" name="page" id="entries">
+            <option value="5" ' . $e5 . '>5 entries</option>
+            <option value="10" ' . $e10 . '>10 entries</option>
+            <option value="20" ' . $e20 . '>20 entries</option>
+            <option value="50" ' . $e50 . '>50 entries</option>
+          </select>
+        </div>
+        <div class="float-right pagination">
+          <ul class="pagination">
+            <li class="page-item"><a style="pointer-events: none;"class="page-link" aria-label="previous page" href="">« Prev</a></li>
+            <li class="page-item active bg-gradient-faded-dark-vertical border-radius-2xl"><a style="pointer-events: none;"class="page-link" aria-label="to page 1" href="">1</a></li>
+            <li class="page-item"><a style="pointer-events: none;"class="page-link" aria-label="next page" href="">Next »</a></li>
+          </ul>
+        </div>
+      </div>';
+      }
+      exit();
+    }
+  }
+
+  fetchData($page, $search, $entries);
+}
 ?>
 
 <!DOCTYPE html>
@@ -31,7 +194,7 @@ $userReference = $database->getReference("users/" . $uid . "/result");
   <!-- Material Icons -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
   <!-- CSS Files -->
-  
+
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
@@ -39,7 +202,7 @@ $userReference = $database->getReference("users/" . $uid . "/result");
 </head>
 
 <body class="g-sidenav-show  bg-gray-200">
-<aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3   bg-gradient-dark" id="sidenav-main">
+  <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3   bg-gradient-dark" id="sidenav-main">
     <div class="sidenav-header">
       <i class="fas fa-times p-3 cursor-pointer text-white opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
       <a class="navbar-brand m-0" target="_blank">
@@ -49,7 +212,7 @@ $userReference = $database->getReference("users/" . $uid . "/result");
     <hr class="horizontal light mt-0 mb-2">
     <div class="collapse navbar-collapse  w-auto  max-height-vh-100" id="sidenav-collapse-main">
       <ul class="navbar-nav">
-      <li class="nav-item">
+        <li class="nav-item">
           <a class="nav-link text-white" href="dashboard.php">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">dashboard</i>
@@ -68,10 +231,10 @@ $userReference = $database->getReference("users/" . $uid . "/result");
         <li class="nav-item">
           <a class="nav-link text-white" href="assigning.php">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-              <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-              <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
-            </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+              </svg>
             </div>
             <span class="nav-link-text ms-1">Assigning</span>
           </a>
@@ -87,9 +250,9 @@ $userReference = $database->getReference("users/" . $uid . "/result");
         <li class="nav-item">
           <a class="nav-link text-white " href="useracc.php">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-person-fill material-icons" viewBox="0 0 16 16">
-              <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0zm2 5.755V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-.245S4 12 8 12s5 1.755 5 1.755z"/>
-            </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-person-fill material-icons" viewBox="0 0 16 16">
+                <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0zm2 5.755V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-.245S4 12 8 12s5 1.755 5 1.755z" />
+              </svg>
             </div>
             <span class="nav-link-text ms-1">User Accounts</span>
           </a>
@@ -101,7 +264,7 @@ $userReference = $database->getReference("users/" . $uid . "/result");
             </div>
             <span class="nav-link-text ms-1">User Log</span>
           </a>
-        </li> 
+        </li>
 
         <li class="nav-item mt-3">
           <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">___________________________________</h6>
@@ -117,16 +280,16 @@ $userReference = $database->getReference("users/" . $uid . "/result");
         <li class="nav-item">
           <a class="nav-link dropdown-toggle pt-1 px-0" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             <div class="media d-flex align-items-center ps-3 pt-2">
-                <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                  <i class="material-icons opacity-10">settings</i>
-                </div>
+              <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                <i class="material-icons opacity-10">settings</i>
+              </div>
               <div class="media-body ms-2 text-dark align-items-center d-none d-lg-block">
                 <span class="nav-link-text text-white">Setting</span>
               </div>
             </div>
           </a>
           <div class="dropdown-menu dashboard-dropdown dropdown-menu-start mt-2 py-1 bg-light">
-              <select class="dropdown-item d-flex align-items-center bg-transparent" aria-label=".form-select-lg example" onchange="acadYear(this)">
+            <select class="dropdown-item d-flex align-items-center bg-transparent" aria-label=".form-select-lg example" onchange="acadYear(this)">
               <option disabled selected>Select</option>
               <?php
               $sel = isset($_COOKIE['AY']) ? $_COOKIE['AY'] : $database->getReference('system/current')->getValue();
@@ -156,7 +319,7 @@ $userReference = $database->getReference("users/" . $uid . "/result");
     <!-- Navbar -->
     <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" navbar-scroll="true">
       <div class="container-fluid py-1 px-3">
-      <img class="icon-shape me-2" src="../../assets\img\favicon.png" alt="">
+        <img class="icon-shape me-2" src="../../assets\img\favicon.png" alt="">
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
             <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">SSP Coordinator</a></li>
@@ -167,10 +330,10 @@ $userReference = $database->getReference("users/" . $uid . "/result");
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
           <div class="col-5 pe-md-3 d-flex align-items-center">
             <div class="input-group input-group-outline">
-              <label class="form-label">Type here...</label>
+              <label class="form-label" id="inpSearch">Type here...</label>
               <input type="text" class="form-control">
             </div>
-            <button class="btn bg-gradient-success mt-3 ms-1 ps-3 text-center font-monospace text-capitalize">Search</button>
+            <button class="btn bg-gradient-success mt-3 ms-1 ps-3 text-center font-monospace text-capitalize" onclick="loadData(1, $('#inpSearch').val());">Search</button>
           </div>
           <ul class="navbar-nav  justify-content-end">
           </ul>
@@ -187,120 +350,66 @@ $userReference = $database->getReference("users/" . $uid . "/result");
                 <h6 class="text-white text-capitalize ps-3">User History</h6>
               </div>
             </div>
-            <div class="page-content page-container" id="page-content">
+            <div id="data">
+              <div class="page-content page-container" id="page-content">
                 <div class="card-body px-0 pb-2">
-                    <div class="table-responsive p-0">
-                        <div class="col-xl-12">
-                            <div>
-                                <div class="card-block">
-                                    <div class="row m-b-25">
-                                        <div class="col-auto p-r-0">
-                                        <div class="col">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-sticky" viewBox="0 0 16 16">
-                                            <path d="M2.5 1A1.5 1.5 0 0 0 1 2.5v11A1.5 1.5 0 0 0 2.5 15h6.086a1.5 1.5 0 0 0 1.06-.44l4.915-4.914A1.5 1.5 0 0 0 15 8.586V2.5A1.5 1.5 0 0 0 13.5 1h-11zM2 2.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 .5.5V8H9.5A1.5 1.5 0 0 0 8 9.5V14H2.5a.5.5 0 0 1-.5-.5v-11zm7 11.293V9.5a.5.5 0 0 1 .5-.5h4.293L9 13.793z"/>
-                                        </svg>
-                                        </div>     
-                                        </div>
-                                        <div class="col">
-                                            <h6 class="m-b-5">Login time</h6>
-                                            <p class="text-muted m-b-0">You log in last</p>
-                                            <p class="text-muted m-b-0"><i class="mdi mdi-timer feather icon-clock m-r-10"></i>24 min ago</p>
-                                        </div>
-                                    </div>
-                                    <div class="row m-b-25">
-                                        <div class="col-auto p-r-0">
-                                        <div class="col">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-sticky" viewBox="0 0 16 16">
-                                            <path d="M2.5 1A1.5 1.5 0 0 0 1 2.5v11A1.5 1.5 0 0 0 2.5 15h6.086a1.5 1.5 0 0 0 1.06-.44l4.915-4.914A1.5 1.5 0 0 0 15 8.586V2.5A1.5 1.5 0 0 0 13.5 1h-11zM2 2.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 .5.5V8H9.5A1.5 1.5 0 0 0 8 9.5V14H2.5a.5.5 0 0 1-.5-.5v-11zm7 11.293V9.5a.5.5 0 0 1 .5-.5h4.293L9 13.793z"/>
-                                        </svg>
-                                        </div> 
-                                        </div>
-                                        <div class="col">
-                                            <h6 class="m-b-5">Log out time</h6>
-                                            <p class="text-muted m-b-0">You logged out last</p>
-                                            <p class="text-muted m-b-0"><i class="mdi mdi-timer feather icon-clock m-r-10"></i>12 hours ago</p>
-                                        </div>
-                                    </div>
-                                    <div class="row m-b-25">
-                                        <div class="col-auto p-r-0">
-                                        <div class="col">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-sticky" viewBox="0 0 16 16">
-                                            <path d="M2.5 1A1.5 1.5 0 0 0 1 2.5v11A1.5 1.5 0 0 0 2.5 15h6.086a1.5 1.5 0 0 0 1.06-.44l4.915-4.914A1.5 1.5 0 0 0 15 8.586V2.5A1.5 1.5 0 0 0 13.5 1h-11zM2 2.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 .5.5V8H9.5A1.5 1.5 0 0 0 8 9.5V14H2.5a.5.5 0 0 1-.5-.5v-11zm7 11.293V9.5a.5.5 0 0 1 .5-.5h4.293L9 13.793z"/>
-                                        </svg>
-                                        </div>
-                                        </div>
-                                        <div class="col">
-                                            <h6 class="m-b-5">Accout creation</h6>
-                                            <p class="text-muted m-b-0">You created account last</p>
-                                            <p class="text-muted m-b-0"><i class="mdi mdi-timer feather icon-clock m-r-10"></i>2 min ago</p>
-                                        </div>
-                                    </div>
-                                    <div class="row m-b-25">
-                                        <div class="col-auto p-r-0">
-                                        <div class="col">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-sticky" viewBox="0 0 16 16">
-                                            <path d="M2.5 1A1.5 1.5 0 0 0 1 2.5v11A1.5 1.5 0 0 0 2.5 15h6.086a1.5 1.5 0 0 0 1.06-.44l4.915-4.914A1.5 1.5 0 0 0 15 8.586V2.5A1.5 1.5 0 0 0 13.5 1h-11zM2 2.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 .5.5V8H9.5A1.5 1.5 0 0 0 8 9.5V14H2.5a.5.5 0 0 1-.5-.5v-11zm7 11.293V9.5a.5.5 0 0 1 .5-.5h4.293L9 13.793z"/>
-                                        </svg>
-                                        </div> 
-                                        </div>
-                                        <div class="col">
-                                            <h6 class="m-b-5">Accout creation</h6>
-                                            <p class="text-muted m-b-0">You created account last</p>
-                                            <p class="text-muted m-b-0"><i class="mdi mdi-timer feather icon-clock m-r-10"></i>12 min ago</p>
-                                        </div>
-                                    </div>
-                                </div>
+                  <div class="table-responsive p-0">
+                    <div class="col-xl-12">
+                      <div>
+                        <div class="card-block">
+                          <div class="row m-b-25">
+                            <div class="col">
+                              <h6 class="m-b-5">Loading data...</h6>
                             </div>
+                          </div>
                         </div>
+                      </div>
                     </div>
+                  </div>
                 </div>
-            </div>
-            <div class="fixed-table-pagination">
-                <div class="float-left pagination">
-                  <button type="button" class="btn btn-outline-dark mt-2 ms-1 mb-1">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer" viewBox="0 0 16 16">
-                    <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"></path>
-                    <path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z"></path>
-                    </svg> Print
-                  </button>
-                </div>
-                <div class="float-left pagination">
-                  <select class="btn btn-outline-dark mt-2 ms-1 mb-1" name="page" id="">
-                    <option value="e3" Selected>5 entries</option>
-                    <option value="e5">15 entries</option>
-                    <option value="e5">25 entries</option>
-                    <option value="e5">50 entries</option>
-                  </select>
-                </div>
-                <div class="float-right pagination">
-                  <ul class="pagination">
-                    <li class="page-item"><a class="page-link" aria-label="previous page" href="">« Prev</a></li>
-                    <li class="page-item active bg-gradient-faded-dark-vertical border-radius-2xl"><a class="page-link" aria-label="to page 1" href="">1</a></li>
-                    <li class="page-item"><a class="page-link" aria-label="to page 2" href="">2</a></li>
-                    <li class="page-item"><a class="page-link" aria-label="to page 3" href="">3</a></li>
-                    <li class="page-item"><a class="page-link" aria-label="to page 3" href="">...</a></li>
-                    <li class="page-item"><a class="page-link" aria-label="to page 3" href="">10</a></li>
-                    <li class="page-item"><a class="page-link" aria-label="next page" href="">Next »</a></li>
-                  </ul>
+                <div class="fixed-table-pagination">
+                  <div class="float-left pagination">
+                    <button type="button" class="btn btn-outline-dark mt-2 ms-1 mb-1">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer" viewBox="0 0 16 16">
+                        <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"></path>
+                        <path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z"></path>
+                      </svg> Print
+                    </button>
+                  </div>
+                  <div class="float-left pagination">
+                    <select class="btn btn-outline-dark mt-2 ms-1 mb-1" name="page" id="entries">
+                      <option value="5" Selected>5 entries</option>
+                      <option value="10">10 entries</option>
+                      <option value="20">20 entries</option>
+                      <option value="50">50 entries</option>
+                    </select>
+                  </div>
+                  <div class="float-right pagination">
+                    <ul class="pagination">
+                      <li class="page-item"><a style="pointer-events: none;" class="page-link" aria-label="previous page" href="">« Prev</a></li>
+                      <li class="page-item active bg-gradient-faded-dark-vertical border-radius-2xl"><a style="pointer-events: none;" class="page-link" aria-label="to page 1" href="">1</a></li>
+                      <li class="page-item"><a style="pointer-events: none;" class="page-link" aria-label="next page" href="">Next »</a></li>
+                    </ul>
+                  </div>
                 </div>
               </div>
+            </div>
           </div>
         </div>
+        <footer class="footer py-4  ">
+          <div class="container-fluid">
+            <div class="row align-items-center justify-content-lg-between">
+              <div class="col-lg-6 mb-lg-0 mb-4">
+              </div>
+              <div class="col-lg-6">
+                <ul class="nav nav-footer justify-content-center justify-content-lg-end">
+
+                </ul>
+              </div>
+            </div>
+          </div>
+        </footer>
       </div>
-      <footer class="footer py-4  ">
-        <div class="container-fluid">
-          <div class="row align-items-center justify-content-lg-between">
-            <div class="col-lg-6 mb-lg-0 mb-4">
-            </div>
-            <div class="col-lg-6">
-              <ul class="nav nav-footer justify-content-center justify-content-lg-end">
-              
-              </ul>
-            </div>
-          </div>
-        </div>
-      </footer>
-    </div>
   </main>
   <div class="fixed-plugin">
     <div class="card shadow-lg">
@@ -390,5 +499,25 @@ $userReference = $database->getReference("users/" . $uid . "/result");
   <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="../../assets/js/material-dashboard.min.js?v=3.0.0"></script>
 </body>
+
+<script>
+    loadData(1, '')
+
+    function loadData(page, search) {
+      $.ajax({
+        url: "userlogs.php",
+        type: "POST",
+        data: {
+          "load": "",
+          "page": page,
+          "search": search,
+          "entries": $("#entries").val()
+        }
+      }).done(function(data) {
+        console.log(data);
+        $("#data").html(data)
+      });
+    }
+  </script>
 
 </html>
