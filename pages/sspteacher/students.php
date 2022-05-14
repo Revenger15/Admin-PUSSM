@@ -67,9 +67,9 @@
         <li class="nav-item">
           <a class="nav-link text-white" href="useracc.php">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-person-fill material-icons" viewBox="0 0 16 16">
-              <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0zm2 5.755V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-.245S4 12 8 12s5 1.755 5 1.755z"/>
-            </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-person-fill material-icons" viewBox="0 0 16 16">
+                <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0zm2 5.755V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-.245S4 12 8 12s5 1.755 5 1.755z" />
+              </svg>
             </div>
             <span class="nav-link-text ms-1">User Accounts</span>
           </a>
@@ -81,7 +81,7 @@
             </div>
             <span class="nav-link-text ms-1">User Log</span>
           </a>
-        </li> 
+        </li>
         <li class="nav-item mt-3">
           <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">___________________________________</h6>
         </li>
@@ -93,28 +93,6 @@
             </div>
             <span class="nav-link-text ms-1">Log Out</span>
           </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link dropdown-toggle pt-1 px-0" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <div class="media d-flex align-items-center ps-3 pt-2">
-                <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                  <i class="material-icons opacity-10">settings</i>
-                </div>
-              <div class="media-body ms-2 text-dark align-items-center d-none d-lg-block">
-                <span class="nav-link-text text-white">Setting</span>
-              </div>
-            </div>
-          </a>
-          <div class="dropdown-menu dashboard-dropdown dropdown-menu-start mt-2 py-1 bg-light">
-              <select class="dropdown-item d-flex align-items-center bg-transparent" aria-label=".form-select-lg example">
-                <option selected>School Year</option>
-                <option value="1">SY-21/22</option>
-                <option value="2">SY-22/23</option>
-                <option value="3">SY-23/24</option>
-                <option value="3">SY-24/25</option>
-                <option value="3">SY-25/26</option>
-              </select>
-          </div>
         </li>
       </ul>
     </div>
@@ -144,7 +122,7 @@
                     </div>
                     <p class="mt-4">Single Sign up:</p>
                     <div class="input-group input-group-outline mb-1">
-                        <select class="form-control" id="" required="">
+                        <select class="form-control" name="gender" required="">
                             <option value="" selected>-select gender-</option>
                             <option value="Male">Male</option>
                             <option value="Female">Female</option>
@@ -155,7 +133,7 @@
                       </div>
                     </div>
                     <div class="input-group input-group-outline mb-1">
-                        <select class="form-control" id="" required="">
+                        <select class="form-control" name="department" required="">
                             <option value="" selected>-Select Department-</option>
                             <option value="CITE">CITE</option>
                             <option value="CEA">CEA</option>
@@ -170,63 +148,63 @@
                     </div>
                     <div class="input-group input-group-outline mb-2">
                       <label class="form-label">LastName</label>
-                      <input type="text" name="lName" class="form-control" required="">
+                      <input type="text" name="lastname" class="form-control" required>
                       <div class="invalid-feedback">
                         Please provide a valid LastName.
                       </div>
                     </div>
                     <div class="input-group input-group-outline mb-2">
                       <label class="form-label">FirstName</label>
-                      <input type="text" name="fName" class="form-control" required="">
+                      <input type="text" name="firstname" class="form-control" required>
                       <div class="invalid-feedback">
                         Please provide a valid FirstName.
                       </div>
                     </div>
                     <div class="input-group input-group-outline mb-2">
                       <label class="form-label">MiddleName</label>
-                      <input type="text" name="mName" class="form-control" required="">
+                      <input type="text" name="middlename" class="form-control" required>
                       <div class="invalid-feedback">
                         Please provide a valid MiddleName.
                       </div>
                     </div>
                     <div class="input-group input-group-outline mb-2">
                       <label class="form-label">ID Number</label>
-                      <input type="text" name="lName" class="form-control" required="">
+                      <input type="text" name="idNum" class="form-control" required>
                       <div class="invalid-feedback">
                         Please provide a valid ID Number.
                       </div>
                     </div>
                     <div class="input-group input-group-outline mb-2">
                       <label class="form-label">Subject</label>
-                      <input type="text" name="lName" class="form-control" required="">
+                      <input type="text" name="subject" class="form-control" required>
                       <div class="invalid-feedback">
                         Please provide a Subject.
                       </div>
                     </div>
                     <div class="input-group input-group-outline mb-2">
                       <label class="form-label">Section</label>
-                      <input type="text" name="lName" class="form-control" required="">
+                      <input type="text" name="section" class="form-control" required>
                       <div class="invalid-feedback">
                         Please provide a Section.
                       </div>
                     </div>
                     <div class="input-group input-group-outline mb-2">
                       <label class="form-label">Contact Number</label>
-                      <input type="text" name="empNo" class="form-control" required="">
+                      <input type="text" name="contact" class="form-control" required>
                       <div class="invalid-feedback">
                         Please provide a valid Number.
                       </div>
                     </div>
                     <div class="input-group input-group-outline mb-2">
                       <label class="form-label">Email</label>
-                      <input type="email" name="email" class="form-control" required="">
+                      <input type="email" name="email" class="form-control" required>
                       <div class="invalid-feedback">
                         Please provide a valid Email.
                       </div>
                     </div>
-                    <div class="input-group input-group-outline mb-2">
+                    <div class="input-group input-group-outline mb-3">
                       <label class="form-label">Password</label>
-                      <input type="password" name="password" id="password" class="form-control" style="border-radius: 0.375em;" required="">
+                      <input type="password" name="password" id="password" class="form-control" style="border-radius: 0.375em;" required>
                       <button style="position:absolute; cursor: pointer; z-index: 3; width: 9%; border: none; background: none; right: 0%; top: 50%; transform: translate(0%, -50%);" id="togglePassword">
                         <i id="password-icon" class="fa fa-eye-slash"></i>
                       </button>
@@ -314,6 +292,7 @@
       });
 
       console.log("Created FormData, " + [...data.keys()] + " keys in data");
+      data.set("reg-type", "student");
 
       // console.log(new FormData($('#teacher-register')));
       console.log('started ajax')
@@ -330,32 +309,9 @@
           $("#proc-close").show();
           $("#content").html(data);
         }
+      }).done(function() {
+        document.getElementById("teacher-register").reset();
       });
-      // $.ajax({
-      //   url: "process-register.php",
-      //   type: "POST",
-      //   dataType: "JSON",
-      //   data: data,
-      //   processData: false,
-      //   contentType: false,
-      //   success: function(data, textStatus, xhr) {
-      //     console.log(xhr.status);
-      //   },
-      //   complete: function(xhr, textStatus) {
-      //     console.log(xhr.status);
-      //   },
-      //   error: function(result) {
-      //     alert("hello1");
-      //     alert(result.status + ' ' + result.statusText);
-      //   }
-      // }).done(function(data) {
-      //   $("#proc-close").show();
-      //   $("#content").html(data);
-      //   // var modalBody = document.getElementById('user-info-modal');
-      //   // modalBody.html(data);
-      // }).always(function(jqXHR) {
-      //   console.log(jqXHR.status);
-      // });
     });
 
     function csvInput() {

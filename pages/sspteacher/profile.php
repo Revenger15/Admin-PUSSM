@@ -1,21 +1,40 @@
 <?php
 include '../../includes/dbconfig.php';
-if (session_status() !== PHP_SESSION_NONE) {
+if (session_status() == PHP_SESSION_NONE) {
   session_start();
 }
-$_SESSION['uid'] = 'eOnUIApmfOP7ntvx8iydcm8E82j2';
+
 
 $dbUser = $database->getReference('users/' . $_SESSION['uid']);
 $userInfo = $dbUser->getValue();
 $auth = $firebase->createAuth();
 $email = $auth->getUser($_SESSION['uid'])->__get('email');
+$currAY = $database->getReference('system/current')->getValue();
+
+$advDB = $database->getReference('data/' . $currAY . '/adviser/' . $_SESSION['uid'])->getValue();
+if (!isset($advDB)) {
+  $sect = 'NOT YET ASSIGNED';
+  $subj = 'NOT YET ASSIGNED';
+} else {
+  $sect = '';
+  $subj = '';
+  foreach ($advDB as $arrSubj => $arrSect) {
+    $subj .= $arrSubj . ', ';
+    foreach ($arrSect as $k => $v) {
+      $sect .= $v . ', ';
+    }
+  }
+
+  $sect = substr($sect, 0, -2);
+  $subj = substr($subj, 0, -2);
+}
 
 if (isset($_POST['email'])) {
   $firstname = $_POST['firstname'];
   $middlename = $_POST['middlename'];
   $lastname = $_POST['lastname'];
   $gender = $_POST['gender'];
-  $contact = $_POST['contactnumber'];
+  $contact = $_POST['contact'];
   $newEmail = $_POST['email'];
   $department = $_POST['department'];
 
@@ -46,34 +65,19 @@ if (isset($_POST['email'])) {
     </script>';
   exit();
 }
+var_dump($userInfo);
 ?>
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="apple-touch-icon" sizes="76x76" href="../../assets/img/apple-icon.png">
-  <link rel="icon" type="image/png" href="../../assets/img/favicon.png">
-  <title>
-    Profile
-  </title>
-  <!--     Fonts and icons     -->
-  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
-  <!-- Nucleo Icons -->
-  <link href="../../assets/css/nucleo-icons.css" rel="stylesheet" />
-  <link href="../../assets/css/nucleo-svg.css" rel="stylesheet" />
-  <!-- Font Awesome Icons -->
-  <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
-  <!-- Material Icons -->
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
-  <!-- CSS Files -->
-  <link id="pagestyle" href="../../assets/css/material-dashboard.css?v=3.0.0" rel="stylesheet" />
-</head>
-
-<body class="g-sidenav-show bg-gray-200">
-  <div class="main-content position-relative bg-gray-100 max-height-vh-100 h-100">
-    <!-- End Navbar -->
+<div class="modal" id="profile" tabindex="-1" role="dialog" aria-labelledby="profileLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="profileLabel">User Profile</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- End Navbar -->
     <div class="container-fluid px-2 px-md-4">
       <div class="page-header min-height-300 border-radius-xl mt-4" style="background-image: url('../../assets/img/ivancik.jpg');">
         <span class="mask  bg-gradient-faded-dark opacity-6"></span>
@@ -108,13 +112,13 @@ if (isset($_POST['email'])) {
                 </div>
                 <div class="card-body p-3">
                   <ul class="list-group">
-                    <li class="list-group-item border-0 ps-0 pt-0 text-sm"><strong class="text-dark">Full Name:</strong> &nbsp; Silver S. Swan</li>
-                    <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Gender:</strong> &nbsp; Female</li>
-                    <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Mobile:</strong> &nbsp; (+63)123 123 1234</li>
-                    <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Email:</strong> &nbsp; Datoputi@mail.com</li>
-                    <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Subject Assigned:</strong> &nbsp; SSP-000</li>
-                    <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Section Handled:</strong> &nbsp; 1bsit-00, 2bsit-01, 2bsit-02</li>
-                    <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Department:</strong> &nbsp; CITE</li>
+                    <li class="list-group-item border-0 ps-0 pt-0 text-sm"><strong class="text-dark">Full Name:</strong> &nbsp; <?php echo $userInfo['firstname'] . ' ' . $userInfo['middlename'] . ' ' . $userInfo['lastname'] ?></li>
+                    <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Gender:</strong> &nbsp; <?php echo $userInfo['gender'] ?></li>
+                    <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Mobile:</strong> &nbsp; <?php echo $userInfo['contact'] ?></li>
+                    <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Email:</strong> &nbsp; <?php echo $userInfo['email'] ?></li>
+                    <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Subject Assigned:</strong> &nbsp; <?php echo $subj ?></li>
+                    <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Section Handled:</strong> &nbsp; <?php echo $sect ?></li>
+                    <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Department:</strong> &nbsp; <?php echo $userInfo['department'] ?></li>
                   </ul>
                 </div>
               </div>
@@ -161,46 +165,27 @@ if (isset($_POST['email'])) {
                       </div>
                       <div class="form-group mt-1">
                           <label class="mb-0" for="">Department</label>
-                          <select class="form-control ps-2" name="department" id="department" required>
-                              <option value="" disabled selected>-select</option>
-                              <option value="CITE">CITE</option>
-                              <option value="CEA">CEA</option>
-                              <option value="CAS">CAS</option>
-                              <option value="CHS">CHS</option>
-                              <option value="CSS">CSS</option>
-                              <option value="PUCO">PUCO</option>
+                          <select class="form-control ps-2" name="department" id="department" required readonly>
+                              <option value="<?php echo $userInfo['department'] ?>" selected><?php echo $userInfo['department'] ?></option>
                           </select>
                       </div>
                       <center>
                         <div class="form-group pt-2">
                           <button type="submit" class="btn btn-success btn-lg float-right">Update</button>
                         </div>
-                      </center>
+                        </center>
                     </form>
+                  </div>
                 </div>
               </div>
+            </div>
           </div>
+        </div>
       </div>
     </div>
   </div>
-  <!--   Core JS Files   -->
-  <script src="../../assets/js/core/popper.min.js"></script>
-  <script src="../../assets/js/core/bootstrap.min.js"></script>
-  <script src="../../assets/js/plugins/perfect-scrollbar.min.js"></script>
-  <script src="../../assets/js/plugins/smooth-scrollbar.min.js"></script>
-  <script>
-    var win = navigator.platform.indexOf('Win') > -1;
-    if (win && document.querySelector('#sidenav-scrollbar')) {
-      var options = {
-        damping: '0.5'
-      }
-      Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
-    }
-  </script>
-  <!-- Github buttons -->
-  <script async defer src="https://buttons.github.io/buttons.js"></script>
-  <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
-  <script src="../../assets/js/material-dashboard.min.js?v=3.0.0"></script>
-</body>
+</div>
 
-</html>
+<script>
+  $("#gender").val("<?php echo $userInfo['gender']?>");
+</script>

@@ -166,7 +166,8 @@ if (isset($_POST['page'])) {
             </tr>
             ';
           }
-          echo '
+        }
+        echo '
                     </tbody>
                     </table>
                   </div>
@@ -175,14 +176,6 @@ if (isset($_POST['page'])) {
             </div>
           </div>
           <div class="fixed-table-pagination">
-            <div class="float-left pagination">
-              <button type="button" class="btn btn-outline-' . $theme . ' mt-2 ms-1 mb-1">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer" viewBox="0 0 16 16">
-                  <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"></path>
-                  <path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z"></path>
-                </svg> Print
-              </button>
-            </div>
             <div class="float-left pagination">
               <select class="btn btn-outline-' . $theme . ' mt-2 ms-1 mb-1" name="page" id="ent' . $category . '">
                 <option value="5"  ' . $e5 . '>5 entries</option>
@@ -195,36 +188,35 @@ if (isset($_POST['page'])) {
               <ul class="pagination">
           ';
 
-          // Pagination <<
-          echo '<li class="page-item"><a class="page-link"';
-          if ($page == 1) {
+        // Pagination <<
+        echo '<li class="page-item"><a class="page-link"';
+        if ($page == 1) {
+          echo ' style="pointer-events: none;"';
+        }
+        echo ' aria-label="previous page" onclick="loadData(' . $page - 1 . ', \'' . $search . '\', \'' . $category . '\');">« Prev</a></li>';
+
+        // Pagination Number
+        for ($x = 1; $x <= $tPage; $x++) {
+          echo '<li class="page-item';
+          if ($x == $page) {
+            echo ' active bg-gradient-faded-' . $theme . '-vertical border-radius-2xl';
+          }
+          echo '"><a class="page-link" ';
+          if ($x == $page) {
             echo ' style="pointer-events: none;"';
           }
-          echo ' aria-label="previous page" onclick="loadData(' . $page - 1 . ', \'' . $search . '\', \'' . $category . '\');">« Prev</a></li>';
+          echo 'aria-label="to page ' . $x . '"  onclick="loadData(' . $x . ', \'' . $search . '\', \'' . $category . '\');">' . $x . '</a></li>';
+        }
 
-          // Pagination Number
-          for ($x = 1; $x <= $tPage; $x++) {
-            echo '<li class="page-item';
-            if ($x == $page) {
-              echo ' active bg-gradient-faded-' . $theme . '-vertical border-radius-2xl';
-            }
-            echo '"><a class="page-link" ';
-            if ($x == $page) {
-              echo ' style="pointer-events: none;"';
-            }
-            echo 'aria-label="to page ' . $x . '"  onclick="loadData(' . $x . ', \'' . $search . '\', \'' . $category . '\');">' . $x . '</a></li>';
-          }
-
-          // Pagination >>
-          echo '<li class="page-item"><a class="page-link"';
-          if ($page == $tPage) {
-            echo ' style="pointer-events: none;"';
-          }
-          echo ' aria-label="next page" onclick="loadData(' . $page + 1 . ', \'' . $search . '\', \'' . $category . '\');">Next »</a></li>
+        // Pagination >>
+        echo '<li class="page-item"><a class="page-link"';
+        if ($page == $tPage) {
+          echo ' style="pointer-events: none;"';
+        }
+        echo ' aria-label="next page" onclick="loadData(' . $page + 1 . ', \'' . $search . '\', \'' . $category . '\');">Next »</a></li>
               </ul>
             </div>
           </div>';
-        }
       } else {
         $colspan = ($category == 'assign') ? 2 : 4;
         echo '
@@ -241,14 +233,6 @@ if (isset($_POST['page'])) {
               </div>
             </div>
             <div class="fixed-table-pagination">
-              <div class="float-left pagination">
-                <button type="button" class="btn btn-outline-' . $theme . ' mt-2 ms-1 mb-1">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer" viewBox="0 0 16 16">
-                    <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"></path>
-                    <path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z"></path>
-                  </svg> Print
-                </button>
-              </div>
               <div class="float-left pagination">
                 <select class="btn btn-outline-' . $theme . ' mt-2 ms-1 mb-1" name="page" id="entassign">
                   <option value="5"  ' . $e5 . '>5 entries</option>
@@ -572,14 +556,6 @@ if (isset($_POST['page'])) {
               </div>
               <div class="fixed-table-pagination">
                 <div class="float-left pagination">
-                  <button type="button" class="btn btn-outline-dark mt-2 ms-1 mb-1">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer" viewBox="0 0 16 16">
-                      <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"></path>
-                      <path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z"></path>
-                    </svg> Print
-                  </button>
-                </div>
-                <div class="float-left pagination">
                   <select class="btn btn-outline-dark mt-2 ms-1 mb-1" name="page" id="entassign">
                     <option value="5" Selected>5 entries</option>
                     <option value="15">15 entries</option>
@@ -636,14 +612,6 @@ if (isset($_POST['page'])) {
               </div>
               <div class="fixed-table-pagination">
                 <div class="float-left pagination">
-                  <button type="button" class="btn btn-outline-success mt-2 ms-1 mb-1">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer" viewBox="0 0 16 16">
-                      <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"></path>
-                      <path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z"></path>
-                    </svg> Print
-                  </button>
-                </div>
-                <div class="float-left pagination">
                   <select class="btn btn-outline-success mt-2 ms-1 mb-1" name="page" id="entassigned">
                     <option value="5" Selected>5 entries</option>
                     <option value="15">15 entries</option>
@@ -651,22 +619,6 @@ if (isset($_POST['page'])) {
                     <option value="50">50 entries</option>
                   </select>
                 </div>
-                <div class="float-left pagination">
-                  <!-- <select class="btn btn-outline-success mt-2 ms-1 mb-1" name="page" id="">
-                    <option value="">-subject-</option>
-                    <option value="" Selected>NST-001</option>
-                    <option value="">NST-002</option>
-                    <option value="">SSP-001</option>
-                    <option value="">SSP-002</option>
-                    <option value="">SSP-003</option>
-                    <option value="">SSP-004</option>
-                    <option value="">SSP-005</option>
-                    <option value="">SSP-006</option>
-                    <option value="">SSP-007</option>
-                    <option value="">SSP-008</option>
-                    <option value="">SSP-009</option>
-                  </select>
-                </div> -->
                   <div class="float-right pagination">
                     <ul class="pagination">
                       <li class="page-item"><a class="page-link" aria-label="previous page" href="">« Prev</a></li>

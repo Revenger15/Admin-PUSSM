@@ -2,11 +2,230 @@
 include '../../includes/dbconfig.php';
 session_start();
 
-// DEBUG: UID
-$uid = "UP-21-090-F";
+if (isset($_POST['page'])) {
+  $page = $_POST['page'];
+  $search = $_POST['search'];
+  $entries = $_POST['entries'];
 
-$resultReference = $database->getReference("result");
-$userReference = $database->getReference("users/" . $uid . "/result");
+  if (!function_exists('fetchData')) {
+    function fetchData($page, $search, $nEntries)
+    {
+      include '../../includes/dbconfig.php';
+
+      $currAY = $database->getReference('system/current')->getValue();
+      $teacherDB = $database->getReference('data/' . $currAY . '/adviser/' . $_SESSION['uid']);
+      $subSect = $teacherDB->getValue();
+      $filteredData = [];
+
+      $e5  = ($nEntries == 5)  ? 'selected' : '';
+      $e15 = ($nEntries == 15) ? 'selected' : '';
+      $e25 = ($nEntries == 25) ? 'selected' : '';
+      $e50 = ($nEntries == 50) ? 'selected' : '';
+
+      // Get teacher subj and sect
+      foreach ($subSect as $subj => $sect) {
+        foreach ($sect as $k1 => $v1) {
+          $stdListDB = $database->getReference('data/' . $currAY . '/studentList/' . $subj . '/' . $v1);
+          $stdUIDs = $stdListDB->getValue() ? array_keys($stdListDB->getValue()) : [];
+
+          // var_dump($stdResultDB);
+          // Get student list and result
+          foreach ($stdUIDs as $k2 => $v2) {
+            $stdData = $database->getReference('users/' . $v2)->getValue();
+            $ayData = $database->getReference('data/' . $currAY . '/student/' . $v2)->getValue();
+            $rawResult[$subj][$v1][$v2] = array_merge($stdData, $ayData);
+          }
+        }
+      }
+
+      // var_dump($rawResult);
+
+      // Search data
+      if ($search != '' && $rawResult != []) {
+        foreach ($rawResult as $subj => $data1) {
+          if (str_icontains($subj, $search)) {
+            $filteredData[$subj] = $data1;
+          }
+          foreach ($data1 as $sect => $data2) {
+            if (str_icontains($sect, $search)) {
+              $filteredData[$subj][$sect] = $data2;
+            }
+            foreach ($data2 as $uid => $data3) {
+              $json = json_encode($data3);
+              if (str_icontains($json, $search)) {
+                $filteredData[$subj][$sect] = $data2;
+              }
+            }
+          }
+        }
+      } else {
+        $filteredData = $rawResult;
+      }
+
+      echo '
+        <div class="card-body px-0 pb-2">
+          <div class="table-responsive p-0">
+              <table class="table align-items-center justify-content-center mb-0">
+                  <thead>
+                      <tr>
+                          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Names</th>
+                          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Subject</th>
+                          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Section</th>
+                          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Contact</th>
+                          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-3">Delete</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+      ';
+
+      if ($filteredData != []) {
+
+        $numChild = count($filteredData);
+        $tPage = ceil($numChild / $nEntries);
+        $page = ($page <= $tPage && $page > 0) ? $page : 1;
+
+        $pagedData = array_slice($filteredData, ($page - 1) * $nEntries, $preserve_keys = true);
+
+        foreach ($pagedData as $subj => $data1) {
+          foreach ($data1 as $sect => $data2) {
+            foreach ($data2 as $uid => $data3) {
+                echo <<<HTML
+                  <tr>
+                    <td>
+                      <div class="d-flex px-2 py-1">
+                        <div>
+                          <img src="../../assets/img/micon.png" class="avatar avatar-sm me-3 border-radius-lg" alt="user1">
+                        </div>
+                        <div class="d-flex flex-column justify-content-center">
+                          <h6 class="mb-0 text-sm">{$data3['firstname']} {$data3['middlename']} {$data3['lastname']}</h6>
+                          <p class="text-xs text-secondary mb-0">{$data3['email']}</p>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <p class="text-xs font-weight-bold mb-0">{$data3['subject']}</p>
+                    </td>
+                    <td>
+                      <span class="text-xs font-weight-bold mb-0">{$data3['section']}</span>
+                    </td>
+                    <td>
+                      <p class="text-xs font-weight-bold mb-0">{$data3['contact']}</p>
+                    </td>
+                    <td>
+                      <button type="button" onclick="deleteUser('{$uid}');" class="btn btn-outline-danger mt-2 ms-1 mb-1">
+                        <a href="#" class="text-danger" data-toggle="tooltip" title="" data-original-title="Delete"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
+                      </button>
+                    </td>
+                  </tr>
+                HTML;
+            }
+          }
+        }
+        echo <<<HTML
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          <div class="fixed-table-pagination">
+            <div class="float-left pagination">
+              <select class="btn btn-outline-warning mt-2 ms-1 mb-1" name="page" id="entries">
+                <option value="5" {$e5}>5 entries</option>
+                <option value="15" {$e15}>15 entries</option>
+                <option value="25" {$e25}>25 entries</option>
+                <option value="50" {$e50}>50 entries</option>
+              </select>
+            </div>
+            <div class="float-right pagination">
+              <ul class="pagination">
+        HTML;
+
+        // Pagination <<
+        echo '<li class="page-item"><a class="page-link"';
+        if ($page == 1) {
+          echo ' style="pointer-events: none;"';
+        }
+        echo ' aria-label="previous page" onclick="loadData(' . $page - 1 . ', \'' . $search . '\');">« Prev</a></li>';
+
+        // Pagination Number
+        for ($x = 1; $x <= $tPage; $x++) {
+          echo '<li class="page-item';
+          if ($x == $page) {
+            echo ' active bg-gradient-faded-warning-vertical border-radius-2xl';
+          }
+          echo '"><a class="page-link" ';
+          if ($x == $page) {
+            echo ' style="pointer-events: none;"';
+          }
+          echo 'aria-label="to page ' . $x . '"  onclick="loadData(' . $x . ', \'' . $search . '\');">' . $x . '</a></li>';
+        }
+
+        // Pagination >>
+        echo '<li class="page-item"><a class="page-link"';
+        if ($page == $tPage) {
+          echo ' style="pointer-events: none;"';
+        }
+        echo ' aria-label="next page" onclick="loadData(' . $page + 1 . ', \'' . $search . '\');">Next »</a></li>
+              </ul>
+            </div>
+          </div>';
+      } else {
+        echo <<<HTML
+                  <tr>
+                    <td>
+                      No data found...
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        <div class="fixed-table-pagination">
+          <div class="float-left pagination">
+            <select class="btn btn-outline-warning mt-2 ms-1 mb-1" name="page" id="entries">
+              <option value="5" {$e5}>5 entries</option>
+              <option value="15" {$e15}>15 entries</option>
+              <option value="25" {$e25}>25 entries</option>
+              <option value="50" {$e50}>50 entries</option>
+            </select>
+          </div>
+          <div class="float-right pagination">
+            <ul class="pagination">
+              <li class="page-item"><a class="page-link" aria-label="previous page" href="#">« Prev</a></li>
+              <li class="page-item active bg-gradient-faded-warning-vertical border-radius-2xl"><a class="page-link" aria-label="to page 1" href="#">1</a></li>
+              <li class="page-item"><a class="page-link" aria-label="next page" href="#">Next »</a></li>
+            </ul>
+          </div>
+        </div>
+        HTML;
+      }
+    }
+  }
+
+  fetchData($page, $search, $entries);
+  exit();
+} elseif (isset($_POST['deleteUser'])) {
+  $uid = $_POST['deleteUser'];
+
+  // delete data from currAY pool
+  $currAY = $database->getReference('system/current')->getValue();
+  $dbAY = $database->getReference('data/' . $currAY . '/student/' . $uid);
+
+  $database->getReference('data/' . $currAY . '/studentList/'
+    . $dbAY->getChild('suject')->getValue() . '/'
+    . $dbAY->getChild('section')->getValue . '/'
+    . $uid)->set(NULL);
+
+  $dbAY->set(NULL);
+
+  // delete user information
+  $database->getReference('users/' . $uid)->set(NULL);
+
+  // delete user from fbAuth
+  $auth = $firebase->createAuth();
+  $auth->deleteUser($uid);
+
+  exit();
+}
 ?>
 
 <!DOCTYPE html>
@@ -31,20 +250,21 @@ $userReference = $database->getReference("users/" . $uid . "/result");
   <!-- Material Icons -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
   <!-- CSS Files -->
-  
+
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
   <link id="pagestyle" href="../../assets/css/material-dashboard.css?v=3.0.0" rel="stylesheet" />
   <style>
-    .table td, .table th {
-    border-top: unset;
+    .table td,
+    .table th {
+      border-top: unset;
     }
   </style>
 </head>
 
 <body class="g-sidenav-show  bg-gray-200">
-<aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3   bg-gradient-dark" id="sidenav-main">
+  <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3   bg-gradient-dark" id="sidenav-main">
     <div class="sidenav-header">
       <i class="fas fa-times p-3 cursor-pointer text-white opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
       <a class="navbar-brand m-0" target="_blank">
@@ -81,9 +301,9 @@ $userReference = $database->getReference("users/" . $uid . "/result");
         <li class="nav-item">
           <a class="nav-link text-white active bg-gradient-faded-dark-vertical" href="#">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-person-fill material-icons" viewBox="0 0 16 16">
-              <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0zm2 5.755V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-.245S4 12 8 12s5 1.755 5 1.755z"/>
-            </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-person-fill material-icons" viewBox="0 0 16 16">
+                <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0zm2 5.755V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-.245S4 12 8 12s5 1.755 5 1.755z" />
+              </svg>
             </div>
             <span class="nav-link-text ms-1">User Accounts</span>
           </a>
@@ -95,7 +315,7 @@ $userReference = $database->getReference("users/" . $uid . "/result");
             </div>
             <span class="nav-link-text ms-1">User Log</span>
           </a>
-        </li> 
+        </li>
         <li class="nav-item mt-3">
           <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">___________________________________</h6>
         </li>
@@ -107,28 +327,6 @@ $userReference = $database->getReference("users/" . $uid . "/result");
             <span class="nav-link-text ms-1">Log Out</span>
           </a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link dropdown-toggle pt-1 px-0" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <div class="media d-flex align-items-center ps-3 pt-2">
-                <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                  <i class="material-icons opacity-10">settings</i>
-                </div>
-              <div class="media-body ms-2 text-dark align-items-center d-none d-lg-block">
-                <span class="nav-link-text text-white">Setting</span>
-              </div>
-            </div>
-          </a>
-          <div class="dropdown-menu dashboard-dropdown dropdown-menu-start mt-2 py-1 bg-light">
-              <select class="dropdown-item d-flex align-items-center bg-transparent" aria-label=".form-select-lg example">
-                <option selected>School Year</option>
-                <option value="1">SY-21/22</option>
-                <option value="2">SY-22/23</option>
-                <option value="3">SY-23/24</option>
-                <option value="3">SY-24/25</option>
-                <option value="3">SY-25/26</option>
-              </select>
-          </div>
-        </li>
       </ul>
     </div>
   </aside>
@@ -136,7 +334,7 @@ $userReference = $database->getReference("users/" . $uid . "/result");
     <!-- Navbar -->
     <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" navbar-scroll="true">
       <div class="container-fluid py-1 px-3">
-      <img class="icon-shape me-2" src="../../assets\img\favicon.png" alt="">
+        <img class="icon-shape me-2" src="../../assets\img\favicon.png" alt="">
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
             <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">SSP Adviser</a></li>
@@ -148,9 +346,9 @@ $userReference = $database->getReference("users/" . $uid . "/result");
           <div class="col-5 pe-md-3 d-flex align-items-center">
             <div class="input-group input-group-outline">
               <label class="form-label">Type here...</label>
-              <input type="text" class="form-control">
+              <input type="text" id="inpSearch" class="form-control">
             </div>
-            <button class="btn bg-gradient-success mt-3 ms-1 ps-3 text-center font-monospace text-capitalize">Search</button>
+            <button class="btn bg-gradient-success mt-3 ms-1 ps-3 text-center font-monospace text-capitalize" onclick="loadData(1, $('#inpSearch').val());">Search</button>
           </div>
           <ul class="navbar-nav  justify-content-end">
           </ul>
@@ -158,7 +356,7 @@ $userReference = $database->getReference("users/" . $uid . "/result");
       </div>
     </nav>
     <!-- End Navbar -->
-    <div class="container-fluid py-4"> 
+    <div class="container-fluid py-4">
       <div class="row">
         <div class="col-12">
           <div class="card my-4">
@@ -167,16 +365,15 @@ $userReference = $database->getReference("users/" . $uid . "/result");
                 <h6 class="text-white text-capitalize ps-3">Student Account list</h6>
               </div>
             </div>
-            <div class="card-body px-0 pb-2">
-              <div class="table-responsive p-0">
-                <table class="table align-items-center justify-content-center mb-0">
+            <div id="data">
+              <div class="card-body px-0 pb-2">
+                <div class="table-responsive p-0">
+                  <table class="table align-items-center justify-content-center mb-0">
                     <thead>
                       <tr>
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Names</th>
-
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Subject</th>
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Section</th>
-                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">SEM/AY</th>                        
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Contact</th>
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-3">Delete</th>
                       </tr>
@@ -184,68 +381,31 @@ $userReference = $database->getReference("users/" . $uid . "/result");
                     <tbody>
                       <tr>
                         <td>
-                          <div class="d-flex px-2 py-1">
-                            <div>
-                              <img src="../../assets/img/micon.png" class="avatar avatar-sm me-3 border-radius-lg" alt="user1">
-                            </div>
-                            <div class="d-flex flex-column justify-content-center">
-                              <h6 class="mb-0 text-sm">Arniel C. Fernandez</h6>
-                              <p class="text-xs text-secondary mb-0">farniel1588@gmail.com</p>
-                            </div>
-                          </div>
-                        </td>
-
-                        <td>
-                          <p class="text-xs font-weight-bold mb-0">SSP-000</p>
-                        </td>
-                        <td>
-                          <span class="text-xs font-weight-bold mb-0">BSIT-00</span>
-                        </td>
-                        <td>
-                          <span class="text-xs font-weight-bold mb-0">1SEM/2021-2022</span>
-                        </td>                        
-                        <td>
-                          <p class="text-xs font-weight-bold mb-0">09987654321</p>
-                        </td>
-                        <td>
-                          <button type="button" class="btn btn-outline-danger mt-2 ms-1 mb-1">
-                            <a href="#" class="text-danger" data-toggle="tooltip" title="" data-original-title="Delete"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
-                          </button>
+                          Loading data...
                         </td>
                       </tr>
                     </tbody>
-                </table>
-              </div>
-            </div>
-            <div class="fixed-table-pagination">
-                <div class="float-left pagination">
-                  <button type="button" class="btn btn-outline-warning mt-2 ms-1 mb-1">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer" viewBox="0 0 16 16">
-                    <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"></path>
-                    <path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z"></path>
-                    </svg> Print
-                  </button>
+                  </table>
                 </div>
+              </div>
+              <div class="fixed-table-pagination">
                 <div class="float-left pagination">
-                  <select class="btn btn-outline-warning mt-2 ms-1 mb-1" name="page" id="">
-                    <option value="e3" Selected>5 entries</option>
-                    <option value="e5">15 entries</option>
-                    <option value="e5">25 entries</option>
-                    <option value="e5">50 entries</option>
+                  <select class="btn btn-outline-warning mt-2 ms-1 mb-1" name="page" id="entries">
+                    <option value="5" selected>5 entries</option>
+                    <option value="15">15 entries</option>
+                    <option value="25">25 entries</option>
+                    <option value="50">50 entries</option>
                   </select>
                 </div>
                 <div class="float-right pagination">
                   <ul class="pagination">
-                    <li class="page-item"><a class="page-link" aria-label="previous page" href="">« Prev</a></li>
-                    <li class="page-item active bg-gradient-faded-warning-vertical border-radius-2xl"><a class="page-link" aria-label="to page 1" href="">1</a></li>
-                    <li class="page-item"><a class="page-link" aria-label="to page 2" href="">2</a></li>
-                    <li class="page-item"><a class="page-link" aria-label="to page 3" href="">3</a></li>
-                    <li class="page-item"><a class="page-link" aria-label="to page 3" href="">...</a></li>
-                    <li class="page-item"><a class="page-link" aria-label="to page 3" href="">10</a></li>
-                    <li class="page-item"><a class="page-link" aria-label="next page" href="">Next »</a></li>
+                    <li class="page-item"><a class="page-link" aria-label="previous page" href="#">« Prev</a></li>
+                    <li class="page-item active bg-gradient-faded-warning-vertical border-radius-2xl"><a class="page-link" aria-label="to page 1" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" aria-label="next page" href="#">Next »</a></li>
                   </ul>
                 </div>
               </div>
+            </div>
           </div>
         </div>
       </div>
@@ -354,6 +514,43 @@ $userReference = $database->getReference("users/" . $uid . "/result");
         // var modalBody = document.getElementById('user-info-modal');
         // modalBody.html(data);
       });
+    }
+
+    loadData(1, '');
+
+    function loadData(page, search) {
+      // Cat: assign, and assigned
+      $.ajax({
+        url: 'useracc.php',
+        method: 'POST',
+        type: 'POST',
+        data: {
+          'page': page,
+          'search': search,
+          'entries': $('#entries').val()
+        }
+      }).done(function(data) {
+        console.log(data);
+        $("#data").html(data);
+      });
+    }
+
+    function deleteUser(uid) {
+      if (confirm("Are you sure you want to delete " + uid + "? This actioon cannot be undone!")) {
+        $.ajax({
+          url: 'useracc.php',
+          method: 'POST',
+          type: 'POST',
+          data: {
+            'uid': uid
+          }
+        }).done(function(data) {
+          if(data.includes("error")) {
+            alert(data);
+          }
+          loadData(1, '');
+        });
+      }
     }
   </script>
 

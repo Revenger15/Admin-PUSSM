@@ -148,14 +148,6 @@ if (isset($_POST['page'])) {
           </div>
           <div class="fixed-table-pagination">
             <div class="float-left pagination">
-              <button type="button" class="btn btn-outline-{$theme} mt-2 ms-1 mb-1">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer" viewBox="0 0 16 16">
-                  <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"></path>
-                  <path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z"></path>
-                </svg> Print
-              </button>
-            </div>
-            <div class="float-left pagination">
               <select class="btn btn-outline-{$theme} mt-2 ms-1 mb-1" name="page" id="ent{$cat}">
                   <option value="5"  {$e5}>5 entries</option>
                   <option value="15" {$e15}>15 entries</option>
@@ -207,14 +199,6 @@ if (isset($_POST['page'])) {
               </div>
             </div>
             <div class="fixed-table-pagination">
-              <div class="float-left pagination">
-                <button type="button" class="btn btn-outline-{$theme} mt-2 ms-1 mb-1">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer" viewBox="0 0 16 16">
-                    <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"></path>
-                    <path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z"></path>
-                  </svg> Print
-                </button>
-              </div>
               <div class="float-left pagination">
                 <select class="btn btn-outline-{$theme} mt-2 ms-1 mb-1" name="page" id="ent{$cat}">
                   <option value="5"  {$e5}>5 entries</option>
@@ -386,41 +370,6 @@ if (isset($_POST['page'])) {
             <span class="nav-link-text ms-1">Log Out</span>
           </a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link dropdown-toggle pt-1 px-0" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <div class="media d-flex align-items-center ps-3 pt-2">
-              <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                <i class="material-icons opacity-10">settings</i>
-              </div>
-              <div class="media-body ms-2 text-dark align-items-center d-none d-lg-block">
-                <span class="nav-link-text text-white">Setting</span>
-              </div>
-            </div>
-          </a>
-          <div class="dropdown-menu dashboard-dropdown dropdown-menu-start mt-2 py-1 bg-light">
-            <select class="dropdown-item d-flex align-items-center bg-transparent" aria-label=".form-select-lg example" onchange="acadYear(this)">
-              <option disabled selected>Select</option>
-              <?php
-              $sel = isset($_COOKIE['AY']) ? $_COOKIE['AY'] : $database->getReference('system/current')->getValue();
-
-              if (!isset($_COOKIE['AY'])) {
-                setcookie('AY', $sel, 14 * 24 * 60 * 60 * 1000); //14 days
-              }
-
-              $AY = $database->getReference('system/AY')->getValue();
-
-              foreach ($AY as $key => $value) {
-                echo '<option value="' . $key;
-                if ($key == $sel) {
-                  echo 'selected';
-                }
-                echo '">' . $value . '</option>';
-              }
-              ?>
-              <option value="add">Add</option>
-            </select>
-          </div>
-        </li>
       </ul>
     </div>
   </aside>
@@ -485,14 +434,6 @@ if (isset($_POST['page'])) {
               </div>
               <div class="fixed-table-pagination">
                 <div class="float-left pagination">
-                  <button type="button" class="btn btn-outline-warning mt-2 ms-1 mb-1">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer" viewBox="0 0 16 16">
-                      <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"></path>
-                      <path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z"></path>
-                    </svg> Print
-                  </button>
-                </div>
-                <div class="float-left pagination">
                   <select class="btn btn-outline-warning mt-2 ms-1 mb-1" name="page" id="entadviser">
                     <option value="5" Selected>5 entries</option>
                     <option value="15">15 entries</option>
@@ -546,14 +487,6 @@ if (isset($_POST['page'])) {
                 </table>
               </div>
               <div class="fixed-table-pagination">
-                <div class="float-left pagination">
-                  <button type="button" class="btn btn-outline-success mt-2 ms-1 mb-1">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer" viewBox="0 0 16 16">
-                      <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"></path>
-                      <path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z"></path>
-                    </svg> Print
-                  </button>
-                </div>
                 <div class="float-left pagination">
                   <select class="btn btn-outline-success mt-2 ms-1 mb-1" name="page" id="entstudent">
                     <option value="5" Selected>5 entries</option>

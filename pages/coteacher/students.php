@@ -105,41 +105,6 @@
             <span class="nav-link-text ms-1">Log Out</span>
           </a>
         </li>
-        <!-- <li class="nav-item">
-          <a class="nav-link dropdown-toggle pt-1 px-0" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <div class="media d-flex align-items-center ps-3 pt-2">
-                <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                  <i class="material-icons opacity-10">settings</i>
-                </div>
-              <div class="media-body ms-2 text-dark align-items-center d-none d-lg-block">
-                <span class="nav-link-text text-white">Setting</span>
-              </div>
-            </div>
-          </a>
-          <div class="dropdown-menu dashboard-dropdown dropdown-menu-start mt-2 py-1 bg-light">
-              <select class="dropdown-item d-flex align-items-center bg-transparent" aria-label=".form-select-lg example" onchange="acadYear(this)">
-              <option disabled selected>Select</option>
-              <-?php
-              $sel = isset($_COOKIE['AY']) ? $_COOKIE['AY'] : $database->getReference('system/current')->getValue();
-
-              if (!isset($_COOKIE['AY'])) {
-                setcookie('AY', $sel, 14 * 24 * 60 * 60 * 1000); //14 days
-              }
-
-              $AY = $database->getReference('system/AY')->getValue();
-
-              foreach ($AY as $key => $value) {
-                echo '<option value="' . $key;
-                if ($key == $sel) {
-                  echo 'selected';
-                }
-                echo '">' . $value . '</option>';
-              }
-              ?>
-              <option value="add">Add</option>
-            </select>
-          </div>
-        </li> -->
       </ul>
     </div>
   </aside>

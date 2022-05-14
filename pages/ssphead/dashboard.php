@@ -1,7 +1,7 @@
 <?php
 include '../../includes/dbconfig.php';
 session_start();
-var_dump($_COOKIE);
+// var_dump($_COOKIE);
 $auth = $firebase->createAuth();
 ?>
 
