@@ -52,6 +52,9 @@ if (isset($_POST['email'])) {
     "email" => $email,
     "department" => $department,
   ]);
+
+  include '../../php/logEvent.php';
+  logEvent('Profile Update', $_SESSION['uid'] . ' has updated their profile.');
   echo '
     <script>
       alert("Updated Information!");
@@ -65,7 +68,7 @@ if (isset($_POST['email'])) {
     </script>';
   exit();
 }
-var_dump($userInfo);
+// var_dump($userInfo);
 ?>
 <div class="modal" id="profile" tabindex="-1" role="dialog" aria-labelledby="profileLabel" aria-hidden="true">
   <div class="modal-dialog modal-xl" role="document">

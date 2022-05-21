@@ -671,23 +671,9 @@ if (isset($_POST["load"])) {
       </div>
     </div>
   </div>
-
-  <!-- <div id="userInformation" class="modal">
-    <h1>Student Record</h1>
-    <p>Name: </p>
-    <p>Section: </p>
-    <p>Contact Number: </p>
-    <div>
-      <p>Results</p>
-      <p>Date: </p>
-    </div>
-    <p>Actions</p>
-    <div>
-      <button>Refer to Guidance</button>
-      <button>Refer to Nurse</button>
-      <button>Mark Contacted</button>
-    </div>
-  </div> -->
+  <?php
+  include 'acadYear.php';
+  ?>
 </body>
 
 </html>

@@ -23,12 +23,10 @@ if (isset($_POST['year'])) {
         $database->getReference('system/current')->set($yr . '-' . $sem);
 
         include '../../php/logEvent.php';
-
         logEvent('Academic Year', $_SESSION['uid'] . ' has created and changed the academic year: ' . $yr . '-' . $sem);
-
-        header('Location: ' . $_SERVER['HTTP_REFERER']);
-        exit();
+        // header('Location: ' . $_SERVER['HTTP_REFERER']);
     }
+    exit();
 }
 ?>
 
@@ -42,7 +40,7 @@ if (isset($_POST['year'])) {
                 </button>
             </div>
             <div class="modal-body">
-                <form class="form" method="POST" action="acadYear.php" role="form" autocomplete="off">
+                <form class="form" id="acadForm" method="POST" action="acadYear.php" role="form" autocomplete="off">
                     <label for="yr"></label>
                     <input type="number" id="yr" name="year" placeholder="1920">
                     <label for="sem"></label>
@@ -62,6 +60,23 @@ if (isset($_POST['year'])) {
     </div>
 </div>
 <script>
+    $('#submit').click(function() {
+        $.ajax({
+            url: 'acadYear.php',
+            method: 'POST',
+            type: 'POST',
+            data: $('#acadForm').serialize()
+        }).done(function(data) {
+            console.log(data);
+            if(!data.includes('error')) {
+                alert('Setup Success! Now transferring to dashboard');
+                window.location = '../ssphead/dashboard.php';
+            } else {
+                console.log(data);
+                alert('An error has occurred! Please check local DevTools Console.');
+            }
+        });
+    });
     function acadYear(select) {
         var sel = select.value;
         if (sel == 'add') {

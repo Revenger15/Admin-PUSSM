@@ -60,10 +60,12 @@ if (isset($_POST['page'])) {
           // var_dump($stdResultDB);
           // Get student list and result
           foreach ($stdResultDB as $uid => $result) {
-            foreach ($result['result'] as $ts => $status) {
-              if ($status == $stats) {
-                $resultDB = $database->getReference('data/' . $currAY . '/' . $pool . '/' . $ts);
-                $rawResult[$subj][$v][$uid][$ts] = $resultDB->getValue();
+            if(isset($result['result'])) {
+              foreach ($result['result'] as $ts => $status) {
+                if ($status == $stats) {
+                  $resultDB = $database->getReference('data/' . $currAY . '/' . $pool . '/' . $ts);
+                  $rawResult[$subj][$v][$uid][$ts] = $resultDB->getValue();
+                }
               }
             }
           }
@@ -228,7 +230,8 @@ if (isset($_POST['page'])) {
               </ul>
             </div>
           </div>';
-      } else {
+        } else {
+        $action = '';
         if (str_contains($stats, 'TE')) {
           $action = '
           <div class="float-left pagination">
@@ -307,6 +310,10 @@ if (isset($_POST['page'])) {
   // echo 'data/'.$currAY.'/'.$subj.'/'.$sect.'/'.$stdUID.'/result/'.$key;
 
   $database->getReference('data/' . $currAY . '/studentList/' . $subj . '/' . $sect . '/' . $stdUID . '/result/' . $key)->set($newStatus);
+
+  include '../../php/logEvent.php';
+  logEvent('Update Student Record', $_SESSION['uid'] . ' has updated student record of '. $key . ' from '. $oldStatus . ' to '. $newStatus);
+
   exit();
 } elseif (isset($_POST['exportData'])) {
   $cat = $_POST['exportData']; //TE_MEN or TE_PHY
@@ -340,6 +347,10 @@ if (isset($_POST['page'])) {
   }
 
   $database->getReference('data/' . $currAY . '/' . $mode)->update($rawResult);
+  
+  include '../../php/logEvent.php';
+  logEvent('Data Export', $_SESSION['uid'] . ' has exported the data for '. $cat);
+
   exit();
 }
 ?>

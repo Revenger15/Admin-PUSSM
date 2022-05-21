@@ -25,26 +25,12 @@ if (isset($_POST['submit'])) {
         if(!$database->getReference("users")->getSnapshot()->hasChildren()) {
             if($password == "admin") {
                 try {
-                    $signInResult = $auth->signInAnonymously();
-                    $token = $signInResult->idToken();
-                    try {
-                        $verIdToken = $auth->verifyIdToken($token);
-                        $uid = $verIdToken->claims()->get('sub');
-            
-                        $_SESSION['uid'] = $uid;
-                        $_SESSION['token'] = $token;
-                        $_SESSION['type'] = 'CSDL';
-
-                        var_dump($_SESSION);
-            
-                        header('Location: ../pages/superadmin/dashboard.php');
-                    } catch (InvalidToken $e) {
-                        echo '<script>alert("The token is invalid!")</script>';
-                    } catch (\InvalidArgumentException $e) {
-                        echo '<script>alert("The token could not be parsed!")</script>';
-                    }
-                } catch (Exception $e) {
-                    echo '<script>alert("Invalid Email and/or Password!"); window.location = "../";</script>';
+                    $_SESSION['type'] = 'ssphead';
+                    header('Location: ../pages/setup/');
+                } catch (InvalidToken $e) {
+                    echo '<script>alert("The token is invalid!")</script>';
+                } catch (\InvalidArgumentException $e) {
+                    echo '<script>alert("The token could not be parsed!")</script>';
                 }
             } else {
                 echo '<script>alert("Invalid Email and/or Password!"); window.location = "../";</script>';

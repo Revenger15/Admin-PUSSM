@@ -1,13 +1,13 @@
 <?php
+
+use Firebase\Auth\Token\Exception\InvalidToken;
+
 include '../../includes/dbconfig.php';
 if (session_status() == PHP_SESSION_NONE) {
   session_start();
 }
 
-$dbUser = $database->getReference('users/' . $_SESSION['uid']);
-$userInfo = $dbUser->getValue();
 $auth = $firebase->createAuth();
-$email = $auth->getUser($_SESSION['uid'])->__get('email');
 
 if (isset($_POST['email'])) {
   $firstname = $_POST['firstname'];
@@ -15,12 +15,24 @@ if (isset($_POST['email'])) {
   $lastname = $_POST['lastname'];
   $gender = $_POST['gender'];
   $contact = $_POST['contact'];
-  $newEmail = $_POST['email'];
+  $email = $_POST['email'];
+  $empNo = $_POST['empNo'];
+  $password = $_POST['password'];
 
-  if ($email != $newEmail) {
-    $auth->changeUserEmail($_SESSION['uid'], $newEmail);
-    $email = $newEmail;
-  }
+  $userProperties = [
+    'email' => $email,
+    'password' => $password,
+    'uid' => $empNo,
+    'emailVerified' => true,
+  ];
+
+  $new = $auth->createUser($userProperties);
+  $dbUser = $database->getReference('users/' . $empNo);
+  $_SESSION['uid'] = $empNo;
+
+  // var_dump($up);
+  // var_dump($_SESSION);
+  // var_dump($updatedInfo);
 
   $dbUser->update([
     "firstname" => $firstname,
@@ -29,30 +41,33 @@ if (isset($_POST['email'])) {
     "gender" => $gender,
     "contact" => $contact,
     "email" => $email,
+    "type" => "ssphead"
   ]);
 
-  include '../../php/logEvent.php';
-  logEvent('Profile Update', $_SESSION['uid'] . ' has updated their profile');
+  try {
+    $signInResult = $auth->signInAsUser($empNo);
+    $token = $signInResult->idToken();
+    try {
+      $verIdToken = $auth->verifyIdToken($token);
+      $uid = $verIdToken->claims()->get('sub');
 
-  echo '
-    <script>
-      alert("Updated Information!");
-      if (\'referrer\' in document) {
-        window.location = document.referrer;
-        /* OR */
-        //location.replace(document.referrer);
-    } else {
-        window.history.back();
+      $_SESSION['uid'] = $uid;
+      $_SESSION['token'] = $token;
+    } catch (InvalidToken $e) {
+        echo '<script>alert("The token is invalid!")</script>';
+    } catch (\InvalidArgumentException $e) {
+        echo '<script>alert("The token could not be parsed!")</script>';
     }
-    </script>';
+  } catch (Exception $e) {
+    echo '<script>alert("Invalid Email and/or Password!"); window.location = "../";</script>';
+  }
+
+  include '../../php/logEvent.php';
+  logEvent('Profile Update', $_SESSION['uid'] . ' has updated their own profile.');
+
   exit();
 }
 ?>
-<style>
-  .form-control {
-    height: unset;
-  }
-</style>
 <div class="modal" id="profile" tabindex="-1" role="dialog" aria-labelledby="profileLabel" aria-hidden="true">
   <div class="modal-dialog modal-xl" role="document">
     <div class="modal-content">
@@ -78,7 +93,7 @@ if (isset($_POST['email'])) {
               <div class="col-auto my-auto">
                 <div class="h-100">
                   <h5 class="mb-1">
-                    <?php echo $userInfo['firstname'] . ' ' . $userInfo['middlename'] . ' ' . $userInfo['lastname']; ?>
+                    NULL
                   </h5>
                   <p class="mb-0 font-weight-normal text-sm">
                     SSP HEAD
@@ -98,10 +113,10 @@ if (isset($_POST['email'])) {
                   </div>
                   <div class="card-body p-3">
                     <ul class="list-group">
-                      <li class="list-group-item border-0 ps-0 pt-0 text-sm"><strong class="text-dark">Full Name:</strong> &nbsp; <?php echo $userInfo['firstname'] . ' ' . $userInfo['middlename'] . ' ' . $userInfo['lastname']; ?></li>
-                      <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Gender:</strong> &nbsp; <?php echo $userInfo['gender']; ?></li>
-                      <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Mobile:</strong> &nbsp; <?php echo $userInfo['contact']; ?></li>
-                      <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Email:</strong> &nbsp; <?php echo $email ?></li>
+                      <li class="list-group-item border-0 ps-0 pt-0 text-sm"><strong class="text-dark">Full Name:</strong> &nbsp; NULL</li>
+                      <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Gender:</strong> &nbsp; NULL</li>
+                      <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Mobile:</strong> &nbsp; NULL</li>
+                      <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Email:</strong> &nbsp; NULL</li>
                       <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark"></strong></li>
                     </ul>
                   </div>
@@ -117,39 +132,47 @@ if (isset($_POST['email'])) {
                     </div>
                   </div>
                   <div class="card-body p-3">
-                  <form class="form" role="form" method="POST" action="profile.php" autocomplete="off">
+                  <form class="form" role="form" autocomplete="off" id="profileForm">
                     <div class="form-group mt-1">
                         <label class="mb-0" for="">First Name</label>
-                        <input type="text" name="firstname" class="form-control ps-2" id="firstname" value="<?php echo $userInfo['firstname'] ?>" required>
+                        <input type="text" name="firstname" class="form-control ps-2" id="firstname" value="" required>
                       </div>
                       <div class="form-group mt-1">
                         <label class="mb-0" for="">Middle Name</label>
-                        <input type="text" name="middlename" class="form-control ps-2" id="middlename" value="<?php echo $userInfo['middlename'] ?>" required>
+                        <input type="text" name="middlename" class="form-control ps-2" id="middlename" value="" required>
                       </div>
                       <div class="form-group mt-1">
                         <label class="mb-0" for="">Last Name</label>
-                        <input type="text" name="lastname" class="form-control ps-2" id="lastname" value="<?php echo $userInfo['lastname'] ?>" required>
+                        <input type="text" name="lastname" class="form-control ps-2" id="lastname" value="" required>
                       </div>
                       <div class="form-group mt-1">
                           <label class="mb-0" for="">Gender</label>
                           <select class="form-control ps-2" id="gender" name="gender" required>
-                              <option value="" disabled>-select option-</option>
+                              <option value="" selected>-select</option>
                               <option value="Male">Male</option>
                               <option value="Female">Female</option>
                               <option value="Prefer-not-to-say">Prefer not to say</option>
                           </select>
                       </div>
                       <div class="form-group mt-1">
-                          <label class="mb-0" for="">Number</label>
-                          <input type="textfield" class="form-control ps-2" id="contact" name="contact" value="<?php echo $userInfo['contact'] ?>" required>
+                          <label class="mb-0" for="">Contact Number</label>
+                          <input type="textfield" class="form-control ps-2" id="cNo" name="contact" required>
                       </div>
                       <div class="form-group mt-1">
                           <label class="mb-0" for="">Email</label>
-                          <input type="textfield" class="form-control ps-2" id="email" name="email" value="<?php echo $userInfo['email'] ?>" required>
+                          <input type="textfield" class="form-control ps-2" id="email"  name="email" required>
+                      </div>
+                      <div class="form-group mt-1">
+                          <label class="mb-0" for="">Password</label>
+                          <input type="password" class="form-control ps-2" id="password"  name="password" required>
+                      </div>
+                      <div class="form-group mt-1">
+                          <label class="mb-0" for="">Employee Number</label>
+                          <input type="textfield" class="form-control ps-2" id="empNo"  name="empNo" required>
                       </div>
                       <center>
                       <div class="form-group pt-2">
-                          <button type="submit" class="btn btn-success btn-lg float-right">Update</button>
+                          <button type="button" id="updateData" class="btn btn-success btn-lg float-right">Update</button>
                       </div>
                       </center>
                     </form>
@@ -165,5 +188,21 @@ if (isset($_POST['email'])) {
 </div>
 
 <script>
-  $("#gender").val("<?php echo $userInfo['gender']?>");
+  $('#updateData').click(function() {
+    $.ajax({
+      url: 'profile.php',
+      method: 'POST',
+      type: 'POST',
+      data: $('#profileForm').serialize()
+    }).done(function(data) {
+      console.log(data);
+      if(!data.includes('error')) {
+        $('#profile').modal('toggle');
+        $('#addYear').modal('show');
+      } else {
+        console.log(data);
+        alert('An error has occurred! Please check local DevTools Console.');
+      }
+    });
+  });
 </script>

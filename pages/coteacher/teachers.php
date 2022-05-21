@@ -171,6 +171,13 @@
                         Please provide a valid Employee Number.
                       </div>
                     </div>
+                    <div class="input-group input-group-outline mb-2">
+                      <label class="form-label">Contact Number</label>
+                      <input type="text" name="contact" class="form-control" required>
+                      <div class="invalid-feedback">
+                        Please provide a valid Number.
+                      </div>
+                    </div>
                     <div class="input-group input-group-outline mb-3">
                       <label class="form-label">Email</label>
                       <input type="email" name="email" class="form-control" required>

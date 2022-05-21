@@ -52,6 +52,7 @@
         if ($csv['name'] != '') {
             // CSV Registration
             $file = fopen($csv['tmp_name'], 'r');
+            $x = 0;
             while (($line = fgetcsv($file)) !== FALSE) {
                 if ($line[3] == 'Employee Number') {
                     continue;
@@ -127,7 +128,13 @@
                 }
 
                 $usersRef->getChild($line[4])->update($info);
+
+                $x++;
             }
+
+            include '../../php/logEvent.php';
+            logEvent('Created User', $_SESSION['uid'] . ' has created '. $x . ' new accounts.');
+
             fclose($file);
             echo '</table>';
 
@@ -145,9 +152,9 @@
 
             $info = [
                 'gender' => $_POST['gender'],
-                'lastName' => $_POST['lastname'],
-                'firstName' => $_POST['firstname'],
-                'middleName' => $_POST['middlename'],
+                'lastname' => $_POST['lastname'],
+                'firstname' => $_POST['firstname'],
+                'middlename' => $_POST['middlename'],
                 'empNo' => $_POST['idNum'],
                 'email' => $_POST['email'],
                 'type' => $type
@@ -201,6 +208,9 @@
             }
 
             $usersRef->getChild($_POST['idNum'])->update($info);
+
+            include '../../php/logEvent.php';
+            logEvent('Create User', $_SESSION['uid'] . ' has created user '. $_POST['idNum']);
         }
         ?>
 </table>

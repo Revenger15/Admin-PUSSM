@@ -223,6 +223,9 @@ if (isset($_POST['page'])) {
   // delete user from fbAuth
   $auth = $firebase->createAuth();
   $auth->deleteUser($uid);
+  
+  include '../../php/logEvent.php';
+  logEvent('Delete User', $_SESSION['uid'] . ' has deleted user '. $uid);
 
   exit();
 }

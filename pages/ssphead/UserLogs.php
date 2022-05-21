@@ -479,6 +479,9 @@ if (isset($_POST['load'])) {
       });
     }
   </script>
+  <?php
+  include 'acadYear.php';
+  ?>
 </body>
 
 </html>

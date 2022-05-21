@@ -164,6 +164,8 @@ if (isset($_POST["load"])) {
   if ($csv['name'] != '') {
     // CSV Registration
     $file = fopen($csv['tmp_name'], 'r');
+
+    $x = 0;
     while (($line = fgetcsv($file)) !== FALSE) {
       if (str_contains($line[0], 'Question') && strlen($line[0]) <= 11) {
         continue;
@@ -176,8 +178,13 @@ if (isset($_POST["load"])) {
 
       echo '<tr><td>' . $line[0] . '</td></tr>';
       // print_r($line);
+      $x++;
       // echo '<br><br>';
     }
+
+    include '../../php/logEvent.php';
+    logEvent('Added Questions', $_SESSION['uid'] . ' has added '. $x .' questions to '.$type);
+
     fclose($file);
   } else {
     $input = $_POST['question'];
@@ -185,6 +192,9 @@ if (isset($_POST["load"])) {
       round(microtime(true) * 1000) => $input
     ]);
     echo '<tr><td>' . $input . '</td></tr>';
+
+    include '../../php/logEvent.php';
+    logEvent('Added a Question', $_SESSION['uid'] . ' has added '. $input .' to '.$type);
   }
   exit();
 } elseif (isset($_POST['action'])) {
@@ -195,6 +205,9 @@ if (isset($_POST["load"])) {
     $cat = $_POST['category'];
     $id = $_POST['id'];
     $database->getReference('tbank/' . $cat . 'q/' . $id)->set(null);
+
+    include '../../php/logEvent.php';
+    logEvent('Added Questions', $_SESSION['uid'] . ' has removed '. $id .' questions to '.$cat);
   }
   exit();
 }
@@ -390,7 +403,7 @@ if (isset($_POST["load"])) {
                     <p>Batch Create:</p>
                     <div class="custom-file">
                       <input type="file" accept=".csv" name="batch-csv" class="custom-file-input" id="men-file" onchange="csvInput('men');">
-                      <label class="custom-file-label" for="customFile" id="fileLabel">No File Selected (.csv)</label>
+                      <label class="custom-file-label" for="customFile" id="men-fileLabel">No File Selected (.csv)</label>
                       <a href="#dl-template" data-toggle="modal" data-target="#instructionBatch" style="float: right;">Download Template</a>
                     </div>
                     <div class="input-group input-group-outline mb-3">
@@ -474,8 +487,8 @@ if (isset($_POST["load"])) {
                   <form method="POST" enctype="multipart/form-data" name="phy-question" id="phy-question">
                     <p>Batch Create:</p>
                     <div class="custom-file">
-                      <input type="file" accept=".csv" name="batch-csv" class="custom-file-input" id="customFile" onchange="csvInput('phy');">
-                      <label class="custom-file-label" for="customFile" id="fileLabel">No File Selected (.csv)</label>
+                      <input type="file" accept=".csv" name="batch-csv" class="custom-file-input" id="phy-file" onchange="csvInput('phy');">
+                      <label class="custom-file-label" for="phy-file" id="phy-fileLabel">No File Selected (.csv)</label>
                       <a href="#dl-template" data-toggle="modal" data-target="#instructionBatch" style="float: right;">Download Template</a>
                     </div>
                     <div class="input-group input-group-outline mb-3">
@@ -544,36 +557,43 @@ if (isset($_POST["load"])) {
   <script src="../../assets/js/material-dashboard.min.js?v=3.0.0"></script>
 
   <script>
-    // $('#btn-account').click(function() {
+    function resetDialog() {
+      def_state = `
+        <h5 style="text-align: center;">Please wait as we process your request...</h5>
+        <div class="loader"></div>
 
-    // $.ajax({
-    //   url: "process-register.php",
-    //   type: "POST",
-    //   dataType: "JSON",
-    //   data: data,
-    //   processData: false,
-    //   contentType: false,
-    //   success: function(data, textStatus, xhr) {
-    //     console.log(xhr.status);
-    //   },
-    //   complete: function(xhr, textStatus) {
-    //     console.log(xhr.status);
-    //   },
-    //   error: function(result) {
-    //     alert("hello1");
-    //     alert(result.status + ' ' + result.statusText);
-    //   }
-    // }).done(function(data) {
-    //   $("#proc-close").show();
-    //   $("#content").html(data);
-    //   // var modalBody = document.getElementById('user-info-modal');
-    //   // modalBody.html(data);
-    // }).always(function(jqXHR) {
-    //   console.log(jqXHR.status);
-    // });
-    // });
+        <style>
+          .loader {
+            margin: auto;
+            text-align: center;
+            border: 8px solid #f3f3f3;
+            /* Light grey */
+            border-top: 8px solid #3498db;
+            /* Blue */
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 2s linear infinite;
+          }
+
+          @keyframes spin {
+            0% {
+              transform: rotate(0deg);
+            }
+
+            100% {
+              transform: rotate(360deg);
+            }
+          }
+        </style>
+      `;
+
+      $('#content').html(def_state);
+    }
 
     function addQuestion(category) {
+      resetDialog();
+
       $("#processing").modal({
         backdrop: 'static',
         keyboard: false
@@ -605,6 +625,14 @@ if (isset($_POST["load"])) {
         }
       }).done(function(data) {
         console.log(data);
+        if(category == 'phy') {
+          loadData(1, "", "physical");
+        } else {
+          loadData(1, "", "mental");
+        }
+        // Clear input
+        $('#' + category + '-file').val(null);
+        csvInput(category);
       });
     }
 
@@ -625,12 +653,12 @@ if (isset($_POST["load"])) {
       }
     }
 
-    function csvInput() {
-      var filename = $('input[type=file]').val().split('\\').pop();
+    function csvInput(category) {
+      var filename = $('#'+category+'-file').val().split('\\').pop();
       if (filename == "") {
         filename = "No file selected (.csv)";
       }
-      $("#fileLabel").text(filename);
+      $("#"+category+"-fileLabel").text(filename);
     }
 
     function templateModal() {
@@ -693,7 +721,7 @@ if (isset($_POST["load"])) {
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="processingLabel">Registration Status</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="proc-close">
+          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close" id="proc-close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
@@ -729,6 +757,9 @@ if (isset($_POST["load"])) {
       </div>
     </div>
   </div>
+  <?php
+  include 'acadYear.php';
+  ?>
 </body>
 
 </html>

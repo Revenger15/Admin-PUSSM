@@ -34,7 +34,7 @@ if (isset($_POST['action'])) {
 
       $dbUser = $database->getReference('users');
       $dbCoords = $database->getReference('system/sspcoord');
-      $list = array_keys($dbCoords->getValue());
+      $list = $dbCoords->getValue() ? array_keys($dbCoords->getValue()) : [];
       $userData = [];
       $filteredData = [];
 
@@ -703,6 +703,9 @@ if (isset($_POST['action'])) {
       </div>
     </div>
   </div>
+  <?php
+  include 'acadYear.php';
+  ?>
 </body>
 
 </html>

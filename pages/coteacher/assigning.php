@@ -14,6 +14,7 @@ if (isset($_POST['page'])) {
       include '../../includes/dbconfig.php';
 
       $dbInstructor = $database->getReference('system/sspcoord/' . $_SESSION['uid'] . '/advisers/');
+      $userDB = $database->getReference('system/sspcoord/' . $_SESSION['uid'] . '/advisers');
       $dbUsers = $database->getReference('users');
       $currAY = $database->getReference('system/current')->getValue();
       $uidList = $dbInstructor->getValue();
@@ -25,20 +26,47 @@ if (isset($_POST['page'])) {
       $e25 = ($nEntries == 25) ? 'selected' : '';
       $e50 = ($nEntries == 50) ? 'selected' : '';
 
-      // Fetch User data based from List
+      // Get Data for UID
+      $uidList = array_keys($userDB->getValue());
       if ($uidList != '') {
-        foreach ($uidList as $key => $value) {
-          $userData[$value] = $dbUsers->getChild($value)->getValue();
-          $subs = $database->getReference('data/' . $currAY . '/users/' . $value . '/subjects/')->getSnapshot();
+        foreach ($uidList as $k => $v) {
+          $userData[$v] =  $database->getReference('users/' . $v)->getValue();
+          $subs = $database->getReference('data/' . $currAY . '/adviser/' . $v)->getSnapshot();
           if ($subs->hasChildren()) {
             $listSub = $subs->getValue();
-            $userData[$value]['subject'] = array_keys($listSub);
+            $userData[$v]['subject'] = implode(',', array_keys($listSub));
             foreach ($listSub as $sub => $sect) {
-              $userData[$value]['section'] = array_keys($sect);
+              $tmpStrSect = '';
+              foreach ($listSub as $arrSubj => $arrSect) {
+                foreach ($arrSect as $k => $v2) {
+                  $tmpStrSect .= $v2 . ', ';
+                }
+              }
+
+              $tmpStrSect = substr($tmpStrSect, 0, -2);
+              $userData[$v]['section'] = $tmpStrSect;
             }
+          } else {
+            $userData[$v]['section'] = 'NOT YET ASSIGNED';
+            $userData[$v]['subject'] = 'NOT YET ASSIGNED';
           }
         }
       }
+
+      // Fetch User data based from List
+      // if ($uidList != '') {
+      //   foreach ($uidList as $key => $value) {
+      //     $userData[$value] = $dbUsers->getChild($value)->getValue();
+      //     $subs = $database->getReference('data/' . $currAY . '/users/' . $value . '/subjects/')->getSnapshot();
+      //     if ($subs->hasChildren()) {
+      //       $listSub = $subs->getValue();
+      //       $userData[$value]['subject'] = array_keys($listSub);
+      //       foreach ($listSub as $sub => $sect) {
+      //         $userData[$value]['section'] = array_keys($sect);
+      //       }
+      //     }
+      //   }
+      // }
 
       // Search
       if ($userData != [] && $search != '') {
@@ -234,7 +262,7 @@ if (isset($_POST['page'])) {
             </div>
             <div class="fixed-table-pagination">
               <div class="float-left pagination">
-                <select class="btn btn-outline-' . $theme . ' mt-2 ms-1 mb-1" name="page" id="entassign">
+                <select class="btn btn-outline-' . $theme . ' mt-2 ms-1 mb-1" name="page" id="ent' . $category . '">
                   <option value="5"  ' . $e5 . '>5 entries</option>
                   <option value="15" ' . $e15 . '>15 entries</option>
                   <option value="25" ' . $e25 . '>25 entries</option>
@@ -360,6 +388,9 @@ if (isset($_POST['page'])) {
       trim($v) => trim($v)
     ]);
   }
+  
+  include '../../php/logEvent.php';
+  logEvent('Class Assigned', $_SESSION['uid'] . ' has assigned '. $uid .' to '.$subj. ' - '.$rawSect);
 } elseif (isset($_POST['unassign'])) {
   $uid = $_POST['unassign'];
   $subj = $_POST['subj'];
@@ -367,6 +398,9 @@ if (isset($_POST['page'])) {
 
   $currAY = $database->getReference('system/current')->getValue();
   $database->getReference('data/' . $currAY . '/adviser/' . $uid . '/' . $subj . '/' . $sect)->set(NULL);
+
+  include '../../php/logEvent.php';
+  logEvent('Class Unassigned', $_SESSION['uid'] . ' has unassigned '. $uid .' to '.$subj. ' - '.$sect);
 
   exit();
 }
@@ -619,23 +653,23 @@ if (isset($_POST['page'])) {
                     <option value="50">50 entries</option>
                   </select>
                 </div>
-                  <div class="float-right pagination">
-                    <ul class="pagination">
-                      <li class="page-item"><a class="page-link" aria-label="previous page" href="">« Prev</a></li>
-                      <li class="page-item active bg-gradient-faded-success-vertical border-radius-2xl"><a class="page-link" aria-label="to page 1" href="">1</a></li>
-                      <li class="page-item"><a class="page-link" aria-label="to page 2" href="">2</a></li>
-                      <li class="page-item"><a class="page-link" aria-label="to page 3" href="">3</a></li>
-                      <li class="page-item"><a class="page-link" aria-label="to page 3" href="">...</a></li>
-                      <li class="page-item"><a class="page-link" aria-label="to page 3" href="">10</a></li>
-                      <li class="page-item"><a class="page-link" aria-label="next page" href="">Next »</a></li>
-                    </ul>
-                  </div>
+                <div class="float-right pagination">
+                  <ul class="pagination">
+                    <li class="page-item"><a class="page-link" aria-label="previous page" href="">« Prev</a></li>
+                    <li class="page-item active bg-gradient-faded-success-vertical border-radius-2xl"><a class="page-link" aria-label="to page 1" href="">1</a></li>
+                    <li class="page-item"><a class="page-link" aria-label="to page 2" href="">2</a></li>
+                    <li class="page-item"><a class="page-link" aria-label="to page 3" href="">3</a></li>
+                    <li class="page-item"><a class="page-link" aria-label="to page 3" href="">...</a></li>
+                    <li class="page-item"><a class="page-link" aria-label="to page 3" href="">10</a></li>
+                    <li class="page-item"><a class="page-link" aria-label="next page" href="">Next »</a></li>
+                  </ul>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+    </div>
   </main>
   <div class="fixed-plugin">
     <div class="card shadow-lg">

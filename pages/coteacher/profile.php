@@ -33,6 +33,10 @@ if (isset($_POST['email'])) {
     "email" => $email,
     "department" => $department,
   ]);
+  
+  include '../../php/logEvent.php';
+  logEvent('Profile Update', $_SESSION['uid'] . ' has has updated their profile.');
+
   echo '
     <script>
       alert("Updated Information!");

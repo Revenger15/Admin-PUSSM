@@ -36,19 +36,19 @@ if (isset($_POST['page'])) {
         foreach ($uidList as $k => $v) {
           $userData[$v] =  $database->getReference('users/' . $v)->getValue();
           if ($cat == 'adviser') {
-            $subs = $database->getReference('data/' . $currAY . '/users/' . $v . '/subjects/')->getSnapshot();
+            $subs = $database->getReference('data/' . $currAY . '/adviser/' . $v)->getSnapshot();
             if ($subs->hasChildren()) {
               $listSub = $subs->getValue();
-              $userData[$v]['subject'] = array_keys($listSub);
+              $userData[$v]['subject'] = implode(',',array_keys($listSub));
               foreach ($listSub as $sub => $sect) {
                 $tmpStrSect = '';
                 foreach ($listSub as $arrSubj => $arrSect) {
-                  foreach ($arrSect as $k => $v) {
-                    $tmpStrSect .= $v . ', ';
+                  foreach ($arrSect as $k => $v2) {
+                    $tmpStrSect .= $v2 . ', ';
                   }
                 }
 
-                $tmpStrSect = substr($sect, 0, -2);
+                $tmpStrSect = substr($tmpStrSect, 0, -2);
                 $userData[$v]['section'] = $tmpStrSect;
               }
             } else {
@@ -102,7 +102,7 @@ if (isset($_POST['page'])) {
         $tPage = ceil($numChild / $nEntries);
         $page = ($page <= $tPage && $page > 0) ? $page : 1;
 
-        $pagedData = array_slice($filteredData, ($page - 1) * $nEntries);
+        $pagedData = array_slice($filteredData, ($page - 1) * $nEntries, $nEntries, true);
         foreach ($pagedData as $uid => $data) {
           echo <<<HTML
             <tr>
@@ -225,6 +225,9 @@ if (isset($_POST['page'])) {
 } elseif (isset($_POST['deleteUser'])) {
   $uid = $_POST['deleteUser'];
   $userType = $_POST['userType'];
+  
+  include '../../php/logEvent.php';
+  logEvent('Delete User', $_SESSION['uid'] . ' has deleted user '. $uid);
 
   if ($userType == 'student') {
     // delete data from currAY pool

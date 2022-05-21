@@ -3,6 +3,71 @@ include '../../includes/dbconfig.php';
 session_start();
 // var_dump($_COOKIE);
 $auth = $firebase->createAuth();
+
+$currAY = $database->getReference('system/current')->getValue();
+$resDB = $database->getReference('data/'.$currAY.'/result');
+$results = $resDB->getValue() ? $resDB->getValue() : [];
+$sorted = [];
+
+foreach($results as $ts => $data) {
+    $sorted[date('M', $ts/1000)][$ts] = $data;
+}
+
+foreach($sorted as $month => $data) {
+    $t = 0;
+    $men = 0;
+    $phy = 0;
+    $overall = 0;
+    foreach($data as $ts => $data2) {
+        $t++;
+        $men+=$data2['mental'];
+        $overall+=$data2['total'];
+        $phy+=$data2['physical'];
+    }
+    $sorted[$month]['mental'] = $men/$t;
+    $sorted[$month]['physical'] = $phy/$t;
+    $sorted[$month]['overall'] = $overall/$t;
+}
+
+$prev_month = date('M', strtotime("first day of previous month"));
+$curr_month = date('M');
+$void = false;
+
+if(!isset($sorted[$prev_month])) {
+  $sorted[$prev_month]['overall'] = 0;
+  $sorted[$prev_month]['mental'] = 0;
+  $sorted[$prev_month]['physical'] = 0;
+} else $void = true;
+if(!isset($sorted[$curr_month])) {
+  $sorted[$curr_month]['overall'] = 0;
+  $sorted[$curr_month]['mental'] = 0;
+  $sorted[$curr_month]['physical'] = 0;
+} else $void = true;
+try {
+  if($void) {
+    $overall = round(($sorted[$curr_month]['overall'] - $sorted[$prev_month]['overall'])/$sorted[$prev_month]['overall'] *100, 2);
+    $mental = round(($sorted[$curr_month]['mental'] - $sorted[$prev_month]['mental']) / $sorted[$prev_month]['mental'] *100, 2);
+    $physical = round(($sorted[$curr_month]['physical'] - $sorted[$prev_month]['physical']) / $sorted[$prev_month]['physical'] *100, 2);
+  } else {
+    $overall = 0;
+    $mental = 0;
+    $physical = 0;
+  }
+} catch (DivisionByZeroError $e) {
+    $overall = $sorted[$curr_month]['overall'] > 0 ? 100 : 0;
+    $physical = $sorted[$curr_month]['physical'] > 0 ? 100 : 0;
+    $mental = $sorted[$curr_month]['mental'] > 0 ? 100 : 0;
+
+}
+$students = $resDB->getSnapshot()->numChildren();
+
+function getTheme($val) {
+  if($val == 0) return 'secondary';
+  elseif($val > 0) return 'success';
+  else return 'danger';
+}
+
+$user = $database->getReference('users/'.$_SESSION['uid'].'/firstname')->getValue();
 ?>
 
 <!DOCTYPE html>
@@ -176,7 +241,7 @@ $auth = $firebase->createAuth();
                 <div class="media d-flex align-items-center">
                   <img class="icon-xs rounded-circle" alt="Image placeholder" src="../../assets\img\micon.png">
                   <div class="media-body ms-2 text-dark align-items-center d-none d-lg-block">
-                    <span class="mb-0 font-small fw-bold text-gray-900">Welcome, "Admin" (SSP Head)</span>
+                    <span class="mb-0 font-small fw-bold text-gray-900">Welcome, "<?php echo $user ?>" (SSP Head)</span>
                   </div>
                 </div>
               </a>
@@ -188,7 +253,7 @@ $auth = $firebase->createAuth();
                   </svg>
                   &nbsp; My Profile
                 </a>
-                <a class="dropdown-item d-flex align-items-center" href="#" data-toggle="modal" data-target="#changePassword" draggable="false">
+                <a class="dropdown-item d-flex align-items-center" href="#" onclick="$('#changePassword').modal('toggle');" >
                   <svg class="dropdown-icon me-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                     <path d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 1 1 0-5.86 2.929 2.929 0 0 1 0 5.858z"></path>
                   </svg>
@@ -217,7 +282,7 @@ $auth = $firebase->createAuth();
             </div>
             <hr class="dark horizontal my-0">
             <div class="card-footer p-3">
-              <p class="mb-0"><span class="text-success text-sm font-weight-bolder">±0% </span>than last month</p>
+              <p class="mb-0"><span class="text-<?php echo getTheme($overall)?> text-sm font-weight-bolder"><?php echo $overall?>% </span>than last month</p>
             </div>
           </div>
         </div>
@@ -235,7 +300,7 @@ $auth = $firebase->createAuth();
             </div>
             <hr class="dark horizontal my-0">
             <div class="card-footer p-3">
-              <p class="mb-0"><span class="text-success text-sm font-weight-bolder">±0% </span>than last month</p>
+            <p class="mb-0"><span class="text-<?php echo getTheme($physical)?> text-sm font-weight-bolder"><?php echo $physical?>% </span>than last month</p>
             </div>
           </div>
         </div>
@@ -253,7 +318,7 @@ $auth = $firebase->createAuth();
             </div>
             <hr class="dark horizontal my-0">
             <div class="card-footer p-3">
-              <p class="mb-0"><span class="text-danger text-sm font-weight-bolder">±0%</span> than last month</p>
+            <p class="mb-0"><span class="text-<?php echo getTheme($mental)?> text-sm font-weight-bolder"><?php echo $mental?>% </span>than last month</p>
             </div>
           </div>
         </div>
@@ -271,7 +336,7 @@ $auth = $firebase->createAuth();
             </div>
             <hr class="dark horizontal my-0">
             <div class="card-footer p-3">
-              <p class="mb-0"><span class="text-success text-sm font-weight-bolder"> 0 </span>students Assessed</p>
+              <p class="mb-0"><span class="text-<?php echo getTheme($students)?> text-sm font-weight-bolder"><?php echo $students?> </span>students Assessed</p>
             </div>
           </div>
         </div>
@@ -383,7 +448,7 @@ $auth = $firebase->createAuth();
           <p class="text-sm">Recommended: If just first login</p>
         </div>
         <div class="mt-2 text-center fs-7">
-          <button class="btn bg-gradient-dark px-3 mb-2 ms-2" id="show-modal">Change password</button>
+          <button class="btn bg-gradient-dark px-3 mb-2 ms-2" id="show-modal"onclick="$('#changePassword').modal('toggle');" >Change password</button>
         </div>
       </div>
     </div>
@@ -400,7 +465,7 @@ $auth = $firebase->createAuth();
     new Chart(ctx, {
       type: "bar",
       data: {
-        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+        labels: [<?php foreach($sorted as $mo => $data) echo '\'', $mo . '\', ';?>], //Month
         datasets: [{
           label: "Rate",
           tension: 0.4,
@@ -408,7 +473,7 @@ $auth = $firebase->createAuth();
           borderRadius: 4,
           borderSkipped: false,
           backgroundColor: "rgba(255, 255, 255, .8)",
-          data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          data: [<?php foreach($sorted as $mo => $data) echo $data['overall'] . ', ';?>], //data
           maxBarThickness: 6
         }, ],
       },
@@ -481,7 +546,7 @@ $auth = $firebase->createAuth();
     new Chart(ctx2, {
       type: "line",
       data: {
-        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+        labels: [<?php foreach($sorted as $mo => $data) echo '\'', $mo . '\', ';?>],
         datasets: [{
           label: "Rating",
           tension: 0,
@@ -494,7 +559,7 @@ $auth = $firebase->createAuth();
           borderWidth: 4,
           backgroundColor: "transparent",
           fill: true,
-          data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          data: [<?php foreach($sorted as $mo => $data) echo $data['physical'] . ', ';?>],
           maxBarThickness: 6
 
         }],
@@ -564,7 +629,7 @@ $auth = $firebase->createAuth();
     new Chart(ctx3, {
       type: "line",
       data: {
-        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+        labels: [<?php foreach($sorted as $mo => $data) echo '\'', $mo . '\', ';?>],
         datasets: [{
           label: "Rating",
           tension: 0,
@@ -576,7 +641,7 @@ $auth = $firebase->createAuth();
           borderWidth: 4,
           backgroundColor: "transparent",
           fill: true,
-          data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          data: [<?php foreach($sorted as $mo => $data) echo $data['mental'] . ', ';?>],
           maxBarThickness: 6
 
         }],
@@ -660,26 +725,26 @@ $auth = $firebase->createAuth();
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="changePasswordLabel">Change Password</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
-          <form class="form" action="../change.php" role="form" autocomplete="off">
+          <form class="form" action="../change.php" method="POST" role="form" autocomplete="off">
             <div class="form-group">
               <label for="inputPasswordOld">Current Password</label>
-              <input type="password" class="form-control ps-2" id="inputPasswordOld" required="">
+              <input type="password" class="form-control ps-2" id="inputPasswordOld" name="inputPasswordOld" required>
             </div>
             <div class="form-group">
               <label for="inputPasswordNew">New Password</label>
-              <input type="password" class="form-control ps-2" id="inputPasswordNew" required="">
+              <input type="password" class="form-control ps-2" id="inputPasswordNew" name="inputPasswordNew" required>
               <span class="form-text small text-muted">
                 The password must be 8-20 characters, and must <em>not</em> contain spaces.
               </span>
             </div>
             <div class="form-group">
               <label for="inputPasswordNewVerify">Verify</label>
-              <input type="password" class="form-control ps-2" id="inputPasswordNewVerify" required="">
+              <input type="password" class="form-control ps-2" id="inputPasswordNewVerify" name="inputPasswordNewVerify" required>
               <span class="form-text small text-muted">
                 To confirm, type the new password again.
               </span>

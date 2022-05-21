@@ -4,6 +4,11 @@ $cat = $_GET['category'];
 $ay = $_GET['ay'];
 $dbRef = $database->getReference('data/'.$ay.'/'.$cat);
 $assList = $dbRef->getValue();
+
+$database->getReference('system/logs/'.round(microtime(true) * 1000))->update([
+    'title' => 'Exported Data',
+    'message' => $_SESSION['uid'].' has exported the data for '.$cat.' assessment'
+]);
 ?>
 <!DOCTYPE html>
 <html lang="en">
