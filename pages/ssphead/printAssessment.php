@@ -1,13 +1,13 @@
-<?php 
+<?php
 include '../../includes/dbconfig.php';
 $cat = $_GET['category'];
 $ay = $_GET['ay'];
-$dbRef = $database->getReference('data/'.$ay.'/'.$cat);
+$dbRef = $database->getReference('data/' . $ay . '/' . $cat);
 $assList = $dbRef->getValue();
 
-$database->getReference('system/logs/'.round(microtime(true) * 1000))->update([
+$database->getReference('system/logs/' . round(microtime(true) * 1000))->update([
     'title' => 'Exported Data',
-    'message' => $_SESSION['uid'].' has exported the data for '.$cat.' assessment'
+    'message' => $_SESSION['uid'] . ' has exported the data for ' . $cat . ' assessment'
 ]);
 ?>
 <!DOCTYPE html>
@@ -19,13 +19,20 @@ $database->getReference('system/logs/'.round(microtime(true) * 1000))->update([
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Print Assessment</title>
     <style>
-        h1,h2,h3,h4,h5,h6 {
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
             text-align: center;
         }
+
         table {
             width: 100%;
             table-layout: fixed;
         }
+
         @media print {
             .pagebreak {
                 page-break-before: always;
@@ -38,8 +45,8 @@ $database->getReference('system/logs/'.round(microtime(true) * 1000))->update([
 
 <body>
     <?php
-    foreach($assList as $ts => $data) {
-        $date = date('F d, Y', floor($ts/1000));
+    foreach ($assList as $ts => $data) {
+        $date = date('F d, Y', floor($ts / 1000));
         $cat = ucfirst($cat);
         echo <<<HTML
             <h2>PHINMA UPang Student Support Module</h2>
@@ -80,6 +87,25 @@ $database->getReference('system/logs/'.round(microtime(true) * 1000))->update([
         echo '<div class="pagebreak"> </div>';
     }
     ?>
+    <script>
+        window.onload = function(e) {
+            window.print();
+            if (confirm("Do you wish to hide the exported data from the pending assessments page?")) {
+                ay = getCookie('AY') ? getCookie('AY') : '<?php echo $database->getReference('system/current')->getValue(); ?>';
+                $.ajax({
+                    url: 'Assessment.php',
+                    method: 'POST',
+                    type: 'POST',
+                    data: {
+                        'action': 'export',
+                        'ay': ay
+                    }
+                }).done(function(data) {
+                    alert('Data has been hidden. You may now close the window!');
+                });
+            }
+        }
+    </script>
 </body>
 
 </html>

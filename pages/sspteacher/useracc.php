@@ -14,8 +14,9 @@ if (isset($_POST['page'])) {
 
       $currAY = $database->getReference('system/current')->getValue();
       $teacherDB = $database->getReference('data/' . $currAY . '/adviser/' . $_SESSION['uid']);
-      $subSect = $teacherDB->getValue();
+      $subSect = $teacherDB->getValue() ? $teacherDB->getValue() : [];
       $filteredData = [];
+      $rawResult = [];
 
       $e5  = ($nEntries == 5)  ? 'selected' : '';
       $e15 = ($nEntries == 15) ? 'selected' : '';
@@ -23,17 +24,20 @@ if (isset($_POST['page'])) {
       $e50 = ($nEntries == 50) ? 'selected' : '';
 
       // Get teacher subj and sect
-      foreach ($subSect as $subj => $sect) {
-        foreach ($sect as $k1 => $v1) {
-          $stdListDB = $database->getReference('data/' . $currAY . '/studentList/' . $subj . '/' . $v1);
-          $stdUIDs = $stdListDB->getValue() ? array_keys($stdListDB->getValue()) : [];
+      if($subSect != []) {
+        foreach ($subSect as $subj => $sect) {
+          foreach ($sect as $k1 => $v1) {
+            $stdListDB = $database->getReference('data/' . $currAY . '/studentList/' . $subj . '/' . $v1);
+            $stdUIDs = $stdListDB->getValue() ? array_keys($stdListDB->getValue()) : [];
 
-          // var_dump($stdResultDB);
-          // Get student list and result
-          foreach ($stdUIDs as $k2 => $v2) {
-            $stdData = $database->getReference('users/' . $v2)->getValue();
-            $ayData = $database->getReference('data/' . $currAY . '/student/' . $v2)->getValue();
-            $rawResult[$subj][$v1][$v2] = array_merge($stdData, $ayData);
+            // var_dump($stdResultDB);
+            // Get student list and result
+            foreach ($stdUIDs as $k2 => $v2) {
+              if($v2 == 'adviser') continue;
+              $stdData = $database->getReference('users/' . $v2)->getValue();
+              $ayData = $database->getReference('data/' . $currAY . '/student/' . $v2)->getValue();
+              $rawResult[$subj][$v1][$v2] = array_merge($stdData, $ayData);
+            }
           }
         }
       }

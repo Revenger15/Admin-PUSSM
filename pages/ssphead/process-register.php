@@ -20,6 +20,9 @@
             Department
         </th>
         <th>
+            Contact Number
+        </th>
+        <th>
             Email
         </th>
     </tr>
@@ -49,6 +52,7 @@
         'firstname' => $_POST['fName'],
         'middlename' => $_POST['mName'],
         'empNo' => $_POST['empNo'],
+        'contact' => $_POST['contact'],
         'department' => $_POST['dept'],
         'gender' => $_POST['gender'],
         'type' => 'sspcoord'
@@ -82,6 +86,9 @@
             </td>
             <td>
                 {$_POST['dept']}
+            </td>
+            <td>
+                {$_POST['contact']}
             </td>
             <td>
                 {$_POST['email']}

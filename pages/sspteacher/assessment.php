@@ -16,7 +16,7 @@ if (isset($_POST['page'])) {
 
       $currAY = $database->getReference('system/current')->getValue();
       $teacherDB = $database->getReference('data/' . $currAY . '/adviser/' . $_SESSION['uid']);
-      $subSect = $teacherDB->getValue();
+      $subSect = $teacherDB->getValue() ? $teacherDB->getValue() : [];
       $filteredData = [];
 
       $e5  = ($nEntries == 5)  ? 'selected' : '';
@@ -52,19 +52,22 @@ if (isset($_POST['page'])) {
       }
 
       // Get teacher subj and sect
-      foreach ($subSect as $subj => $sect) {
-        foreach ($sect as $k => $v) {
-          $stdListDB = $database->getReference('data/' . $currAY . '/studentList/' . $subj . '/' . $v);
-          $stdResultDB = $stdListDB->getValue() ? $stdListDB->getValue() : [];
+      if ($subSect != []) {
+        foreach ($subSect as $subj => $sect) {
+          foreach ($sect as $k => $v) {
+            $stdListDB = $database->getReference('data/' . $currAY . '/studentList/' . $subj . '/' . $v);
+            $stdResultDB = $stdListDB->getValue() ? $stdListDB->getValue() : [];
 
-          // var_dump($stdResultDB);
-          // Get student list and result
-          foreach ($stdResultDB as $uid => $result) {
-            if(isset($result['result'])) {
-              foreach ($result['result'] as $ts => $status) {
-                if ($status == $stats) {
-                  $resultDB = $database->getReference('data/' . $currAY . '/' . $pool . '/' . $ts);
-                  $rawResult[$subj][$v][$uid][$ts] = $resultDB->getValue();
+            // var_dump($stdResultDB);
+            // Get student list and result
+            foreach ($stdResultDB as $uid => $result) {
+              if($uid == 'adviser') continue;
+              if (isset($result['result'])) {
+                foreach ($result['result'] as $ts => $status) {
+                  if ($status == $stats) {
+                    $resultDB = $database->getReference('data/' . $currAY . '/' . $pool . '/' . $ts);
+                    $rawResult[$subj][$v][$uid][$ts] = $resultDB->getValue();
+                  }
                 }
               }
             }
@@ -180,7 +183,7 @@ if (isset($_POST['page'])) {
         if (str_contains($stats, 'TE')) {
           echo '
           <div class="float-left pagination">
-            <button type="button" class="btn btn-outline-' . $theme . ' mt-2 ms-1 mb-1" onclick="exportData(\''. $stats .'\', \''. $cat .'\')">
+            <button type="button" class="btn btn-outline-' . $theme . ' mt-2 ms-1 mb-1" onclick="exportData(\'' . $stats . '\', \'' . $cat . '\')">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send-fill" viewBox="0 0 16 16">
               <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083l6-15Zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471-.47 1.178Z"/>
             </svg> Send
@@ -230,7 +233,7 @@ if (isset($_POST['page'])) {
               </ul>
             </div>
           </div>';
-        } else {
+      } else {
         $action = '';
         if (str_contains($stats, 'TE')) {
           $action = '
@@ -312,7 +315,7 @@ if (isset($_POST['page'])) {
   $database->getReference('data/' . $currAY . '/studentList/' . $subj . '/' . $sect . '/' . $stdUID . '/result/' . $key)->set($newStatus);
 
   include '../../php/logEvent.php';
-  logEvent('Update Student Record', $_SESSION['uid'] . ' has updated student record of '. $key . ' from '. $oldStatus . ' to '. $newStatus);
+  logEvent('Update Student Record', $_SESSION['uid'] . ' has updated student record of ' . $key . ' from ' . $oldStatus . ' to ' . $newStatus);
 
   exit();
 } elseif (isset($_POST['exportData'])) {
@@ -334,6 +337,7 @@ if (isset($_POST['page'])) {
       // var_dump($stdResultDB);
       // Get student list and result
       foreach ($stdResultDB as $uid => $result) {
+        if($uid == 'adviser') continue;
         foreach ($result['result'] as $ts => $status) {
           if ($status == $cat) {
             $stdListDB->getChild($uid . '/result/' . $ts)->set(str_replace('TE', 'REF', $cat)); //Change TE to REF
@@ -347,9 +351,9 @@ if (isset($_POST['page'])) {
   }
 
   $database->getReference('data/' . $currAY . '/' . $mode)->update($rawResult);
-  
+
   include '../../php/logEvent.php';
-  logEvent('Data Export', $_SESSION['uid'] . ' has exported the data for '. $cat);
+  logEvent('Data Export', $_SESSION['uid'] . ' has exported the data for ' . $cat);
 
   exit();
 }
@@ -888,7 +892,7 @@ if (isset($_POST['page'])) {
         } else {
           // error
           // close modal and show alert()
-          alert('An error occurred!\n'+data);
+          alert('An error occurred!\n' + data);
         }
       });
     }
@@ -899,8 +903,8 @@ if (isset($_POST['page'])) {
         type: 'POST',
         method: 'POST',
         data: {
-          'mode' : mode,
-          'exportData' : category
+          'mode': mode,
+          'exportData': category
         }
       }).done(function(data) {
         console.log(data);
@@ -911,13 +915,13 @@ if (isset($_POST['page'])) {
         } else {
           // error
           // close modal and show alert()
-          alert('An error occurred!\n'+data);
+          alert('An error occurred!\n' + data);
         }
       });
     }
-    
+
     function convertCode(code) {
-      switch(code) {
+      switch (code) {
         case 'RECORDED':
           return 'assess';
           break;

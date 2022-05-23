@@ -186,11 +186,11 @@ $user = $database->getReference('users/'.$_SESSION['uid'].'/firstname')->getValu
               $AY = $database->getReference('system/AY')->getValue();
 
               foreach ($AY as $key => $value) {
-                echo '<option value="' . $key;
+                echo '<option value="' . $key . '"';
                 if ($key == $sel) {
-                  echo 'selected';
+                  echo ' selected';
                 }
-                echo '">' . $value . '</option>';
+                echo '>' . $value . '</option>';
               }
               ?>
               <option value="add">Add</option>

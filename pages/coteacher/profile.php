@@ -4,7 +4,6 @@ if (session_status() == PHP_SESSION_NONE) {
   session_start();
 }
 
-
 $dbUser = $database->getReference('users/' . $_SESSION['uid']);
 $userInfo = $dbUser->getValue();
 $auth = $firebase->createAuth();
@@ -15,7 +14,7 @@ if (isset($_POST['email'])) {
   $middlename = $_POST['middlename'];
   $lastname = $_POST['lastname'];
   $gender = $_POST['gender'];
-  $contact = $_POST['contactnumber'];
+  $contact = $_POST['contact'];
   $newEmail = $_POST['email'];
   $department = $_POST['department'];
 
@@ -76,7 +75,7 @@ if (isset($_POST['email'])) {
               <div class="col-auto my-auto">
                 <div class="h-100">
                   <h5 class="mb-1">
-                    Silver Swan
+                  <?php echo $userInfo['firstname'] . ' ' . $userInfo['middlename'] . ' ' . $userInfo['lastname'] ?>
                   </h5>
                   <p class="mb-0 font-weight-normal text-sm">
                     SSP Coordinator
@@ -96,11 +95,11 @@ if (isset($_POST['email'])) {
                   </div>
                   <div class="card-body p-3">
                     <ul class="list-group">
-                      <li class="list-group-item border-0 ps-0 pt-0 text-sm"><strong class="text-dark">Full Name:</strong> &nbsp; Silver S. Swan</li>
-                      <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Gender:</strong> &nbsp; Female</li>
-                      <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Mobile:</strong> &nbsp; (+63)123 123 1234</li>
-                      <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Email:</strong> &nbsp; Datoputi@mail.com</li>
-                      <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Department:</strong> &nbsp; CITE</li>
+                      <li class="list-group-item border-0 ps-0 pt-0 text-sm"><strong class="text-dark">Full Name:</strong> &nbsp; <?php echo $userInfo['firstname'] . ' ' . $userInfo['middlename'] . ' ' . $userInfo['lastname'] ?></li>
+                      <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Gender:</strong> &nbsp; <?php echo $userInfo['gender']?></li>
+                      <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Mobile:</strong> &nbsp; <?php echo $userInfo['contact']?></li>
+                      <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Email:</strong> &nbsp; <?php echo $userInfo['email']?></li>
+                      <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Department:</strong> &nbsp; <?php echo $userInfo['department']?></li>
                       <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark"></strong></li>
                     </ul>
                   </div>
@@ -140,23 +139,17 @@ if (isset($_POST['email'])) {
                       </div>
                       <div class="form-group mt-1">
                         <label class="mb-0" for="">Contact Number</label>
-                        <input type="tel" name="contactnumber" class="form-control ps-2" id="contactnumber" value="<?php echo $userInfo['contact'] ?>" required>
+                        <input type="tel" name="contact" class="form-control ps-2" id="contact" value="<?php echo $userInfo['contact'] ?>" required>
                       </div>
                       <div class="form-group mt-1">
                         <label class="mb-0" for="">Email</label>
                         <input type="email" name="email" class="form-control ps-2" id="email" value="<?php echo $email ?>" required>
                       </div>
                       <div class="form-group mt-1">
-                        <label class="mb-0" for="">Department</label>
-                        <select class="form-control ps-2" name="department" id="department" required>
-                          <option value="" disabled selected>-select</option>
-                          <option value="CITE">CITE</option>
-                          <option value="CEA">CEA</option>
-                          <option value="CAS">CAS</option>
-                          <option value="CHS">CHS</option>
-                          <option value="CSS">CSS</option>
-                          <option value="PUCO">PUCO</option>
-                        </select>
+                          <label class="mb-0" for="">Department</label>
+                          <select class="form-control ps-2" name="department" id="department" required readonly>
+                              <option value="<?php echo $userInfo['department'] ?>" selected><?php echo $userInfo['department'] ?></option>
+                          </select>
                       </div>
                       <center>
                         <div class="form-group pt-2">

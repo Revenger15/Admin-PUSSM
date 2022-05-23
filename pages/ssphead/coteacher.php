@@ -316,11 +316,11 @@ if (isset($_POST['action'])) {
               $AY = $database->getReference('system/AY')->getValue();
 
               foreach ($AY as $key => $value) {
-                echo '<option value="' . $key;
+                echo '<option value="' . $key . '"';
                 if ($key == $sel) {
-                  echo 'selected';
+                  echo ' selected';
                 }
-                echo '">' . $value . '</option>';
+                echo '>' . $value . '</option>';
               }
               ?>
               <option value="add">Add</option>
@@ -470,6 +470,13 @@ if (isset($_POST['action'])) {
                       <input type="text" name="empNo" class="form-control" required="">
                       <div class="invalid-feedback">
                         Please provide a valid Employee Number.
+                      </div>
+                    </div>
+                    <div class="input-group input-group-outline mb-2">
+                      <label class="form-label">Contact Number</label>
+                      <input type="text" name="contact" class="form-control" required>
+                      <div class="invalid-feedback">
+                        Please provide a valid Number.
                       </div>
                     </div>
                     <div class="input-group input-group-outline mb-3">

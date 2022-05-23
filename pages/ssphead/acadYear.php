@@ -8,7 +8,7 @@ if (isset($_POST['year'])) {
     if ($database->getReference('data/' . $yr . '-' . $sem)->getSnapshot()->exists()) {
         echo '<script>
             alert("AY and Semester already exists in the server.");
-            window.location.href = "'. $_SERVER['HTTP_REFERER'] .'";
+            window.location.href = "' . $_SERVER['HTTP_REFERER'] . '";
         </script>';
         exit();
         // header('Location: ' . $_SERVER['HTTP_REFERER']);
@@ -37,7 +37,7 @@ if (isset($_POST['year'])) {
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="addYearLabel">Add Period</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -53,7 +53,7 @@ if (isset($_POST['year'])) {
                     </select>
                     <center>
                         <div class="form-group pt-2">
-                          <button type="button" id="submit" class="btn btn-success btn-lg float-right">Add</button>
+                            <button type="button" id="submit" class="btn btn-success btn-lg float-right">Add</button>
                         </div>
                     </center>
                 </form>
@@ -70,5 +70,30 @@ if (isset($_POST['year'])) {
             setCookie("AY", sel, 14);
             location.reload();
         }
+    }
+
+    function setCookie(name, value, days) {
+        var expires = "";
+        if (days) {
+            var date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            expires = "; expires=" + date.toUTCString();
+        }
+        document.cookie = name + "=" + (value || "") + expires + "; path=/";
+    }
+
+    function getCookie(name) {
+        var nameEQ = name + "=";
+        var ca = document.cookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+            if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+        }
+        return null;
+    }
+
+    function eraseCookie(name) {
+        document.cookie = name + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
     }
 </script>

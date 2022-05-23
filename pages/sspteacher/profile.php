@@ -95,7 +95,7 @@ if (isset($_POST['email'])) {
           <div class="col-auto my-auto">
             <div class="h-100">
               <h5 class="mb-1">
-                Silver Swan
+              <?php echo $userInfo['firstname'] . ' ' . $userInfo['middlename'] . ' ' . $userInfo['lastname'] ?>
               </h5>
               <p class="mb-0 font-weight-normal text-sm">
                 SSP Adviser

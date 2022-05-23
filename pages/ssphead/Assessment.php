@@ -7,14 +7,13 @@ if (isset($_POST["load"])) {
   $search = $_POST["search"];
   $nEntries = $_POST["entries"];
   $cat = $_POST['category'];
+  $ay = $_POST['AY'];
   if (!function_exists('fetchData')) {
-    function fetchData($page, $search, $nEntries, $cat)
+    function fetchData($page, $search, $nEntries, $cat, $ay)
     {
       include '../../includes/dbconfig.php';
 
-      $class = $cat=='physical' ? 'warning' : 'success';
-
-      $ay = $_COOKIE['AY'];
+      $class = $cat == 'physical' ? 'warning' : 'success';
 
       $dbResult = $database->getReference('data/' . $ay . '/' . $cat);
       $result = $dbResult->getValue();
@@ -92,7 +91,7 @@ if (isset($_POST["load"])) {
               <span class="text-secondary text-xs font-weight-bold">' . date('m/d/Y', floor($ts / 1000)) . '</span>
             </td>
             <td class="align-middle">
-              <a href="#" onclick="showDetails(\'' . $ts . '\');" class="text-sm font-weight-bold text-xs badge badge-sm bg-gradient-'.$class.'" data-toggle="tooltip" data-original-title="Edit user">
+              <a href="#" onclick="showDetails(\'' . $ts . '\');" class="text-sm font-weight-bold text-xs badge badge-sm bg-gradient-' . $class . '" data-toggle="tooltip" data-original-title="Edit user">
                 Result
               </a>
             </td>
@@ -105,7 +104,7 @@ if (isset($_POST["load"])) {
     </div>
     <div class="fixed-table-pagination">
         <div class="float-left pagination">
-          <button type="button" onclick="openDocument(\'printAssessment.php?category='.$cat.'&ay='.$_COOKIE['AY'].'\')" class="btn btn-outline-'.$class.' mt-2 ms-1 mb-1">
+          <button type="button" onclick="exportData(\''.$cat.'\');" class="btn btn-outline-' . $class . ' mt-2 ms-1 mb-1">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer" viewBox="0 0 16 16">
             <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"></path>
             <path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z"></path>
@@ -113,7 +112,7 @@ if (isset($_POST["load"])) {
           </button>
         </div>
         <div class="float-left pagination">
-          <select class="btn btn-outline-'.$class.' mt-2 ms-1 mb-1" name="page" id="ent' . $cat . '">
+          <select class="btn btn-outline-' . $class . ' mt-2 ms-1 mb-1" name="page" id="ent' . $cat . '">
             <option value="5" ' . $e5 . '>5 entries</option>
             <option value="15" ' . $e15 . '>15 entries</option>
             <option value="25" ' . $e25 . '>25 entries</option>
@@ -134,7 +133,7 @@ if (isset($_POST["load"])) {
         for ($x = 1; $x <= $tPage; $x++) {
           echo '<li class="page-item';
           if ($x == $page) {
-            echo ' active bg-gradient-faded-'.$class.'-vertical border-radius-2xl';
+            echo ' active bg-gradient-faded-' . $class . '-vertical border-radius-2xl';
           }
           echo '"><a class="page-link" ';
           if ($x == $page) {
@@ -163,7 +162,7 @@ if (isset($_POST["load"])) {
         </div>
         <div class="fixed-table-pagination">
         <div class="float-left pagination">
-          <button type="button" class="btn btn-outline-'.$class.' mt-2 ms-1 mb-1" disabled>
+          <button type="button" class="btn btn-outline-' . $class . ' mt-2 ms-1 mb-1" disabled>
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer" viewBox="0 0 16 16">
               <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"></path>
               <path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z"></path>
@@ -171,7 +170,7 @@ if (isset($_POST["load"])) {
           </button>
         </div>
         <div class="float-left pagination">
-        <select class="btn btn-outline-'.$class.' mt-2 ms-1 mb-1" name="page" id="ent' . $cat . '">
+        <select class="btn btn-outline-' . $class . ' mt-2 ms-1 mb-1" name="page" id="ent' . $cat . '">
           <option value="5" ' . $e5 . '>5 entries</option>
           <option value="15" ' . $e15 . '>15 entries</option>
           <option value="25" ' . $e25 . '>25 entries</option>
@@ -181,7 +180,7 @@ if (isset($_POST["load"])) {
         <div class="float-right pagination">
           <ul class="pagination">
             <li class="page-item"><a class="page-link" style="pointer-events: none;" aria-label="previous page" href="">« Prev</a></li>
-            <li class="page-item active bg-gradient-faded-'.$class.'-vertical border-radius-2xl"><a class="page-link" style="pointer-events: none;" aria-label="to page 1" href="">1</a></li>
+            <li class="page-item active bg-gradient-faded-' . $class . '-vertical border-radius-2xl"><a class="page-link" style="pointer-events: none;" aria-label="to page 1" href="">1</a></li>
             <li class="page-item"><a class="page-link" style="pointer-events: none;" aria-label="next page" href="">Next »</a></li>
           </ul>
         </div>
@@ -192,17 +191,17 @@ if (isset($_POST["load"])) {
     }
   }
 
-  fetchData($page, $search, $nEntries, $cat);
+  fetchData($page, $search, $nEntries, $cat, $ay);
 } elseif (isset($_POST['action'])) {
   $action = $_POST['action'];
   $cat = $_POST['category'];
-  if ($action == 'delete') {
-    $ay = $_COOKIE['AY'];
+  if ($action == 'export') {
+    $ay = $_POST['AY'];
     $database->getReference('data/' . $ay . '/' . $cat)->set(NULL);
 
-    $database->getReference('system/logs/'.round(microtime(true) * 1000))->update([
+    $database->getReference('system/logs/' . round(microtime(true) * 1000))->update([
       'title' => 'Exported Data',
-      'message' => $_SESSION['uid'].' has exported the data for '.$cat.' assessment'
+      'message' => $_SESSION['uid'] . ' has exported the data for ' . $cat . ' assessment'
     ]);
   }
 }
@@ -324,11 +323,11 @@ if (isset($_POST["load"])) {
               $AY = $database->getReference('system/AY')->getValue();
 
               foreach ($AY as $key => $value) {
-                echo '<option value="' . $key;
+                echo '<option value="' . $key . '"';
                 if ($key == $sel) {
-                  echo 'selected';
+                  echo ' selected';
                 }
-                echo '">' . $value . '</option>';
+                echo '>' . $value . '</option>';
               }
               ?>
               <option value="add">Add</option>
@@ -360,7 +359,7 @@ if (isset($_POST["load"])) {
                 <option value="mental">Mental Table</option>
               </select>
             </div>
-            <button class="btn bg-gradient-success mt-3 ms-1 ps-3 text-center font-monospace text-capitalize"  onclick="loadData(1, $('#inpSearch').val(), $('#searchTable').val());">Search</button>
+            <button class="btn bg-gradient-success mt-3 ms-1 ps-3 text-center font-monospace text-capitalize" onclick="loadData(1, $('#inpSearch').val(), $('#searchTable').val());">Search</button>
           </div>
         </div>
       </div>
@@ -400,7 +399,7 @@ if (isset($_POST["load"])) {
               </div>
               <div class="fixed-table-pagination">
                 <div class="float-left pagination">
-                  <button type="button" class="btn btn-outline-warning mt-2 ms-1 mb-1">
+                  <button type="button" class="btn btn-outline-warning mt-2 ms-1 mb-1" disabled>
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer" viewBox="0 0 16 16">
                       <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"></path>
                       <path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z"></path>
@@ -464,7 +463,7 @@ if (isset($_POST["load"])) {
               </div>
               <div class="fixed-table-pagination">
                 <div class="float-left pagination">
-                  <button type="button" class="btn btn-outline-success mt-2 ms-1 mb-1">
+                  <button type="button" class="btn btn-outline-success mt-2 ms-1 mb-1" disabled>
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer" viewBox="0 0 16 16">
                       <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"></path>
                       <path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z"></path>
@@ -586,6 +585,22 @@ if (isset($_POST["load"])) {
   <script src="../../assets/js/material-dashboard.min.js?v=3.0.0"></script>
 
   <script>
+    function exportData(cat) {
+      ay = getCookie('AY') ? getCookie('AY') : '<?php echo $database->getReference('system/current')->getValue(); ?>';
+      openDocument('printAssessment.php?category='+cat+'&ay='+ay);
+    }
+
+    function getCookie(name) {
+      var nameEQ = name + "=";
+      var ca = document.cookie.split(';');
+      for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+      }
+      return null;
+    }
+
     function showDetails(key) {
       $("#userInformation").modal('show');
 
@@ -606,6 +621,7 @@ if (isset($_POST["load"])) {
     loadData(1, '', 'mental');
 
     function loadData(page, search, cat) {
+      ay = getCookie('AY') ? getCookie('AY') : '<?php echo $database->getReference('system/current')->getValue(); ?>';
       $.ajax({
         url: 'Assessment.php',
         type: 'POST',
@@ -615,7 +631,8 @@ if (isset($_POST["load"])) {
           'page': page,
           'search': search,
           'category': cat,
-          'entries': $("#ent" + cat).val()
+          'entries': $("#ent" + cat).val(),
+          'AY': ay
         }
       }).done(function(data) {
         $('#con' + cat).html(data);
@@ -623,14 +640,14 @@ if (isset($_POST["load"])) {
     }
 
     function openDocument(url) {
-    w = 700;
-    h = 500;
-    LeftPosition = (screen.width) ? (screen.width - w) / 2 : 0;
-    TopPosition = (screen.height) ? (screen.height - h) / 2 : 0;
-    settings = 'toolbar=no,location=no,status=yes,menubar=no,scrollbars=yes,resizable=yes,';
-    settings += 'height=' + h + ',width=' + w + ',top=' + TopPosition + ',left=' + LeftPosition;
-    window.open(url, 'Supporting Documents', settings);
-}
+      w = 700;
+      h = 500;
+      LeftPosition = (screen.width) ? (screen.width - w) / 2 : 0;
+      TopPosition = (screen.height) ? (screen.height - h) / 2 : 0;
+      settings = 'toolbar=no,location=no,status=yes,menubar=no,scrollbars=yes,resizable=yes,';
+      settings += 'height=' + h + ',width=' + w + ',top=' + TopPosition + ',left=' + LeftPosition;
+      window.open(url, 'Supporting Documents', settings);
+    }
   </script>
 
   <div class="modal fade" id="userInformation" tabindex="-1" role="dialog" aria-labelledby="userInformationLabel" aria-hidden="true">

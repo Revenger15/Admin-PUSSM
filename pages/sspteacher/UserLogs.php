@@ -14,15 +14,14 @@ if (isset($_POST['load'])) {
 
       $dbLogs = $database->getReference('system/logs');
       $logs = $dbLogs->getValue();
-      $filteredData = [];
+      $userlogs = [];
 
       $e5  = ($nEntries == 5)  ? 'selected' : '';
       $e10 = ($nEntries == 10) ? 'selected' : '';
       $e20 = ($nEntries == 20) ? 'selected' : '';
       $e50 = ($nEntries == 50) ? 'selected' : '';
 
-      //Get user data
-      $userlogs = [];
+      //Get user data and search
       if ($logs != []) {
           foreach ($logs as $key1 => $value1) {
             if (str_icontains($value1['message'], $_SESSION['uid'])) {
@@ -37,20 +36,6 @@ if (isset($_POST['load'])) {
         $userlogs = $logs;
       }
 
-      //Get user data
-      if ($userlogs != [] && $search != '') {
-        foreach ($userData as $uid => $data) {
-          foreach ($data as $key => $value) {
-            // Search
-            if (str_icontains($value, $search)) {
-              $filteredData[$uid] = $data;
-            }
-          }
-        }
-      } else {
-        $filteredData = $logs;
-      }
-
       echo '
       <div class="page-content page-container" id="page-content">
         <div class="card-body px-0 pb-2">
@@ -60,12 +45,12 @@ if (isset($_POST['load'])) {
                       <div class="card-block">
       ';
 
-      if ($filteredData != []) {
-        $numChild = count($filteredData);
+      if ($userlogs != []) {
+        $numChild = count($userlogs);
         $tPage = ceil($numChild / $nEntries);
         $page = ($page <= $tPage && $page > 0) ? $page : 1;
 
-        $pagedData = array_slice($filteredData, ($page - 1) * $nEntries, $nEntries, true);
+        $pagedData = array_slice($userlogs, ($page - 1) * $nEntries, $nEntries, true);
 
         foreach ($pagedData as $ts => $data) {
           echo '

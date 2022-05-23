@@ -1,3 +1,10 @@
+<?php
+session_start();
+include '../../includes/dbconfig.php';
+
+$currAY = $database->getReference('system/current')->getValue();
+$teacherDB = $database->getReference('data/' . $currAY . '/adviser/' . $_SESSION['uid']);
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -122,26 +129,26 @@
                     </div>
                     <p class="mt-4">Single Sign up:</p>
                     <div class="input-group input-group-outline mb-1">
-                        <select class="form-control" name="gender" required="">
-                            <option value="" selected>-select gender-</option>
-                            <option value="Male">Male</option>
-                            <option value="Female">Female</option>
-                            <option value="Prefer-not-to-say">Prefer not to say</option>
-                        </select>
+                      <select class="form-control" name="gender" required="">
+                        <option value="" selected>-select gender-</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Prefer-not-to-say">Prefer not to say</option>
+                      </select>
                       <div class="invalid-feedback">
                         Please provide gender.
                       </div>
                     </div>
                     <div class="input-group input-group-outline mb-1">
-                        <select class="form-control" name="department" required="">
-                            <option value="" selected>-Select Department-</option>
-                            <option value="CITE">CITE</option>
-                            <option value="CEA">CEA</option>
-                            <option value="CAS">CAS</option>
-                            <option value="CHS">CHS</option>
-                            <option value="CSS">CSS</option>
-                            <option value="PUCO">PUCO</option>
-                        </select>
+                      <select class="form-control" name="department" required="">
+                        <option value="" selected>-Select Department-</option>
+                        <option value="CITE">CITE</option>
+                        <option value="CEA">CEA</option>
+                        <option value="CAS">CAS</option>
+                        <option value="CHS">CHS</option>
+                        <option value="CSS">CSS</option>
+                        <option value="PUCO">PUCO</option>
+                      </select>
                       <div class="invalid-feedback">
                         Please provide a valid Department.
                       </div>
@@ -398,6 +405,23 @@
       </div>
     </div>
   </div>
+  <?php
+  if (!$teacherDB->getValue()) {
+    echo "
+    <script>
+      var form = document.getElementById('teacher-register');
+      var elements = form.elements;
+      for (var i = 0, len = elements.length; i < len; ++i) {
+          elements[i].readOnly = true;
+          elements[i].disabled = true;
+      }
+      $('#btn-account').prop('disabled', true);
+
+      alert('Module Disabled! You haven\'t been assigned a section yet. Please contact your SSP Coordinator.');
+    </script>
+    ";
+  }
+  ?>
 </body>
 
 </html>

@@ -376,21 +376,47 @@ if (isset($_POST['page'])) {
   HTML;
   exit();
 } elseif (isset($_POST['assignUser'])) {
+
+  include '../../php/logEvent.php';
+
+  // Get data from POST
   $uid = $_POST['assignUser'];
   $subj = $_POST['subj'];
   $rawSect = $_POST['sect'];
+
+  // Convert section to array
   $sect = explode(',', $rawSect);
-  var_dump($sect);
+  // var_dump($sect);
+
+  // Errors
+  $error = [];
+  $cnt = 0;
+
+  // DB Ref
   $currAY = $database->getReference('system/current')->getValue();
   $advDB = $database->getReference('data/' . $currAY . '/adviser/' . $uid);
+
+  // Foreach Section array
   foreach ($sect as $k => $v) {
-    $advDB->getChild($subj)->update([
-      trim($v) => trim($v)
-    ]);
+    $stdListRef = $database->getReference('data/' . $currAY . '/studentList/' . $subj);
+    // Check if the section has an adviser or non
+    if (!$stdListRef->getSnapshot()->hasChild(trim($v))) {
+      $stdListRef->getChild(trim($v))->update([
+        'adviser' => $uid
+      ]);
+
+      $advDB->getChild($subj)->update([
+        trim($v) => trim($v)
+      ]);
+
+      logEvent('Class Assigned', $_SESSION['uid'] . ' has assigned ' . $uid . ' to ' . $subj . ' - ' . $v);
+    } else {
+      $error[$cnt]['subject'] = trim($subj);
+      $error[$cnt++]['section'] = trim($v);
+    }
   }
-  
-  include '../../php/logEvent.php';
-  logEvent('Class Assigned', $_SESSION['uid'] . ' has assigned '. $uid .' to '.$subj. ' - '.$rawSect);
+
+  // exit();
 } elseif (isset($_POST['unassign'])) {
   $uid = $_POST['unassign'];
   $subj = $_POST['subj'];
@@ -400,7 +426,7 @@ if (isset($_POST['page'])) {
   $database->getReference('data/' . $currAY . '/adviser/' . $uid . '/' . $subj . '/' . $sect)->set(NULL);
 
   include '../../php/logEvent.php';
-  logEvent('Class Unassigned', $_SESSION['uid'] . ' has unassigned '. $uid .' to '.$subj. ' - '.$sect);
+  logEvent('Class Unassigned', $_SESSION['uid'] . ' has unassigned ' . $uid . ' to ' . $subj . ' - ' . $sect);
 
   exit();
 }
@@ -828,6 +854,27 @@ if (isset($_POST['page'])) {
         loadData(1, '', 'assigned');
       });
     }
+
+    <?php
+    if (isset($error)) {
+      if ($error != []) {
+        $json = json_encode($error);
+        echo <<<JS
+        window.onload = (function(e) {
+          error = JSON.parse('{$json}');
+          data = "<table style=\"width: 100%;\"><tr><th>Subject</th><th>Section</th></tr>";
+          error.forEach(obj => {
+            data += "<tr><td>"+obj['subject']+"</td><td>"+obj['section']+"</td></tr>";
+          });
+          data += "</table>"
+          $('#error-data').html(data);
+          $('#error').modal('show');
+          console.log(data);
+        })
+        JS;
+      }
+    }
+    ?>
   </script>
 
   <div class="modal fade" id="assigning" tabindex="-1" role="dialog" aria-labelledby="assigningLabel" aria-hidden="true">
@@ -884,6 +931,26 @@ if (isset($_POST['page'])) {
         </div>
       </div>
     </div>
+  </div>
+
+  <div class="modal fade" id="error" tabindex="-1" role="dialog" aria-labelledby="errorLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="errorLabel">Teacher Assigning</h5>
+          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <h3>Assigning</h3>
+          <p>The previous action has encountered the following errors:</p>
+          <p>• The following subjects/sections has an instructor assigned to them:</p>
+          <div id="error-data"></div>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 
 </html>
