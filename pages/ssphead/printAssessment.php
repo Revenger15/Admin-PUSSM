@@ -1,5 +1,6 @@
 <?php
 include '../../includes/dbconfig.php';
+session_start();
 $cat = $_GET['category'];
 $ay = $_GET['ay'];
 $dbRef = $database->getReference('data/' . $ay . '/' . $cat);
@@ -65,13 +66,13 @@ $database->getReference('system/logs/' . round(microtime(true) * 1000))->update(
                     <td>Email</td>
                     <td>{$data['email']}</td>
                     <td>Contact Number</td>
-                    <td>{$data['cNo']}</td>
+                    <td>{$data['contact']}</td>
                 </tr>
                 <tr>
                     <td>Subject</td>
-                    <td>{$data['sub']}</td>
+                    <td>{$data['subject']}</td>
                     <td>Section</td>
-                    <td>{$data['sec']}</td>
+                    <td>{$data['section']}</td>
                 </tr>
                 <tr><td>&nbsp</td></tr>
                 <tr>
@@ -84,12 +85,27 @@ $database->getReference('system/logs/' . round(microtime(true) * 1000))->update(
                 </tr>
             </table>
         HTML;
-        echo '<div class="pagebreak"> </div>';
+        echo '<hr><div class="pagebreak"> </div>';
     }
     ?>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
     <script>
-        window.onload = function(e) {
-            window.print();
+        window.print();
+
+        function getCookie(name) {
+            var nameEQ = name + "=";
+            var ca = document.cookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+            }
+            return null;
+        }
+
+        window.addEventListener('afterprint', (event) => {
             if (confirm("Do you wish to hide the exported data from the pending assessments page?")) {
                 ay = getCookie('AY') ? getCookie('AY') : '<?php echo $database->getReference('system/current')->getValue(); ?>';
                 $.ajax({
@@ -104,7 +120,7 @@ $database->getReference('system/logs/' . round(microtime(true) * 1000))->update(
                     alert('Data has been hidden. You may now close the window!');
                 });
             }
-        }
+        });
     </script>
 </body>
 

@@ -59,7 +59,7 @@ if (isset($_POST["load"])) {
         $tPage = ceil($numChild / $nEntries);
         $page = ($page <= $tPage && $page > 0) ? $page : 1;
 
-        $pagedData = array_slice($filteredData, ($page - 1) * $nEntries);
+        $pagedData = array_slice($filteredData, ($page - 1) * $nEntries, $nEntries, true);
 
         foreach ($pagedData as $ts => $data) {
           echo '
@@ -76,22 +76,22 @@ if (isset($_POST["load"])) {
               </div>
             </td>
             <td>
-              <p class="text-xs font-weight-bold mb-0">' . $data['sub'] . '</p>
+              <p class="text-xs font-weight-bold mb-0">' . $data['subject'] . '</p>
             </td>
             <td>
-              <p class="text-xs font-weight-bold mb-0">' . $data['sec'] . '</p>
+              <p class="text-xs font-weight-bold mb-0">' . $data['section'] . '</p>
             </td>
             <td>
               <p class="text-xs font-weight-bold mb-0">' . $data['ay'] . '</p>
             </td>
             <td>
-              <p class="text-xs font-weight-bold mb-0">' . $data['cNo'] . '</p>
+              <p class="text-xs font-weight-bold mb-0">' . $data['contact'] . '</p>
             </td>
             <td class="align-middle text-center">
               <span class="text-secondary text-xs font-weight-bold">' . date('m/d/Y', floor($ts / 1000)) . '</span>
             </td>
             <td class="align-middle">
-              <a href="#" onclick="showDetails(\'' . $ts . '\');" class="text-sm font-weight-bold text-xs badge badge-sm bg-gradient-' . $class . '" data-toggle="tooltip" data-original-title="Edit user">
+              <a href="#" onclick="showDetails(\'' . $ts . '\', \''.$cat.'\');" class="text-sm font-weight-bold text-xs badge badge-sm bg-gradient-' . $class . '" data-toggle="tooltip" data-original-title="Edit user">
                 Result
               </a>
             </td>
@@ -104,7 +104,7 @@ if (isset($_POST["load"])) {
     </div>
     <div class="fixed-table-pagination">
         <div class="float-left pagination">
-          <button type="button" onclick="exportData(\''.$cat.'\');" class="btn btn-outline-' . $class . ' mt-2 ms-1 mb-1">
+          <button type="button" onclick="exportData(\'' . $cat . '\');" class="btn btn-outline-' . $class . ' mt-2 ms-1 mb-1">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer" viewBox="0 0 16 16">
             <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"></path>
             <path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z"></path>
@@ -587,7 +587,7 @@ if (isset($_POST["load"])) {
   <script>
     function exportData(cat) {
       ay = getCookie('AY') ? getCookie('AY') : '<?php echo $database->getReference('system/current')->getValue(); ?>';
-      openDocument('printAssessment.php?category='+cat+'&ay='+ay);
+      openDocument('printAssessment.php?category=' + cat + '&ay=' + ay);
     }
 
     function getCookie(name) {
@@ -601,14 +601,15 @@ if (isset($_POST["load"])) {
       return null;
     }
 
-    function showDetails(key) {
+    function showDetails(key, pool) {
       $("#userInformation").modal('show');
 
       $.ajax({
         url: "data/studInfo.php",
         type: "POST",
         data: {
-          "key": key
+          "key": key,
+          "pool" : pool
         }
       }).done(function(data) {
         $("#user-info-modal").html(data);
@@ -652,14 +653,14 @@ if (isset($_POST["load"])) {
 
   <div class="modal fade" id="userInformation" tabindex="-1" role="dialog" aria-labelledby="userInformationLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
-      <div class="modal-content">
+      <div class="modal-content" id="user-info-modal">
         <div class="modal-header">
           <h5 class="modal-title" id="userInformationlLabel">Student Record</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <div class="modal-body" id="user-info-modal">
+        <div class="modal-body">
           <p>Name: </p>
           <p>Section: </p>
           <p>Contact Number: </p>
@@ -667,23 +668,6 @@ if (isset($_POST["load"])) {
             <p>Results</p>
             <p>Date: </p>
           </div>
-          <p>Actions</p>
-        </div>
-        <div class="container-fluid py-4">
-          <div role="progressbar" aria-valuenow="69" aria-valuemin="0" aria-valuemax="100" style="--value:69">
-            <p class="text-xs font-weight-bold mb-0">Physical</p>
-          </div>
-          <div role="progressbar" aria-valuenow="69" aria-valuemin="0" aria-valuemax="100" style="--value:69">
-            <p class="text-xs font-weight-bold mb-0">Mental</p>
-          </div>
-          <div role="progressbar" aria-valuenow="69" aria-valuemin="0" aria-valuemax="100" style="--value:69">
-            <p class="text-xs font-weight-bold mb-0">Over All</p>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-success">Refer(Guidance)</button>
-          <button type="button" class="btn btn-warning">Refer(Nurse)</button>
-          <button type="button" class="btn btn-info">Good Condition</button>
         </div>
       </div>
     </div>

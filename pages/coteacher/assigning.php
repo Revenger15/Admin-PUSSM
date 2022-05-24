@@ -400,7 +400,7 @@ if (isset($_POST['page'])) {
   foreach ($sect as $k => $v) {
     $stdListRef = $database->getReference('data/' . $currAY . '/studentList/' . $subj);
     // Check if the section has an adviser or non
-    if (!$stdListRef->getSnapshot()->hasChild(trim($v))) {
+    if (!$stdListRef->getChild(trim($v))->getSnapshot()->hasChild('adviser')) {
       $stdListRef->getChild(trim($v))->update([
         'adviser' => $uid
       ]);

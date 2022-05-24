@@ -320,7 +320,7 @@ if (isset($_POST['page'])) {
   exit();
 } elseif (isset($_POST['exportData'])) {
   $cat = $_POST['exportData']; //TE_MEN or TE_PHY
-  $mode = $_POST['mode'];
+  $mode = $_POST['mode']; //mental or physical
 
   $currAY = $database->getReference('system/current')->getValue();
   $teacherDB = $database->getReference('data/' . $currAY . '/adviser/' . $_SESSION['uid']);
@@ -343,7 +343,8 @@ if (isset($_POST['page'])) {
             $stdListDB->getChild($uid . '/result/' . $ts)->set(str_replace('TE', 'REF', $cat)); //Change TE to REF
             $resultDB = $database->getReference('data/' . $currAY . '/result/' . $ts);
             $rawResult[$ts] = $resultDB->getValue();
-            $resultDB->set(NULL);
+            $rawResult[$ts]['status'] = str_replace('TE', 'REF', $cat);
+            // $resultDB->set(NULL);
           }
         }
       }
@@ -897,7 +898,7 @@ if (isset($_POST['page'])) {
       });
     }
 
-    function exportData(code, category) {
+    function exportData(category, mode) {
       $.ajax({
         url: 'assessment.php',
         type: 'POST',
