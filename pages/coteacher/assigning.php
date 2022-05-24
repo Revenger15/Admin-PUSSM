@@ -1,4 +1,7 @@
 <?php
+
+use Kreait\Firebase\Value\Uid;
+
 include '../../includes/dbconfig.php';
 session_start();
 
@@ -17,7 +20,7 @@ if (isset($_POST['page'])) {
       $userDB = $database->getReference('system/sspcoord/' . $_SESSION['uid'] . '/advisers');
       $dbUsers = $database->getReference('users');
       $currAY = $database->getReference('system/current')->getValue();
-      $uidList = $dbInstructor->getValue();
+      $uidList = $dbInstructor->getValue() ? $dbInstructor->getValue() : [];
       $userData = [];
       $filteredData = [];
 
@@ -27,7 +30,7 @@ if (isset($_POST['page'])) {
       $e50 = ($nEntries == 50) ? 'selected' : '';
 
       // Get Data for UID
-      $uidList = array_keys($userDB->getValue());
+      $uidList = array_keys($userDB->getValue() ? $userDB->getValue() : []);
       if ($uidList != '') {
         foreach ($uidList as $k => $v) {
           $userData[$v] =  $database->getReference('users/' . $v)->getValue();

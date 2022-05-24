@@ -54,7 +54,7 @@
             $file = fopen($csv['tmp_name'], 'r');
             $x = 0;
             while (($line = fgetcsv($file)) !== FALSE) {
-                if ($line[3] == 'Employee Number') {
+                if (str_contains($line[0], "Gender")) {
                     continue;
                 }
                 //$line is an array of the csv elements
@@ -84,31 +84,30 @@
                     echo '<td>' . $line[9] . '</td>';
                     echo '<td>' . $line[10] . '</td>';
 
+                    // Additional information needed for "Users" branch
                     $addInfo = [
                         'idnumber' => $line[4],
                         'contact' => $line[10],
                         'department' => $line[7],
                     ];
 
+                    // Info needed for "data/%AY%/student"
                     $acadInfo = [
                         'subject' => $line[8],
                         'section' => $line[9],
                     ];
 
+                    // Merge additional information with info array.
                     unset($info['empNo']);
                     $info = array_merge($info, $addInfo);
 
-                    // Register to AY Branch
+                    // Register $acadInfo to "data/%AY%/student" branch
                     $currAY = $database->getReference('system/current')->getValue();
-                    $database->getReference('data/' . $currAY . '/users/' . $line[4] . '/info')->update($acadInfo);
+                    $database->getReference('data/' . $currAY . '/student/' . $line[4])->update($acadInfo);
 
-                    // Register under Teacher
-                    $database->getReference('data/' . $currAY . '/users/' . $_SESSION['uid'] . '/students/' . $line[9] . '/' . $line[8])->update([
-                        $line[4] => $line[4]
-                    ]);
-                } else {
-                    $database->getReference("system/sspcoord/" . $_SESSION['uid'] . '/advisers')->update([
-                        $line[4] => $line[4]
+                    // Register under "data/%AY%/studentList"
+                    $database->getReference('data/' . $currAY . '/studentList/' . $line[8] . '/'  . $line[9] . '/' . $line[4])->update([
+                        'enrolledAt' => floor(microtime(true) * 1000)
                     ]);
                 }
 
@@ -121,12 +120,14 @@
                     'emailVerified' => true,
                 ];
 
+                // Check if user exists
                 try {
                     $user = $auth->getUser($line[4]);
                 } catch (\Kreait\Firebase\Exception\Auth\UserNotFound $e) {
                     $createdUser = $auth->createUser($userProperties);
                 }
 
+                // Register User Information under "Users" branch.
                 $usersRef->getChild($line[4])->update($info);
 
                 $x++;
@@ -166,34 +167,34 @@
                 echo '<td>' . $_POST['subject'] . '</td>';
                 echo '<td>' . $_POST['contact'] . '</td>';
 
+                // Additional information needed for "Users" branch
                 $addInfo = [
                     'idnumber' => $_POST['idNum'],
-                    'contact' => $_POST['contact'],
                     'department' => $_POST['department'],
                 ];
 
+                // Info needed for "data/%AY%/student"
                 $acadInfo = [
                     'subject' => $_POST['subject'],
                     'section' => $_POST['section'],
                 ];
 
+                // Merge additional information with info array.
                 unset($info['empNo']);
                 $info = array_merge($info, $addInfo);
 
+                // Register $acadInfo to "data/%AY%/student" branch
                 $currAY = $database->getReference('system/current')->getValue();
-                $database->getReference('data/' . $currAY . '/users/' . $_POST['idNum'] . '/info')->update($acadInfo);
+                $database->getReference('data/' . $currAY . '/student/' . $_POST['idNum'])->update($acadInfo);
 
-                // Register under Teacher
-                $database->getReference('data/' . $currAY . '/users/' . $_SESSION['uid'] . '/students/' . $line[9] . '/' . $line[8])->update([
-                    $_POST['idNum'] => $_POST['idNum']
-                ]);
-            } else {
-                $database->getReference("system/sspcoord/" . $_SESSION['uid'] . '/advisers')->update([
-                    $info['empNo'] => $info['empNo']
+                // Register under "data/%AY%/studentList"
+                $database->getReference('data/' . $currAY . '/studentList/' . $_POST['subject'] . '/'  . $_POST['section'] . '/' . $_POST['idNum'])->update([
+                    'enrolledAt' => floor(microtime(true) * 1000)
                 ]);
             }
             echo '</tr>';
 
+            // Register User to Firebase Auth
             $userProperties = [
                 'uid' => $_POST['idNum'],
                 'email' => $_POST['email'],
@@ -201,16 +202,18 @@
                 'emailVerified' => true,
             ];
 
+            // Check if user exists
             try {
                 $user = $auth->getUser($_POST['idNum']);
             } catch (\Kreait\Firebase\Exception\Auth\UserNotFound $e) {
                 $createdUser = $auth->createUser($userProperties);
             }
 
+            // Register User Information under "Users" branch.
             $usersRef->getChild($_POST['idNum'])->update($info);
 
             include '../../php/logEvent.php';
-            logEvent('Create User', $_SESSION['uid'] . ' has created user '. $_POST['idNum']);
+            logEvent('Create User', $_SESSION['uid'] . ' has created '. $_POST['idNum']);
         }
         ?>
 </table>
