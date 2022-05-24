@@ -196,7 +196,8 @@ if (isset($_POST["load"])) {
   $action = $_POST['action'];
   $cat = $_POST['category'];
   if ($action == 'export') {
-    $ay = $_POST['AY'];
+    $ay = $_POST['ay'];
+    echo 'data/' . $ay . '/' . $cat;
     $database->getReference('data/' . $ay . '/' . $cat)->set(NULL);
 
     $database->getReference('system/logs/' . round(microtime(true) * 1000))->update([
@@ -204,6 +205,7 @@ if (isset($_POST["load"])) {
       'message' => $_SESSION['uid'] . ' has exported the data for ' . $cat . ' assessment'
     ]);
   }
+  exit();
 }
 ?>
 

@@ -114,10 +114,12 @@ $database->getReference('system/logs/' . round(microtime(true) * 1000))->update(
                     type: 'POST',
                     data: {
                         'action': 'export',
-                        'ay': ay
+                        'ay': '<?php echo $ay;?>',
+                        'category': '<?php echo strtolower($cat);?>'
                     }
                 }).done(function(data) {
                     alert('Data has been hidden. You may now close the window!');
+                    console.log(data);
                 });
             }
         });

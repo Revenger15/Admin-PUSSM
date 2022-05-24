@@ -912,7 +912,8 @@ if (isset($_POST['page'])) {
         if (data == '') {
           // ok
           // refresh tables and close modal
-          loadData(1, '', category);
+          loadData(1, '', mode);
+          alert("Data exported!")
         } else {
           // error
           // close modal and show alert()
