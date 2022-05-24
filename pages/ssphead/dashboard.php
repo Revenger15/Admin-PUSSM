@@ -68,6 +68,15 @@ function getTheme($val) {
 }
 
 $user = $database->getReference('users/'.$_SESSION['uid'].'/firstname')->getValue();
+
+// Sort Data
+$month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+$unsorted = $sorted;
+unset($sorted);
+foreach ($month as $k => $v) {
+  if(isset($unsorted[$v]))
+    $sorted[$v] = $unsorted[$v];
+}
 ?>
 
 <!DOCTYPE html>
