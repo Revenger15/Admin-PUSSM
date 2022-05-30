@@ -15,7 +15,7 @@ if (isset($_POST["load"])) {
 
       $class = $cat == 'physical' ? 'warning' : 'success';
 
-      $dbResult = $database->getReference('data/' . $ay . '/' . $cat);
+      $dbResult = $database->getReference('data/' . $ay . '/archived/' . $cat);
       $result = $dbResult->getValue();
       $filteredData = [];
 
@@ -104,14 +104,6 @@ if (isset($_POST["load"])) {
     </div>
     <div class="fixed-table-pagination">
         <div class="float-left pagination">
-          <button type="button" id="print'.$cat.'" onclick="exportData(\'' . $cat . '\');" class="btn btn-outline-' . $class . ' mt-2 ms-1 mb-1">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer" viewBox="0 0 16 16">
-            <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"></path>
-            <path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z"></path>
-            </svg> Print
-          </button>
-        </div>
-        <div class="float-left pagination">
           <select class="btn btn-outline-' . $class . ' mt-2 ms-1 mb-1" name="page" id="ent' . $cat . '">
             <option value="5" ' . $e5 . '>5 entries</option>
             <option value="15" ' . $e15 . '>15 entries</option>
@@ -162,14 +154,6 @@ if (isset($_POST["load"])) {
         </div>
         <div class="fixed-table-pagination">
         <div class="float-left pagination">
-          <button type="button" class="btn btn-outline-' . $class . ' mt-2 ms-1 mb-1" disabled>
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer" viewBox="0 0 16 16">
-              <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"></path>
-              <path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z"></path>
-            </svg> Print
-          </button>
-        </div>
-        <div class="float-left pagination">
         <select class="btn btn-outline-' . $class . ' mt-2 ms-1 mb-1" name="page" id="ent' . $cat . '">
           <option value="5" ' . $e5 . '>5 entries</option>
           <option value="15" ' . $e15 . '>15 entries</option>
@@ -198,11 +182,6 @@ if (isset($_POST["load"])) {
   if ($action == 'export') {
     $ay = $_POST['ay'];
     echo 'data/' . $ay . '/' . $cat;
-
-    $database->getReference('data/' . $ay . '/archived/' . $cat)->update(
-      $database->getReference('data/' . $ay . '/' . $cat)->getValue()
-    );
-
     $database->getReference('data/' . $ay . '/' . $cat)->set(NULL);
 
     $database->getReference('system/logs/' . round(microtime(true) * 1000))->update([
@@ -223,7 +202,7 @@ if (isset($_POST["load"])) {
   <link rel="apple-touch-icon" sizes="76x76" href="../../assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../../assets/img/favicon.png">
   <title>
-    Assessment
+    Archived Data
   </title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <!--     Fonts and icons     -->
@@ -279,7 +258,7 @@ if (isset($_POST["load"])) {
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white active bg-gradient-faded-dark-vertical" href="#">
+          <a class="nav-link text-white" href="Assessment.php">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">table_view</i>
             </div>
@@ -287,7 +266,7 @@ if (isset($_POST["load"])) {
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white" href="archived.php">
+          <a class="nav-link text-white active bg-gradient-faded-dark-vertical" href="#">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">archive</i>
             </div>
@@ -362,7 +341,7 @@ if (isset($_POST["load"])) {
             <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Admin</a></li>
             <li class="breadcrumb-item text-sm text-dark active" aria-current="page">PHINMA-UPang Student Support Module</li>
           </ol>
-          <h6 class="font-weight-bolder mb-0">Student Record</h6>
+          <h6 class="font-weight-bolder mb-0">Archived Student Record</h6>
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
           <div class="col-5 pe-md-3 d-flex align-items-center">
@@ -386,7 +365,7 @@ if (isset($_POST["load"])) {
           <div class="card my-4">
             <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
               <div class="bg-gradient-faded-warning shadow-dark border-radius-lg pt-4 pb-3">
-                <h6 class="text-white text-capitalize ps-3">Need to Refer(Physical)</h6>
+                <h6 class="text-white text-capitalize ps-3">Printed Physical Records</h6>
               </div>
             </div>
             <div id="conphysical">
@@ -413,14 +392,6 @@ if (isset($_POST["load"])) {
                 </div>
               </div>
               <div class="fixed-table-pagination">
-                <div class="float-left pagination">
-                  <button type="button" class="btn btn-outline-warning mt-2 ms-1 mb-1" disabled>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer" viewBox="0 0 16 16">
-                      <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"></path>
-                      <path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z"></path>
-                    </svg> Print
-                  </button>
-                </div>
                 <div class="float-left pagination">
                   <select class="btn btn-outline-warning mt-2 ms-1 mb-1" name="page" id="entphysical">
                     <option value="5" Selected>5 entries</option>
@@ -450,7 +421,7 @@ if (isset($_POST["load"])) {
           <div class="card my-4">
             <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
               <div class="bg-gradient-faded-success shadow-dark border-radius-lg pt-4 pb-3">
-                <h6 class="text-white text-capitalize ps-3">Need to Refer(Mental)</h6>
+                <h6 class="text-white text-capitalize ps-3">Printed Mental Records</h6>
               </div>
             </div>
             <div id="conmental">
@@ -477,14 +448,6 @@ if (isset($_POST["load"])) {
                 </div>
               </div>
               <div class="fixed-table-pagination">
-                <div class="float-left pagination">
-                  <button type="button" class="btn btn-outline-success mt-2 ms-1 mb-1" disabled>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer" viewBox="0 0 16 16">
-                      <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"></path>
-                      <path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z"></path>
-                    </svg> Print
-                  </button>
-                </div>
                 <div class="float-left pagination">
                   <select class="btn btn-outline-success mt-2 ms-1 mb-1" name="page" id="entmental">
                     <option value="5" Selected>5 entries</option>
@@ -603,8 +566,6 @@ if (isset($_POST["load"])) {
     function exportData(cat) {
       ay = getCookie('AY') ? getCookie('AY') : '<?php echo $database->getReference('system/current')->getValue(); ?>';
       openDocument('printAssessment.php?category=' + cat + '&ay=' + ay);
-
-      $('#print'+cat).prop('disabled', true);
     }
 
     function getCookie(name) {
@@ -641,7 +602,7 @@ if (isset($_POST["load"])) {
     function loadData(page, search, cat) {
       ay = getCookie('AY') ? getCookie('AY') : '<?php echo $database->getReference('system/current')->getValue(); ?>';
       $.ajax({
-        url: 'Assessment.php',
+        url: 'archived.php',
         type: 'POST',
         method: 'POST',
         data: {

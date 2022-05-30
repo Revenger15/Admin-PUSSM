@@ -77,7 +77,6 @@ foreach ($month as $k => $v) {
     $sorted[$v] = $unsorted[$v];
 }
 ?>
-<!DOCTYPE html>
 <html lang="en">
 
 <head>

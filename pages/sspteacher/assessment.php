@@ -132,6 +132,8 @@ if (isset($_POST['page'])) {
             foreach ($data2 as $uid => $data3) {
               foreach ($data3 as $ts => $data4) {
                 $date = date('d/m/Y', $ts / 1000);
+
+                // var_dump($pagedData);
                 echo <<<HTML
                   <tr>
                     <td>
@@ -337,7 +339,7 @@ if (isset($_POST['page'])) {
       // var_dump($stdResultDB);
       // Get student list and result
       foreach ($stdResultDB as $uid => $result) {
-        if($uid == 'adviser') continue;
+        if($uid == 'adviser' || !isset($result['result'])) continue;
         foreach ($result['result'] as $ts => $status) {
           if ($status == $cat) {
             $stdListDB->getChild($uid . '/result/' . $ts)->set(str_replace('TE', 'REF', $cat)); //Change TE to REF

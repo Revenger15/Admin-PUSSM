@@ -48,7 +48,7 @@ echo '
   <div class="modal-footer">
     <button type="button" onclick="setRecordStatus(\''.$stdUID.'\', \''.$key.'\', \''.$mode.'\', \'TE_MEN\');" '.$state.' class="btn btn-success">Refer(Mental)</button>
     <button type="button" onclick="setRecordStatus(\''.$stdUID.'\', \''.$key.'\', \''.$mode.'\', \'TE_PHY\');" '.$state.' class="btn btn-warning">Refer(Physical)</button>
-    <button type="button" onclick="setRecordStatus(\''.$stdUID.'\', \''.$key.'\', \''.$mode.'\', \'OK\', \');" '.$state.' class="btn btn-info">Good Condition</button>
+    <button type="button" onclick="setRecordStatus(\''.$stdUID.'\', \''.$key.'\', \''.$mode.'\', \'OK\');" '.$state.' class="btn btn-info">Good Condition</button>
   </div>
 ';
 ?>

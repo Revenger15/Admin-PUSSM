@@ -1,6 +1,7 @@
 <?php
 
     require __DIR__.'/vendor/autoload.php';
+    // error_reporting(0);
 
     use Kreait\Firebase\Factory;
     use Kreait\Firebase\ServiceAccount;
